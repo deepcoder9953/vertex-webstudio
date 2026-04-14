@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowerZone Fitness Center — Unleash Your Potential</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & VARIABLES ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --red:#ff3c00;
+  --red-dim:#cc3000;
+  --gold:#ffc94a;
+  --dark:#080808;
+  --dark2:#111111;
+  --dark3:#1a1a1a;
+  --dark4:#222;
+  --grey:#aaaaaa;
+  --light:#f5f2ec;
+  --white:#ffffff;
+  --border:rgba(255,255,255,0.07);
+  --heading:'Barlow Condensed',sans-serif;
+  --body:'Outfit',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:var(--body);background:var(--dark);color:var(--white);overflow-x:hidden;line-height:1.6;}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
+input,select,textarea,button{font-family:var(--body);}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--dark);}
+::-webkit-scrollbar-thumb{background:var(--red);}
+
+/* ===== NAV ===== */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 4rem;transition:background 0.3s, box-shadow 0.3s, padding 0.3s;}
+#navbar.scrolled{background:rgba(8,8,8,0.97);box-shadow:0 2px 32px rgba(0,0,0,0.6);padding:0.7rem 4rem;}
+.nav-logo{font-family:var(--heading);font-weight:900;font-size:1.6rem;letter-spacing:0.04em;text-transform:uppercase;}
+.nav-logo span{color:var(--red);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-size:0.82rem;font-weight:500;color:rgba(255,255,255,0.75);letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover{color:var(--red);}
+.nav-right{display:flex;align-items:center;gap:1rem;}
+.nav-cta{background:var(--red);color:white;padding:0.55rem 1.4rem;border-radius:3px;font-size:0.8rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;transition:background 0.2s;}
+.nav-cta:hover{background:#e03000;}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+.hamburger span{display:block;width:24px;height:2px;background:white;border-radius:2px;transition:all 0.3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* Mobile nav */
+#mobile-nav{display:none;position:fixed;inset:0;top:0;z-index:999;background:var(--dark2);flex-direction:column;padding:6rem 2.5rem 2.5rem;gap:0;}
+#mobile-nav.open{display:flex;}
+#mobile-nav a{font-family:var(--heading);font-weight:800;font-size:2.5rem;text-transform:uppercase;letter-spacing:0.04em;color:white;padding:0.75rem 0;border-bottom:1px solid var(--border);transition:color 0.2s;}
+#mobile-nav a:hover{color:var(--red);}
+#mobile-nav .mob-cta{margin-top:2rem;background:var(--red);text-align:center;border-radius:4px;color:white!important;}
+
+/* ===== HERO ===== */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;z-index:0;}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,rgba(8,8,8,0.97) 40%, rgba(8,8,8,0.6) 70%, rgba(8,8,8,0.2) 100%);}
+.hero-content{position:relative;z-index:2;padding:0 4rem;max-width:760px;}
+.hero-tag{display:inline-flex;align-items:center;gap:0.6rem;font-size:0.72rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem;}
+.hero-tag::before{content:'';display:block;width:28px;height:2px;background:var(--red);}
+.hero-h1{font-family:var(--heading);font-weight:900;font-size:clamp(3.5rem,8vw,6.5rem);line-height:0.92;text-transform:uppercase;letter-spacing:-0.01em;margin-bottom:1.5rem;}
+.hero-h1 em{font-style:italic;color:var(--red);display:block;}
+.hero-p{font-size:1.05rem;color:rgba(255,255,255,0.65);line-height:1.75;max-width:480px;margin-bottom:2.5rem;font-weight:300;}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-red{background:var(--red);color:white;padding:0.9rem 2.2rem;border-radius:3px;font-size:0.85rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem;}
+.btn-red:hover{background:#e03000;transform:translateY(-2px);}
+.btn-outline{background:transparent;color:white;padding:0.9rem 2.2rem;border-radius:3px;font-size:0.85rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;border:2px solid rgba(255,255,255,0.35);cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem;}
+.btn-outline:hover{border-color:var(--red);color:var(--red);}
+.hero-badges{display:flex;gap:1.5rem;margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border);}
+.hero-badge{display:flex;align-items:center;gap:0.75rem;}
+.hb-icon{font-size:1.4rem;}
+.hb-text{font-size:0.78rem;color:rgba(255,255,255,0.6);line-height:1.4;}
+.hb-text strong{display:block;color:white;font-size:0.88rem;}
+
+/* Hero scroll indicator */
+.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:0.5rem;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);}
+.scroll-hint-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--red),transparent);animation:scrollPulse 1.8s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:0.4;transform:scaleY(1);}50%{opacity:1;transform:scaleY(0.6);}}
+
+/* ===== STATS BAR ===== */
+.stats-bar{background:var(--red);display:grid;grid-template-columns:repeat(4,1fr);}
+.stat-cell{padding:1.5rem;text-align:center;border-right:1px solid rgba(255,255,255,0.2);}
+.stat-cell:last-child{border:none;}
+.stat-num{font-family:var(--heading);font-size:2.4rem;font-weight:900;color:white;letter-spacing:-0.02em;line-height:1;}
+.stat-label{font-size:0.75rem;color:rgba(255,255,255,0.8);font-weight:500;margin-top:0.25rem;letter-spacing:0.05em;text-transform:uppercase;}
+
+/* ===== SECTIONS ===== */
+section{padding:5.5rem 4rem;}
+.sec-tag{font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.5rem;}
+.sec-tag::before{content:'';display:block;width:20px;height:2px;background:var(--red);}
+.sec-title{font-family:var(--heading);font-weight:900;font-size:clamp(2rem,4vw,3.2rem);text-transform:uppercase;letter-spacing:-0.01em;line-height:1.05;margin-bottom:0.75rem;}
+.sec-sub{font-size:0.95rem;color:var(--grey);line-height:1.7;max-width:540px;font-weight:300;}
+
+/* ===== ABOUT ===== */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.about-img-wrap{position:relative;}
+.about-img-wrap img{width:100%;height:520px;object-fit:cover;border-radius:4px;}
+.about-tag-float{position:absolute;bottom:-2rem;right:-2rem;background:var(--red);color:white;border-radius:4px;padding:1.5rem;text-align:center;z-index:2;}
+.atf-big{font-family:var(--heading);font-weight:900;font-size:2.2rem;line-height:1;}
+.atf-small{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;margin-top:0.25rem;opacity:0.85;}
+.about-text-wrap{padding-left:1rem;}
+.about-checks{margin:2rem 0;display:flex;flex-direction:column;gap:0.9rem;}
+.about-check{display:flex;align-items:flex-start;gap:0.8rem;font-size:0.92rem;color:rgba(255,255,255,0.8);}
+.about-check-icon{width:20px;height:20px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65rem;flex-shrink:0;margin-top:2px;}
+
+/* ===== CLASSES ===== */
+.classes-section{background:var(--dark2);}
+.classes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem;}
+.class-card{border-radius:6px;overflow:hidden;position:relative;height:260px;cursor:pointer;group:true;}
+.class-card img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
+.class-card:hover img{transform:scale(1.08);}
+.class-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.2) 60%,transparent 100%);transition:background 0.3s;}
+.class-card:hover .class-card-overlay{background:linear-gradient(to top,rgba(255,60,0,0.85) 0%,rgba(0,0,0,0.5) 60%,transparent 100%);}
+.class-card-info{position:absolute;bottom:1.25rem;left:1.25rem;right:1.25rem;}
+.cc-cat{font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:0.3rem;}
+.cc-name{font-family:var(--heading);font-weight:900;font-size:1.4rem;text-transform:uppercase;color:white;letter-spacing:0.02em;}
+.cc-time{font-size:0.78rem;color:rgba(255,255,255,0.65);margin-top:0.25rem;}
+.cc-arrow{position:absolute;top:1.25rem;right:1.25rem;width:36px;height:36px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.9rem;opacity:0;transition:opacity 0.3s;}
+.class-card:hover .cc-arrow{opacity:1;}
+
+/* ===== SCHEDULE ===== */
+.schedule-section{background:var(--dark3);}
+.day-tabs{display:flex;gap:0;margin:2.5rem 0 0;border-bottom:1px solid var(--border);}
+.day-tab{background:none;border:none;color:var(--grey);font-size:0.8rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.75rem 1.5rem;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s;}
+.day-tab.active,.day-tab:hover{color:white;border-bottom-color:var(--red);}
+.schedule-table{width:100%;border-collapse:collapse;margin-top:1.5rem;}
+.schedule-table th{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--grey);text-align:left;padding:0.75rem 1rem;border-bottom:1px solid var(--border);}
+.schedule-table td{padding:1rem;border-bottom:1px solid var(--border);font-size:0.88rem;vertical-align:middle;}
+.schedule-table tr:last-child td{border-bottom:none;}
+.schedule-table tr:hover td{background:rgba(255,60,0,0.04);}
+.sched-time{color:var(--red);font-weight:600;white-space:nowrap;}
+.sched-class{font-weight:500;color:white;}
+.sched-trainer{color:var(--grey);font-size:0.82rem;}
+.sched-spots{font-size:0.78rem;}
+.spots-badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:100px;font-size:0.68rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;}
+.spots-open{background:rgba(0,200,100,0.15);color:#00c864;}
+.spots-few{background:rgba(255,196,74,0.15);color:var(--gold);}
+.spots-full{background:rgba(255,60,0,0.15);color:var(--red);}
+.sched-book{background:var(--dark);color:white;border:1px solid var(--border);padding:0.35rem 1rem;border-radius:3px;font-size:0.75rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.sched-book:hover{background:var(--red);border-color:var(--red);}
+
+/* ===== TRAINERS ===== */
+.trainers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-top:3rem;}
+.trainer-card{background:var(--dark3);border-radius:6px;overflow:hidden;border:1px solid var(--border);transition:transform 0.3s,border-color 0.3s;}
+.trainer-card:hover{transform:translateY(-6px);border-color:var(--red);}
+.trainer-img-wrap{position:relative;overflow:hidden;}
+.trainer-img-wrap img{width:100%;height:220px;object-fit:cover;object-position:top;transition:transform 0.4s;}
+.trainer-card:hover .trainer-img-wrap img{transform:scale(1.05);}
+.trainer-badge{position:absolute;top:0.75rem;left:0.75rem;background:var(--red);color:white;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:2px;}
+.trainer-body{padding:1.25rem;}
+.trainer-name{font-family:var(--heading);font-weight:800;font-size:1.1rem;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.2rem;}
+.trainer-spec{font-size:0.78rem;color:var(--red);font-weight:600;margin-bottom:0.5rem;}
+.trainer-exp{font-size:0.75rem;color:var(--grey);}
+.trainer-socials{display:flex;gap:0.5rem;margin-top:1rem;}
+.t-social{width:30px;height:30px;border-radius:3px;background:var(--dark4);display:flex;align-items:center;justify-content:center;font-size:0.75rem;cursor:pointer;transition:background 0.2s;}
+.t-social:hover{background:var(--red);}
+
+/* ===== MEMBERSHIP ===== */
+.membership-section{background:var(--dark2);}
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem;}
+.plan-card{background:var(--dark3);border-radius:6px;border:1px solid var(--border);padding:2rem;position:relative;transition:transform 0.3s,border-color 0.3s;}
+.plan-card:hover{transform:translateY(-4px);}
+.plan-card.popular{border-color:var(--red);background:var(--dark4);}
+.popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--red);color:white;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.25rem 1rem;border-radius:100px;white-space:nowrap;}
+.plan-name{font-family:var(--heading);font-weight:900;font-size:1.3rem;text-transform:uppercase;letter-spacing:0.06em;color:white;margin-bottom:0.25rem;}
+.plan-desc{font-size:0.8rem;color:var(--grey);margin-bottom:1.5rem;}
+.plan-price{margin-bottom:0.25rem;}
+.plan-price-num{font-family:var(--heading);font-size:3rem;font-weight:900;color:var(--red);letter-spacing:-0.02em;}
+.plan-price-period{font-size:0.8rem;color:var(--grey);margin-left:0.25rem;}
+.plan-savings{font-size:0.72rem;color:var(--gold);font-weight:600;margin-bottom:1.5rem;}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:0.65rem;margin-bottom:2rem;}
+.plan-features li{display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:rgba(255,255,255,0.8);}
+.plan-features li .pf-icon{color:var(--red);font-size:0.75rem;flex-shrink:0;}
+.plan-btn{width:100%;padding:0.85rem;border-radius:3px;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;border:2px solid rgba(255,255,255,0.2);background:transparent;color:white;}
+.plan-btn:hover,.plan-card.popular .plan-btn{background:var(--red);border-color:var(--red);}
+.plan-card.popular .plan-btn:hover{background:#e03000;}
+
+/* ===== GALLERY ===== */
+.gallery-section{padding-bottom:0;}
+.gallery-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:200px 200px;gap:6px;margin-top:3rem;}
+.gallery-item{overflow:hidden;cursor:pointer;}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;}
+.gallery-item:hover img{transform:scale(1.08);}
+.gi-1{grid-column:span 5;grid-row:span 2;}
+.gi-2{grid-column:span 4;}
+.gi-3{grid-column:span 3;}
+.gi-4{grid-column:span 3;}
+.gi-5{grid-column:span 4;}
+
+/* ===== TESTIMONIALS ===== */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem;}
+.review-card{background:var(--dark3);border:1px solid var(--border);border-radius:6px;padding:1.75rem;transition:border-color 0.3s;}
+.review-card:hover{border-color:rgba(255,60,0,0.4);}
+.review-stars{color:var(--gold);font-size:0.95rem;letter-spacing:0.1em;margin-bottom:1rem;}
+.review-text{font-size:0.88rem;color:rgba(255,255,255,0.75);line-height:1.7;font-style:italic;margin-bottom:1.25rem;}
+.review-author{display:flex;align-items:center;gap:0.75rem;}
+.review-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--red);}
+.review-name{font-size:0.85rem;font-weight:600;color:white;}
+.review-meta{font-size:0.72rem;color:var(--grey);}
+
+/* ===== FREE TRIAL CTA ===== */
+.trial-section{background:var(--red);padding:4.5rem 4rem;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;}
+.trial-title{font-family:var(--heading);font-weight:900;font-size:clamp(2rem,4vw,3rem);text-transform:uppercase;letter-spacing:-0.01em;color:white;line-height:1.05;}
+.trial-sub{font-size:0.95rem;color:rgba(255,255,255,0.8);margin-top:0.75rem;font-weight:300;}
+.trial-actions{display:flex;flex-direction:column;gap:0.75rem;min-width:240px;}
+.trial-btn{background:white;color:var(--red);padding:0.9rem 2rem;border-radius:3px;font-size:0.85rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.2s;text-align:center;display:block;}
+.trial-btn:hover{background:var(--dark);color:white;}
+.trial-btn-ghost{background:transparent;color:white;padding:0.75rem 2rem;border-radius:3px;font-size:0.82rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;border:2px solid rgba(255,255,255,0.5);cursor:pointer;transition:all 0.2s;text-align:center;display:block;}
+.trial-btn-ghost:hover{border-color:white;}
+
+/* ===== CONTACT ===== */
+.contact-section{background:var(--dark2);}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:start;margin-top:3rem;}
+.contact-info{display:flex;flex-direction:column;gap:2rem;}
+.contact-item{display:flex;gap:1.1rem;align-items:flex-start;}
+.ci-icon{width:44px;height:44px;background:rgba(255,60,0,0.12);border:1px solid rgba(255,60,0,0.3);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.ci-label{font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:0.25rem;}
+.ci-value{font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6;}
+.contact-map{width:100%;height:200px;border-radius:6px;overflow:hidden;margin-top:0.5rem;border:1px solid var(--border);}
+.contact-form{background:var(--dark3);border-radius:6px;border:1px solid var(--border);padding:2rem;}
+.cf-title{font-family:var(--heading);font-weight:800;font-size:1.4rem;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:1.5rem;}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;}
+.cf-group{margin-bottom:0.75rem;}
+.cf-label{display:block;font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--grey);margin-bottom:0.4rem;}
+.cf-input{width:100%;background:var(--dark4);border:1px solid var(--border);border-radius:3px;padding:0.75rem 1rem;color:white;font-size:0.88rem;transition:border-color 0.2s;}
+.cf-input:focus{outline:none;border-color:var(--red);}
+.cf-input::placeholder{color:rgba(255,255,255,0.3);}
+.cf-select{appearance:none;cursor:pointer;}
+.cf-submit{width:100%;background:var(--red);color:white;border:none;border-radius:3px;padding:0.9rem;font-size:0.85rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;margin-top:0.75rem;transition:background 0.2s;}
+.cf-submit:hover{background:#e03000;}
+
+/* ===== FOOTER ===== */
+footer{background:var(--dark);border-top:1px solid var(--border);padding:3.5rem 4rem 2rem;}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+.footer-brand{max-width:280px;}
+.footer-logo{font-family:var(--heading);font-weight:900;font-size:1.6rem;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:1rem;}
+.footer-logo span{color:var(--red);}
+.footer-desc{font-size:0.85rem;color:var(--grey);line-height:1.7;font-weight:300;}
+.footer-social{display:flex;gap:0.6rem;margin-top:1.25rem;}
+.f-social{width:34px;height:34px;background:var(--dark3);border:1px solid var(--border);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;cursor:pointer;transition:all 0.2s;}
+.f-social:hover{background:var(--red);border-color:var(--red);}
+.footer-col-title{font-family:var(--heading);font-weight:800;font-size:0.95rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1.25rem;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.6rem;}
+.footer-col li a{font-size:0.85rem;color:var(--grey);transition:color 0.2s;}
+.footer-col li a:hover{color:var(--red);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:2rem;display:flex;align-items:center;justify-content:space-between;font-size:0.8rem;color:var(--grey);}
+.footer-bottom a{color:var(--grey);transition:color 0.2s;}
+.footer-bottom a:hover{color:var(--red);}
+
+/* ===== LIGHTBOX ===== */
+#lightbox{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.95);align-items:center;justify-content:center;padding:2rem;}
+#lightbox.open{display:flex;}
+#lightbox img{max-width:90vw;max-height:85vh;border-radius:4px;object-fit:contain;}
+#lightbox-close{position:absolute;top:1.5rem;right:1.5rem;width:40px;height:40px;background:var(--red);border:none;border-radius:50%;cursor:pointer;font-size:1.1rem;color:white;display:flex;align-items:center;justify-content:center;}
+
+/* ===== MODAL - MEMBERSHIP ===== */
+#join-modal{display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:1.5rem;}
+#join-modal.open{display:flex;}
+.jm-container{background:var(--dark2);border-radius:8px;border:1px solid var(--border);width:100%;max-width:480px;padding:2.5rem;animation:modalIn 0.35s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes modalIn{from{opacity:0;transform:scale(0.92) translateY(20px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.jm-title{font-family:var(--heading);font-weight:900;font-size:1.6rem;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.25rem;}
+.jm-plan{font-size:0.82rem;color:var(--red);font-weight:600;margin-bottom:1.5rem;}
+.jm-close{float:right;background:none;border:none;color:var(--grey);font-size:1.2rem;cursor:pointer;margin-top:-2rem;}
+
+/* ===== FLOATING WA ===== */
+.float-wa{position:fixed;bottom:2rem;right:2rem;z-index:500;background:#25d366;color:white;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);transition:transform 0.3s;}
+.float-wa:hover{transform:scale(1.1);}
+.float-wa svg{width:26px;height:26px;fill:white;}
+
+/* ===== REVEAL ANIMATIONS ===== */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:0.1s;}
+.reveal-delay-2{transition-delay:0.2s;}
+.reveal-delay-3{transition-delay:0.3s;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1100px){
+  section{padding:4rem 2.5rem;}
+  .hero-content{padding:0 2.5rem;}
+  #navbar,#navbar.scrolled{padding:1rem 2.5rem;}
+  .trainers-grid{grid-template-columns:repeat(2,1fr);}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr;gap:3rem;}
+  .about-img-wrap img{height:380px;}
+  .about-tag-float{right:0;bottom:-1rem;}
+  .classes-grid{grid-template-columns:1fr 1fr;}
+  .plans-grid{grid-template-columns:1fr;}
+  .trial-section{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .gi-1,.gi-2,.gi-3,.gi-4,.gi-5{grid-column:auto;grid-row:auto;}
+  .reviews-grid{grid-template-columns:1fr;}
+}
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  #navbar,#navbar.scrolled{padding:1rem 1.5rem;}
+  section{padding:3.5rem 1.5rem;}
+  .hero-content{padding:0 1.5rem;}
+  .hero-h1{font-size:clamp(2.8rem,10vw,4rem);}
+  .hero-badges{flex-direction:column;gap:1rem;}
+  .stats-bar{grid-template-columns:1fr 1fr;}
+  .classes-grid{grid-template-columns:1fr;}
+  .trainers-grid{grid-template-columns:1fr 1fr;}
+  .cf-row{grid-template-columns:1fr;}
+  .trial-section{padding:3rem 1.5rem;}
+  footer{padding:2.5rem 1.5rem 1.5rem;}
+  .footer-grid{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;gap:0.75rem;text-align:center;}
+  .day-tabs{flex-wrap:wrap;}
+  .day-tab{padding:0.6rem 1rem;}
+}
+@media(max-width:480px){
+  .hero-h1{font-size:2.5rem;}
+  .hero-actions{flex-direction:column;}
+  .btn-red,.btn-outline{text-align:center;justify-content:center;}
+  .stat-cell{padding:1rem 0.5rem;}
+  .stat-num{font-size:1.8rem;}
+  .gallery-grid{grid-template-columns:1fr;}
+  .trainers-grid{grid-template-columns:1fr;}
+  .contact-map{height:160px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Power<span>Zone</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#trainers">Trainers</a></li>
+    <li><a href="#membership">Membership</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-cta" onclick="openJoinModal('Monthly')">Free Trial →</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div id="mobile-nav">
+  <a href="#about" onclick="closeMobileNav()">About</a>
+  <a href="#classes" onclick="closeMobileNav()">Classes</a>
+  <a href="#schedule" onclick="closeMobileNav()">Schedule</a>
+  <a href="#trainers" onclick="closeMobileNav()">Trainers</a>
+  <a href="#membership" onclick="closeMobileNav()">Membership</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+  <a href="#" class="mob-cta" onclick="closeMobileNav();openJoinModal('Monthly')">Start Free Trial →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=85" alt="PowerZone Gym">
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">Delhi's Premier Fitness Hub</div>
+    <h1 class="hero-h1">Forge Your<br><em>Strongest</em><br>Body</h1>
+    <p class="hero-p">5,000 sq. ft. of premium gym equipment, expert trainers, and transformative classes. Your fitness journey starts here — and it never stops.</p>
+    <div class="hero-actions">
+      <button class="btn-red" onclick="openJoinModal('Monthly')">🔥 Claim Free Trial</button>
+      <a href="#classes" class="btn-outline">Explore Classes →</a>
+    </div>
+    <div class="hero-badges">
+      <div class="hero-badge">
+        <div class="hb-icon">⭐</div>
+        <div class="hb-text"><strong>4.9 / 5.0</strong>1,200+ Google Reviews</div>
+      </div>
+      <div class="hero-badge">
+        <div class="hb-icon">🏋️</div>
+        <div class="hb-text"><strong>3,500+ Members</strong>Active community</div>
+      </div>
+      <div class="hero-badge">
+        <div class="hb-icon">⏰</div>
+        <div class="hb-text"><strong>Open 5 AM – 11 PM</strong>7 days a week</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-hint-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-cell"><div class="stat-num" data-target="3500">0</div><div class="stat-label">Active Members</div></div>
+  <div class="stat-cell"><div class="stat-num" data-target="25">0</div><div class="stat-label">Expert Trainers</div></div>
+  <div class="stat-cell"><div class="stat-num" data-target="40">0</div><div class="stat-label">Classes / Week</div></div>
+  <div class="stat-cell"><div class="stat-num" data-target="12">0</div><div class="stat-label">Years Running</div></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800&q=85" alt="PowerZone interior">
+      <div class="about-tag-float">
+        <div class="atf-big">12+</div>
+        <div class="atf-small">Years of Excellence</div>
+      </div>
+    </div>
+    <div class="about-text-wrap reveal reveal-delay-1">
+      <div class="sec-tag">Who We Are</div>
+      <h2 class="sec-title">More Than a Gym,<br>A Lifestyle</h2>
+      <p class="sec-sub">PowerZone Fitness Center is Delhi's most results-driven fitness facility. We combine world-class equipment, certified coaches, and a community that pushes you further than you thought possible.</p>
+      <div class="about-checks">
+        <div class="about-check"><div class="about-check-icon">✓</div>5,000 sq. ft. of premium equipment — dumbbells, machines, cardio zone, turf area & more</div>
+        <div class="about-check"><div class="about-check-icon">✓</div>25+ certified trainers — strength, yoga, HIIT, Zumba, CrossFit, & nutrition specialists</div>
+        <div class="about-check"><div class="about-check-icon">✓</div>40+ group classes per week — beginner to advanced, every fitness style covered</div>
+        <div class="about-check"><div class="about-check-icon">✓</div>Steam room, locker facility, protein bar & free parking — everything in one place</div>
+        <div class="about-check"><div class="about-check-icon">✓</div>AI-powered body assessment & personalised diet planning included in all plans</div>
+      </div>
+      <button class="btn-red" style="margin-top:1.5rem;" onclick="openJoinModal('Monthly')">Start Your Journey →</button>
+    </div>
+  </div>
+</section>
+
+<!-- CLASSES -->
+<section id="classes" class="classes-section">
+  <div class="reveal">
+    <div class="sec-tag">What We Offer</div>
+    <h2 class="sec-title">Our Classes</h2>
+    <p class="sec-sub">Expert-led group sessions designed to challenge, inspire, and deliver real results — whatever your fitness level.</p>
+  </div>
+  <div class="classes-grid">
+    <div class="class-card reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="HIIT Blast">
+      <div class="class-card-overlay"></div>
+      <div class="cc-arrow">→</div>
+      <div class="class-card-info">
+        <div class="cc-cat">High Intensity</div>
+        <div class="cc-name">HIIT Blast</div>
+        <div class="cc-time">Mon · Wed · Fri — 6:00 AM & 6:30 PM</div>
+      </div>
+    </div>
+    <div class="class-card reveal reveal-delay-2">
+      <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=600&q=80" alt="Yoga Flow">
+      <div class="class-card-overlay"></div>
+      <div class="cc-arrow">→</div>
+      <div class="class-card-info">
+        <div class="cc-cat">Mind & Body</div>
+        <div class="cc-name">Yoga Flow</div>
+        <div class="cc-time">Daily — 7:00 AM</div>
+      </div>
+    </div>
+    <div class="class-card reveal reveal-delay-3">
+      <img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=600&q=80" alt="Strength Training">
+      <div class="class-card-overlay"></div>
+      <div class="cc-arrow">→</div>
+      <div class="class-card-info">
+        <div class="cc-cat">Power Building</div>
+        <div class="cc-name">Strength Training</div>
+        <div class="cc-time">Tue · Thu · Sat — 8:00 AM</div>
+      </div>
+    </div>
+    <div class="class-card reveal">
+      <img src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=600&q=80" alt="Zumba">
+      <div class="class-card-overlay"></div>
+      <div class="cc-arrow">→</div>
+      <div class="class-card-info">
+        <div class="cc-cat">Dance Fitness</div>
+        <div class="cc-name">Zumba Party</div>
+        <div class="cc-time">Tue · Thu — 7:00 PM</div>
+      </div>
+    </div>
+    <div class="class-card reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=80" alt="CrossFit">
+      <div class="class-card-overlay"></div>
+      <div class="cc-arrow">→</div>
+      <div class="class-card-info">
+        <div class="cc-cat">Functional</div>
+        <div class="cc-name">CrossFit WOD</div>
+        <div class="cc-time">Mon · Wed · Fri — 7:30 AM</div>
+      </div>
+    </div>
+    <div class="class-card reveal reveal-delay-2">
+      <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&q=80" alt="Cycling">
+      <div class="class-card-overlay"></div>
+      <div class="cc-arrow">→</div>
+      <div class="class-card-info">
+        <div class="cc-cat">Cardio</div>
+        <div class="cc-name">Spin Cycle</div>
+        <div class="cc-time">Sat · Sun — 8:30 AM</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule" class="schedule-section">
+  <div class="reveal">
+    <div class="sec-tag">Timetable</div>
+    <h2 class="sec-title">Class Schedule</h2>
+    <p class="sec-sub">Plan your week ahead. All classes are included in every membership plan.</p>
+  </div>
+  <div class="day-tabs" id="dayTabs">
+    <button class="day-tab active" onclick="switchDay('mon',this)">Monday</button>
+    <button class="day-tab" onclick="switchDay('tue',this)">Tuesday</button>
+    <button class="day-tab" onclick="switchDay('wed',this)">Wednesday</button>
+    <button class="day-tab" onclick="switchDay('thu',this)">Thursday</button>
+    <button class="day-tab" onclick="switchDay('fri',this)">Friday</button>
+    <button class="day-tab" onclick="switchDay('sat',this)">Saturday</button>
+    <button class="day-tab" onclick="switchDay('sun',this)">Sunday</button>
+  </div>
+  <div id="schedule-content"></div>
+</section>
+
+<!-- TRAINERS -->
+<section id="trainers">
+  <div class="reveal">
+    <div class="sec-tag">Expert Team</div>
+    <h2 class="sec-title">Meet Your Trainers</h2>
+    <p class="sec-sub">Certified, experienced, and passionate about your progress — our coaches are the heart of PowerZone.</p>
+  </div>
+  <div class="trainers-grid">
+    <div class="trainer-card reveal">
+      <div class="trainer-img-wrap">
+        <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=500&q=80" alt="Rahul Kapoor">
+        <div class="trainer-badge">Head Trainer</div>
+      </div>
+      <div class="trainer-body">
+        <div class="trainer-name">Rahul Kapoor</div>
+        <div class="trainer-spec">Strength & Conditioning</div>
+        <div class="trainer-exp">CSCS Certified · 8 years exp.</div>
+        <div class="trainer-socials">
+          <div class="t-social">📷</div><div class="t-social">🐦</div><div class="t-social">💼</div>
+        </div>
+      </div>
+    </div>
+    <div class="trainer-card reveal reveal-delay-1">
+      <div class="trainer-img-wrap">
+        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=500&q=80" alt="Neha Malhotra">
+        <div class="trainer-badge">Yoga Expert</div>
+      </div>
+      <div class="trainer-body">
+        <div class="trainer-name">Neha Malhotra</div>
+        <div class="trainer-spec">Yoga & Mindfulness</div>
+        <div class="trainer-exp">RYT 500 Certified · 6 years exp.</div>
+        <div class="trainer-socials">
+          <div class="t-social">📷</div><div class="t-social">🐦</div><div class="t-social">💼</div>
+        </div>
+      </div>
+    </div>
+    <div class="trainer-card reveal reveal-delay-2">
+      <div class="trainer-img-wrap">
+        <img src="https://images.unsplash.com/photo-1696563996353-214a3690bb11?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Arun Tiwari">
+        <div class="trainer-badge">HIIT Specialist</div>
+      </div>
+      <div class="trainer-body">
+        <div class="trainer-name">Arun Tiwari</div>
+        <div class="trainer-spec">HIIT & Functional Fitness</div>
+        <div class="trainer-exp">ACE Certified · 5 years exp.</div>
+        <div class="trainer-socials">
+          <div class="t-social">📷</div><div class="t-social">🐦</div><div class="t-social">💼</div>
+        </div>
+      </div>
+    </div>
+    <div class="trainer-card reveal reveal-delay-3">
+      <div class="trainer-img-wrap">
+        <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=500&q=80" alt="Priya Saxena">
+        <div class="trainer-badge">Zumba Expert</div>
+      </div>
+      <div class="trainer-body">
+        <div class="trainer-name">Priya Saxena</div>
+        <div class="trainer-spec">Zumba & Dance Fitness</div>
+        <div class="trainer-exp">Licensed Zumba · 7 years exp.</div>
+        <div class="trainer-socials">
+          <div class="t-social">📷</div><div class="t-social">🐦</div><div class="t-social">💼</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERSHIP -->
+<section id="membership" class="membership-section">
+  <div class="reveal" style="text-align:center;">
+    <div class="sec-tag" style="justify-content:center;">Membership Plans</div>
+    <h2 class="sec-title">Choose Your Plan</h2>
+    <p class="sec-sub" style="margin:0 auto;">Flexible options. Zero hidden fees. Every plan includes full gym access and group classes.</p>
+  </div>
+  <div class="plans-grid">
+    <div class="plan-card reveal">
+      <div class="plan-name">Monthly</div>
+      <div class="plan-desc">Perfect to get started — no long commitment.</div>
+      <div class="plan-price"><span class="plan-price-num">₹1,499</span><span class="plan-price-period">/ month</span></div>
+      <div class="plan-savings">📌 No joining fee this month</div>
+      <ul class="plan-features">
+        <li><span class="pf-icon">✓</span>Full gym access (5 AM – 11 PM)</li>
+        <li><span class="pf-icon">✓</span>All group classes included</li>
+        <li><span class="pf-icon">✓</span>Locker facility</li>
+        <li><span class="pf-icon">✓</span>Body assessment session</li>
+        <li><span class="pf-icon">✓</span>Fitness app access</li>
+      </ul>
+      <button class="plan-btn" onclick="openJoinModal('Monthly')">Get Started</button>
+    </div>
+    <div class="plan-card popular reveal reveal-delay-1">
+      <div class="popular-badge">🔥 Most Popular</div>
+      <div class="plan-name">Quarterly</div>
+      <div class="plan-desc">The sweet spot — save more, commit less.</div>
+      <div class="plan-price"><span class="plan-price-num">₹3,499</span><span class="plan-price-period">/ 3 months</span></div>
+      <div class="plan-savings">💰 Save ₹1,000 vs monthly</div>
+      <ul class="plan-features">
+        <li><span class="pf-icon">✓</span>Everything in Monthly</li>
+        <li><span class="pf-icon">✓</span>1 Personal Training session/month</li>
+        <li><span class="pf-icon">✓</span>Nutrition consultation</li>
+        <li><span class="pf-icon">✓</span>Steam room access</li>
+        <li><span class="pf-icon">✓</span>Priority class booking</li>
+        <li><span class="pf-icon">✓</span>Guest pass (1/month)</li>
+      </ul>
+      <button class="plan-btn" onclick="openJoinModal('Quarterly')">Join Now →</button>
+    </div>
+    <div class="plan-card reveal reveal-delay-2">
+      <div class="plan-name">Annual</div>
+      <div class="plan-desc">Best value — for the truly dedicated.</div>
+      <div class="plan-price"><span class="plan-price-num">₹9,999</span><span class="plan-price-period">/ year</span></div>
+      <div class="plan-savings">🏆 Save ₹8,000 vs monthly</div>
+      <ul class="plan-features">
+        <li><span class="pf-icon">✓</span>Everything in Quarterly</li>
+        <li><span class="pf-icon">✓</span>4 PT sessions/month</li>
+        <li><span class="pf-icon">✓</span>Custom nutrition & diet plan</li>
+        <li><span class="pf-icon">✓</span>Monthly body composition report</li>
+        <li><span class="pf-icon">✓</span>Guest passes (4/year)</li>
+        <li><span class="pf-icon">✓</span>Merchandise kit included</li>
+      </ul>
+      <button class="plan-btn" onclick="openJoinModal('Annual')">Get Best Value</button>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section">
+  <div class="reveal" style="padding-bottom:0;">
+    <div class="sec-tag">Inside PowerZone</div>
+    <h2 class="sec-title">Our Facility</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item gi-1" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=85" alt="Gym floor">
+    </div>
+    <div class="gallery-item gi-2" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="HIIT class">
+    </div>
+    <div class="gallery-item gi-3" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="https://images.unsplash.com/photo-1519505907962-0a6cb0167c73?w=600&q=80" alt="Weights area">
+    </div>
+    <div class="gallery-item gi-4" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?w=600&q=80" alt="Cardio zone">
+    </div>
+    <div class="gallery-item gi-5" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&q=80" alt="Cycling">
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="reviews">
+  <div class="reveal">
+    <div class="sec-tag">Member Love</div>
+    <h2 class="sec-title">Real Results,<br>Real People</h2>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"I lost 18 kg in 5 months at PowerZone. The trainers are incredibly motivating — Rahul literally changed my life. Best investment I've ever made in myself."</div>
+      <div class="review-author">
+        <img class="review-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Vikram">
+        <div><div class="review-name">Vikram Nair</div><div class="review-meta">Member since 2022 · Lost 18 kg</div></div>
+      </div>
+    </div>
+    <div class="review-card reveal reveal-delay-1">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Neha's yoga classes are on a completely different level. The facility is spotless, equipment is top-notch, and the community is so supportive. Worth every rupee."</div>
+      <div class="review-author">
+        <img class="review-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Shreya">
+        <div><div class="review-name">Shreya Kapoor</div><div class="review-meta">Member since 2023 · Yoga regular</div></div>
+      </div>
+    </div>
+    <div class="review-card reveal reveal-delay-2">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Joined as a beginner, now I can deadlift 100 kg. The annual plan is the best deal in Delhi for what you get. The nutrition counselling alone is worth it."</div>
+      <div class="review-author">
+        <img class="review-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80" alt="Arjun">
+        <div><div class="review-name">Arjun Mehta</div><div class="review-meta">Member since 2021 · Powerlifter</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE TRIAL CTA -->
+<div class="trial-section reveal">
+  <div>
+    <div class="trial-title">Your First Week<br>Is On Us — Free</div>
+    <p class="trial-sub">Walk in, train hard, feel the difference. No credit card, no commitment, no catch.</p>
+  </div>
+  <div class="trial-actions">
+    <button class="trial-btn" onclick="openJoinModal('Free Trial')">Claim Free Trial →</button>
+    <a href="https://wa.me/919953752331" target="_blank" class="trial-btn-ghost">📱 WhatsApp Us</a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="reveal">
+    <div class="sec-tag">Find Us</div>
+    <h2 class="sec-title">Visit Us or Get in Touch</h2>
+    <p class="sec-sub">We're here every day to answer your questions and help you start your fitness journey.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-item reveal">
+        <div class="ci-icon">📍</div>
+        <div><div class="ci-label">Address</div><div class="ci-value">Plot 45, Sport City Complex,<br>Sector 18, Dwarka, New Delhi – 110078<br><em style="font-size:0.8rem;color:var(--grey);">Near Dwarka Sec 18 Metro Station</em></div></div>
+      </div>
+      <div class="contact-item reveal">
+        <div class="ci-icon">⏰</div>
+        <div><div class="ci-label">Hours</div><div class="ci-value">Monday – Friday: 5:00 AM – 11:00 PM<br>Saturday – Sunday: 6:00 AM – 10:00 PM<br><em style="font-size:0.8rem;color:var(--gold);">Open 365 days a year</em></div></div>
+      </div>
+      <div class="contact-item reveal">
+        <div class="ci-icon">📞</div>
+        <div><div class="ci-label">Call / WhatsApp</div><div class="ci-value">+91 99100-55678<br>+91 98765-44321</div></div>
+      </div>
+      <div class="contact-item reveal">
+        <div class="ci-icon">✉️</div>
+        <div><div class="ci-label">Email</div><div class="ci-value">hello@powerzonefit.in<br>memberships@powerzonefit.in</div></div>
+      </div>
+      <iframe class="contact-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.098!2d77.059!3d28.5921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDM1JzMxLjYiTiA3N8KwMDMnMzIuNCJF!5e0!3m2!1sen!2sin!4v1" allowfullscreen="" loading="lazy" style="border:0;"></iframe>
+    </div>
+    <div class="contact-form reveal reveal-delay-1">
+      <div class="cf-title">Send a Message</div>
+      <div class="cf-row">
+        <div>
+          <label class="cf-label">Full Name</label>
+          <input type="text" class="cf-input" placeholder="Your name" id="cf-name">
+        </div>
+        <div>
+          <label class="cf-label">Phone</label>
+          <input type="tel" class="cf-input" placeholder="+91 XXXXX XXXXX" id="cf-phone">
+        </div>
+      </div>
+      <div class="cf-group">
+        <label class="cf-label">Email</label>
+        <input type="email" class="cf-input" placeholder="you@email.com" id="cf-email">
+      </div>
+      <div class="cf-group">
+        <label class="cf-label">I'm interested in</label>
+        <select class="cf-input cf-select" id="cf-interest">
+          <option value="">Select interest...</option>
+          <option>Free Trial Pass</option>
+          <option>Monthly Membership</option>
+          <option>Quarterly Membership</option>
+          <option>Annual Membership</option>
+          <option>Personal Training</option>
+          <option>Group Classes</option>
+          <option>Corporate Wellness</option>
+        </select>
+      </div>
+      <div class="cf-group">
+        <label class="cf-label">Message</label>
+        <textarea class="cf-input" rows="4" placeholder="Tell us anything — goals, questions, preferred timing..." id="cf-message"></textarea>
+      </div>
+      <button class="cf-submit" onclick="submitContactForm()">Send Message →</button>
+      <p id="cf-success" style="display:none;margin-top:1rem;color:#00c864;font-size:0.85rem;text-align:center;">✅ Message sent! We'll WhatsApp you within 2 hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">Power<span>Zone</span></div>
+      <p class="footer-desc">Delhi's premier fitness center since 2013. We exist to help you become the strongest version of yourself — physically and mentally.</p>
+      <div class="footer-social">
+        <div class="f-social">📷</div>
+        <div class="f-social">🐦</div>
+        <div class="f-social">📘</div>
+        <div class="f-social">📺</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Navigate</div>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#trainers">Trainers</a></li>
+        <li><a href="#membership">Membership</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Programs</div>
+      <ul>
+        <li><a href="#">HIIT Blast</a></li>
+        <li><a href="#">Yoga Flow</a></li>
+        <li><a href="#">Strength Training</a></li>
+        <li><a href="#">Zumba</a></li>
+        <li><a href="#">CrossFit WOD</a></li>
+        <li><a href="#">Spin Cycle</a></li>
+        <li><a href="#">Personal Training</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Info</div>
+      <ul>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Corporate Wellness</a></li>
+        <li><a href="#">Franchise</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 PowerZone Fitness Center. All rights reserved.</span>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="https://wa.me/919910055678" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/919910055678" target="_blank" class="float-wa" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="Gallery">
+</div>
+
+<!-- JOIN MODAL -->
+<div id="join-modal">
+  <div class="jm-container">
+    <button class="jm-close" onclick="closeJoinModal()">✕</button>
+    <div class="jm-title">Join PowerZone</div>
+    <div class="jm-plan" id="jm-plan-name">Monthly Plan</div>
+    <div class="cf-row">
+      <div>
+        <label class="cf-label">Full Name</label>
+        <input type="text" class="cf-input" placeholder="Your name" id="jm-name">
+      </div>
+      <div>
+        <label class="cf-label">Phone</label>
+        <input type="tel" class="cf-input" placeholder="+91 XXXXX XXXXX" id="jm-phone">
+      </div>
+    </div>
+    <div class="cf-group" style="margin-top:0.75rem;">
+      <label class="cf-label">Email</label>
+      <input type="email" class="cf-input" placeholder="you@email.com" id="jm-email">
+    </div>
+    <div class="cf-group" style="margin-top:0.75rem;">
+      <label class="cf-label">Preferred Start Date</label>
+      <input type="date" class="cf-input" id="jm-date">
+    </div>
+    <div class="cf-group" style="margin-top:0.75rem;">
+      <label class="cf-label">Fitness Goal</label>
+      <select class="cf-input cf-select" id="jm-goal">
+        <option>Weight Loss</option>
+        <option>Muscle Building</option>
+        <option>Endurance</option>
+        <option>Flexibility & Yoga</option>
+        <option>General Fitness</option>
+      </select>
+    </div>
+    <button class="cf-submit" style="margin-top:1rem;" onclick="submitJoinForm()">Book My Spot →</button>
+    <p id="jm-success" style="display:none;margin-top:1rem;color:#00c864;font-size:0.85rem;text-align:center;">🎉 Done! We'll call you within 2 hours to confirm.</p>
+  </div>
+</div>
+
+<script>
+/* ===== NAV SCROLL ===== */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* ===== HAMBURGER ===== */
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
+function closeMobileNav() {
+  hamburger.classList.remove('open');
+  mobileNav.classList.remove('open');
+  document.body.style.overflow = '';
+}
+hamburger.addEventListener('click', () => {
+  const isOpen = hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+
+/* ===== REVEAL ON SCROLL ===== */
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => revealObserver.observe(el));
+
+/* ===== STAT COUNTER ===== */
+const statEls = document.querySelectorAll('[data-target]');
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const target = parseInt(el.dataset.target);
+      let current = 0;
+      const inc = target / 60;
+      const timer = setInterval(() => {
+        current += inc;
+        if (current >= target) { el.textContent = target.toLocaleString() + '+'; clearInterval(timer); }
+        else el.textContent = Math.floor(current).toLocaleString();
+      }, 24);
+      statObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+statEls.forEach(el => statObserver.observe(el));
+
+/* ===== SCHEDULE DATA ===== */
+const schedules = {
+  mon: [
+    { time:'5:00 AM', name:'Open Gym', trainer:'Free Access', duration:'120 min', spots:'open' },
+    { time:'6:00 AM', name:'HIIT Blast', trainer:'Rahul Kapoor', duration:'45 min', spots:'few' },
+    { time:'7:00 AM', name:'Morning Yoga Flow', trainer:'Neha Malhotra', duration:'60 min', spots:'open' },
+    { time:'7:30 AM', name:'CrossFit WOD', trainer:'Arun Tiwari', duration:'60 min', spots:'few' },
+    { time:'9:00 AM', name:'Strength Training Basics', trainer:'Rahul Kapoor', duration:'60 min', spots:'open' },
+    { time:'5:00 PM', name:'Evening Yoga', trainer:'Neha Malhotra', duration:'60 min', spots:'open' },
+    { time:'6:30 PM', name:'HIIT Blast', trainer:'Arun Tiwari', duration:'45 min', spots:'full' },
+    { time:'8:00 PM', name:'Stretching & Recovery', trainer:'Priya Saxena', duration:'30 min', spots:'open' },
+  ],
+  tue: [
+    { time:'5:00 AM', name:'Open Gym', trainer:'Free Access', duration:'120 min', spots:'open' },
+    { time:'7:00 AM', name:'Morning Yoga Flow', trainer:'Neha Malhotra', duration:'60 min', spots:'open' },
+    { time:'8:00 AM', name:'Strength Training', trainer:'Rahul Kapoor', duration:'60 min', spots:'open' },
+    { time:'10:00 AM', name:'Zumba Morning', trainer:'Priya Saxena', duration:'45 min', spots:'few' },
+    { time:'6:00 PM', name:'CrossFit WOD', trainer:'Arun Tiwari', duration:'60 min', spots:'open' },
+    { time:'7:00 PM', name:'Zumba Party', trainer:'Priya Saxena', duration:'45 min', spots:'full' },
+    { time:'8:00 PM', name:'Foam Roll & Stretch', trainer:'Neha Malhotra', duration:'30 min', spots:'open' },
+  ],
+  wed: [
+    { time:'5:00 AM', name:'Open Gym', trainer:'Free Access', duration:'120 min', spots:'open' },
+    { time:'6:00 AM', name:'HIIT Blast', trainer:'Arun Tiwari', duration:'45 min', spots:'open' },
+    { time:'7:00 AM', name:'Morning Yoga', trainer:'Neha Malhotra', duration:'60 min', spots:'few' },
+    { time:'7:30 AM', name:'CrossFit WOD', trainer:'Rahul Kapoor', duration:'60 min', spots:'open' },
+    { time:'5:30 PM', name:'Power Lifting Club', trainer:'Rahul Kapoor', duration:'75 min', spots:'few' },
+    { time:'6:30 PM', name:'HIIT Blast', trainer:'Arun Tiwari', duration:'45 min', spots:'full' },
+    { time:'8:00 PM', name:'Night Yoga', trainer:'Neha Malhotra', duration:'45 min', spots:'open' },
+  ],
+  thu: [
+    { time:'5:00 AM', name:'Open Gym', trainer:'Free Access', duration:'120 min', spots:'open' },
+    { time:'7:00 AM', name:'Morning Yoga Flow', trainer:'Neha Malhotra', duration:'60 min', spots:'open' },
+    { time:'8:00 AM', name:'Strength Training', trainer:'Rahul Kapoor', duration:'60 min', spots:'open' },
+    { time:'10:00 AM', name:'Zumba Morning', trainer:'Priya Saxena', duration:'45 min', spots:'open' },
+    { time:'6:00 PM', name:'CrossFit WOD', trainer:'Arun Tiwari', duration:'60 min', spots:'few' },
+    { time:'7:00 PM', name:'Zumba Party', trainer:'Priya Saxena', duration:'45 min', spots:'open' },
+    { time:'8:30 PM', name:'Meditation & Breathwork', trainer:'Neha Malhotra', duration:'30 min', spots:'open' },
+  ],
+  fri: [
+    { time:'5:00 AM', name:'Open Gym', trainer:'Free Access', duration:'120 min', spots:'open' },
+    { time:'6:00 AM', name:'HIIT Blast', trainer:'Rahul Kapoor', duration:'45 min', spots:'few' },
+    { time:'7:00 AM', name:'Morning Yoga Flow', trainer:'Neha Malhotra', duration:'60 min', spots:'open' },
+    { time:'7:30 AM', name:'CrossFit WOD', trainer:'Arun Tiwari', duration:'60 min', spots:'open' },
+    { time:'5:30 PM', name:'Body Pump', trainer:'Rahul Kapoor', duration:'60 min', spots:'open' },
+    { time:'6:30 PM', name:'HIIT Blast', trainer:'Arun Tiwari', duration:'45 min', spots:'full' },
+    { time:'8:00 PM', name:'Friday Night Zumba 🎉', trainer:'Priya Saxena', duration:'60 min', spots:'few' },
+  ],
+  sat: [
+    { time:'6:00 AM', name:'Open Gym', trainer:'Free Access', duration:'120 min', spots:'open' },
+    { time:'7:00 AM', name:'Weekend Warrior HIIT', trainer:'Arun Tiwari', duration:'60 min', spots:'few' },
+    { time:'8:00 AM', name:'Strength Training', trainer:'Rahul Kapoor', duration:'60 min', spots:'open' },
+    { time:'8:30 AM', name:'Spin Cycle', trainer:'Priya Saxena', duration:'45 min', spots:'few' },
+    { time:'10:00 AM', name:'Yoga & Mindfulness', trainer:'Neha Malhotra', duration:'75 min', spots:'open' },
+    { time:'11:30 AM', name:'Zumba Party', trainer:'Priya Saxena', duration:'45 min', spots:'open' },
+    { time:'5:00 PM', name:'CrossFit WOD', trainer:'Arun Tiwari', duration:'60 min', spots:'open' },
+  ],
+  sun: [
+    { time:'6:00 AM', name:'Open Gym', trainer:'Free Access', duration:'120 min', spots:'open' },
+    { time:'7:30 AM', name:'Sunday Yoga Flow', trainer:'Neha Malhotra', duration:'75 min', spots:'open' },
+    { time:'8:30 AM', name:'Spin Cycle', trainer:'Priya Saxena', duration:'45 min', spots:'open' },
+    { time:'10:00 AM', name:'Family Fitness', trainer:'Rahul Kapoor', duration:'60 min', spots:'open' },
+    { time:'5:00 PM', name:'Zumba Party', trainer:'Priya Saxena', duration:'45 min', spots:'few' },
+    { time:'7:00 PM', name:'Restorative Yoga', trainer:'Neha Malhotra', duration:'60 min', spots:'open' },
+  ]
+};
+
+function renderSchedule(day) {
+  const data = schedules[day];
+  const spotsMap = { open: ['spots-open','Open'], few: ['spots-few','Few Spots'], full: ['spots-full','Full'] };
+  let html = `<table class="schedule-table">
+    <thead><tr>
+      <th>Time</th><th>Class</th><th>Trainer</th><th>Duration</th><th>Availability</th><th></th>
+    </tr></thead><tbody>`;
+  data.forEach(r => {
+    const [cls,label] = spotsMap[r.spots];
+    html += `<tr>
+      <td class="sched-time">${r.time}</td>
+      <td class="sched-class">${r.name}</td>
+      <td class="sched-trainer">${r.trainer}</td>
+      <td style="color:var(--grey);font-size:0.82rem;">${r.duration}</td>
+      <td class="sched-spots"><span class="spots-badge ${cls}">${label}</span></td>
+      <td><button class="sched-book" ${r.spots==='full'?'disabled style="opacity:0.4;cursor:not-allowed;"':''} onclick="openJoinModal('Monthly')">${r.spots==='full'?'Full':'Book Slot'}</button></td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  document.getElementById('schedule-content').innerHTML = html;
+}
+
+function switchDay(day, btn) {
+  document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderSchedule(day);
+}
+renderSchedule('mon'); // default
+
+/* ===== LIGHTBOX ===== */
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ===== JOIN MODAL ===== */
+function openJoinModal(plan) {
+  document.getElementById('jm-plan-name').textContent = plan + ' Plan';
+  document.getElementById('join-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeJoinModal() {
+  document.getElementById('join-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('join-modal').addEventListener('click', function(e){
+  if(e.target === this) closeJoinModal();
+});
+
+function submitJoinForm() {
+  const name = document.getElementById('jm-name').value.trim();
+  const phone = document.getElementById('jm-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  document.getElementById('jm-success').style.display = 'block';
+  setTimeout(closeJoinModal, 2800);
+}
+
+function submitContactForm() {
+  const name = document.getElementById('cf-name').value.trim();
+  const phone = document.getElementById('cf-phone').value.trim();
+  if (!name || !phone) { alert('Please fill in your name and phone number.'); return; }
+  document.getElementById('cf-success').style.display = 'block';
+}
+
+/* ===== CLOSE MODAL ON ESCAPE ===== */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeLightbox(); closeJoinModal(); closeMobileNav(); }
+});
+</script>
+</body>
+</html>

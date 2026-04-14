@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow & Grace Beauty Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rose: #b5606a;
+  --rose-light: #e8c4c8;
+  --rose-dark: #7a3a42;
+  --blush: #f9eff0;
+  --cream: #fdf8f5;
+  --gold: #c9a96e;
+  --gold-light: #e8d5b0;
+  --dark: #1e1215;
+  --ink: #2e1c20;
+  --muted: #8a6a70;
+  --border: rgba(181,96,106,0.15);
+  --white: #ffffff;
+  --shadow: 0 20px 60px rgba(181,96,106,0.12);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
+
+/* ─── NAV ─── */
+nav {
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 4rem;
+  background:rgba(253,248,245,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:all 0.3s ease;
+}
+nav.scrolled{padding:0.9rem 4rem;box-shadow:0 4px 40px rgba(181,96,106,0.08);}
+.nav-logo {
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700;font-size:1.45rem;
+  color:var(--ink);letter-spacing:0.02em;
+}
+.nav-logo em{font-style:italic;color:var(--rose);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--rose);}
+.nav-right{display:flex;align-items:center;gap:1rem;}
+.nav-book{
+  background:var(--rose);color:white;
+  padding:0.6rem 1.4rem;border-radius:100px;
+  font-size:0.8rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
+  text-decoration:none;transition:all 0.25s;
+  border:1.5px solid var(--rose);
+}
+.nav-book:hover{background:transparent;color:var(--rose);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--ink);border-radius:2px;transition:all 0.3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{
+  display:none;position:fixed;top:70px;left:0;right:0;z-index:998;
+  background:rgba(253,248,245,0.98);backdrop-filter:blur(20px);
+  padding:2rem;flex-direction:column;gap:1.5rem;
+  border-bottom:1px solid var(--border);
+  transform:translateY(-10px);opacity:0;transition:all 0.3s;
+}
+.mobile-menu.open{display:flex;transform:translateY(0);opacity:1;}
+.mobile-menu a{font-size:1rem;font-weight:500;color:var(--ink);text-decoration:none;letter-spacing:0.05em;}
+.mobile-menu a:hover{color:var(--rose);}
+.mobile-book{
+  background:var(--rose);color:white;text-align:center;
+  padding:0.85rem;border-radius:100px;font-size:0.88rem;font-weight:500;
+  text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  padding-top:80px;
+  position:relative;overflow:hidden;
+}
+.hero-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 3rem 5rem 4rem;position:relative;z-index:2;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  font-size:0.7rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--rose);margin-bottom:1.75rem;
+}
+.hero-tag::before{content:'';width:32px;height:1px;background:var(--rose);}
+h1{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700;font-size:clamp(3rem,5vw,5rem);
+  line-height:1.05;letter-spacing:-0.01em;
+  color:var(--ink);margin-bottom:1.5rem;
+}
+h1 em{font-style:italic;color:var(--rose);}
+.hero-desc{
+  font-size:1rem;color:var(--muted);line-height:1.8;
+  max-width:420px;margin-bottom:2.5rem;font-weight:300;
+}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-primary{
+  background:var(--rose);color:white;
+  padding:0.9rem 2.2rem;border-radius:100px;
+  font-size:0.85rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
+  text-decoration:none;transition:all 0.3s;display:inline-flex;align-items:center;gap:0.6rem;
+  border:1.5px solid var(--rose);
+}
+.btn-primary:hover{background:transparent;color:var(--rose);}
+.btn-secondary{
+  background:transparent;color:var(--ink);
+  padding:0.9rem 2.2rem;border-radius:100px;
+  border:1.5px solid rgba(46,28,32,0.3);
+  font-size:0.85rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
+  text-decoration:none;transition:all 0.3s;
+}
+.btn-secondary:hover{border-color:var(--rose);color:var(--rose);}
+.hero-badges{display:flex;gap:2rem;margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border);}
+.badge-item{}
+.badge-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.2rem;font-weight:700;color:var(--rose);line-height:1;
+}
+.badge-label{font-size:0.75rem;color:var(--muted);margin-top:4px;letter-spacing:0.05em;}
+.hero-right{position:relative;overflow:hidden;}
+.hero-right img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+.hero-right-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right, var(--cream) 0%, transparent 30%);
+}
+.hero-floating-card{
+  position:absolute;bottom:2.5rem;left:2rem;
+  background:white;border-radius:16px;padding:1.1rem 1.4rem;
+  box-shadow:0 16px 48px rgba(181,96,106,0.18);
+  border:1px solid rgba(181,96,106,0.1);
+  animation:floatCard 4s ease-in-out infinite;
+}
+@keyframes floatCard{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.fc-label{font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;}
+.fc-value{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--rose);}
+.hero-decor{
+  position:absolute;bottom:40%;right:20%;
+  width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,169,110,0.08),transparent 70%);
+  pointer-events:none;
+}
+
+/* ─── MARQUEE ─── */
+.marquee-section{
+  padding:1.25rem 0;
+  background:var(--rose-dark);
+  overflow:hidden;
+}
+.marquee-track{
+  display:flex;gap:3rem;white-space:nowrap;
+  animation:marquee 25s linear infinite;
+}
+.marquee-item{
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.95rem;font-weight:600;letter-spacing:0.12em;
+  text-transform:uppercase;color:rgba(253,248,245,0.7);
+  display:flex;align-items:center;gap:1.5rem;flex-shrink:0;
+  font-style:italic;
+}
+.marquee-sep{color:var(--gold-light);font-style:normal;font-size:0.5rem;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ─── SECTIONS ─── */
+section{padding:6rem 4rem;}
+.section-label{
+  font-size:0.7rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--rose);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.75rem;
+}
+.section-label::before{content:'';width:32px;height:1px;background:var(--rose);}
+.section-title{
+  font-family:'Cormorant Garamond',serif;font-weight:700;
+  font-size:clamp(2.2rem,3.5vw,3.2rem);letter-spacing:-0.01em;
+  line-height:1.1;color:var(--ink);margin-bottom:1rem;
+}
+.section-title em{font-style:italic;color:var(--rose);}
+.section-sub{font-size:0.95rem;color:var(--muted);line-height:1.8;max-width:520px;font-weight:300;}
+
+/* ─── SERVICES ─── */
+#services{background:var(--blush);}
+.services-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1.5rem;}
+.services-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;}
+.tab-btn{
+  padding:0.5rem 1.2rem;border-radius:100px;border:1.5px solid var(--border);
+  background:transparent;color:var(--muted);font-size:0.8rem;font-weight:500;
+  cursor:pointer;transition:all 0.25s;font-family:'Jost',sans-serif;letter-spacing:0.05em;
+}
+.tab-btn.active{background:var(--rose);color:white;border-color:var(--rose);}
+.tab-btn:hover:not(.active){border-color:var(--rose);color:var(--rose);}
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;
+}
+.service-card{
+  background:white;border-radius:20px;padding:1.75rem;
+  border:1px solid rgba(181,96,106,0.1);
+  transition:all 0.35s cubic-bezier(0.2,0.8,0.2,1);
+  cursor:default;position:relative;overflow:hidden;
+}
+.service-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(to right,var(--rose),var(--gold));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s ease;
+}
+.service-card:hover::before{transform:scaleX(1);}
+.service-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);}
+.service-icon{font-size:2rem;margin-bottom:1rem;}
+.service-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;}
+.service-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--ink);}
+.service-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--rose);}
+.service-desc{font-size:0.83rem;color:var(--muted);line-height:1.65;margin-bottom:0.75rem;}
+.service-time{font-size:0.72rem;color:var(--gold);font-weight:500;letter-spacing:0.08em;display:flex;align-items:center;gap:0.3rem;}
+.service-time::before{content:'⏱';}
+
+/* ─── GALLERY ─── */
+#gallery{}
+.gallery-intro{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:260px 200px;
+  gap:1rem;
+}
+.gal-item{border-radius:16px;overflow:hidden;position:relative;cursor:zoom-in;}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s cubic-bezier(0.2,0.8,0.2,1);}
+.gal-item:hover img{transform:scale(1.06);}
+.gal-item:first-child{grid-row:span 2;grid-column:span 2;}
+.gal-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(30,18,21,0.5) 0%,transparent 60%);
+  opacity:0;transition:opacity 0.3s;
+  display:flex;align-items:flex-end;padding:1.25rem;
+}
+.gal-item:hover .gal-overlay{opacity:1;}
+.gal-label{font-size:0.78rem;font-weight:500;color:white;letter-spacing:0.05em;}
+
+/* ─── TEAM ─── */
+#team{background:var(--blush);}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem;}
+.stylist-card{text-align:center;transition:transform 0.3s;}
+.stylist-card:hover{transform:translateY(-6px);}
+.stylist-img-wrap{
+  width:140px;height:140px;border-radius:50%;overflow:hidden;
+  margin:0 auto 1.25rem;
+  border:3px solid transparent;
+  background:white;
+  box-shadow:0 8px 32px rgba(181,96,106,0.15);
+  position:relative;
+}
+.stylist-img-wrap::before{
+  content:'';position:absolute;inset:-3px;border-radius:50%;
+  background:linear-gradient(135deg,var(--rose),var(--gold));z-index:-1;
+}
+.stylist-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:50%;}
+.stylist-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--ink);margin-bottom:3px;}
+.stylist-role{font-size:0.75rem;color:var(--rose);font-weight:500;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;}
+.stylist-exp{font-size:0.78rem;color:var(--muted);}
+.stylist-socials{display:flex;justify-content:center;gap:0.6rem;margin-top:0.75rem;}
+.stylist-social{
+  width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.7rem;color:var(--muted);text-decoration:none;transition:all 0.2s;
+}
+.stylist-social:hover{border-color:var(--rose);color:var(--rose);}
+
+/* ─── WHY ─── */
+#why{background:var(--dark);}
+.why-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.why-left{}
+.why-left .section-label{color:var(--gold);}
+.why-left .section-title{color:white;}
+.why-left .section-sub{color:rgba(253,248,245,0.55);}
+.why-list{display:flex;flex-direction:column;gap:1.5rem;margin-top:2.5rem;}
+.why-item{display:flex;gap:1.25rem;align-items:flex-start;}
+.why-icon{
+  width:48px;height:48px;border-radius:14px;flex-shrink:0;
+  background:rgba(181,96,106,0.15);
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+  border:1px solid rgba(181,96,106,0.25);
+}
+.why-text-title{font-size:0.95rem;font-weight:600;color:white;margin-bottom:5px;}
+.why-text-desc{font-size:0.85rem;color:rgba(253,248,245,0.5);line-height:1.65;}
+.why-right{}
+.why-img-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.why-img{border-radius:16px;overflow:hidden;}
+.why-img img{width:100%;height:220px;object-fit:cover;display:block;}
+.why-img:first-child{margin-top:2rem;}
+.why-img:last-child{margin-top:-2rem;}
+.why-quote-card{
+  background:var(--rose);border-radius:16px;
+  padding:1.75rem;margin-top:1rem;
+  grid-column:span 2;position:relative;overflow:hidden;
+}
+.why-quote-card::before{
+  content:'❝';position:absolute;top:-10px;right:20px;
+  font-size:6rem;color:rgba(255,255,255,0.1);
+  font-family:Georgia,serif;line-height:1;
+}
+.why-quote-text{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.15rem;font-weight:600;color:white;line-height:1.5;
+}
+.why-quote-author{font-size:0.78rem;color:rgba(255,255,255,0.65);margin-top:0.75rem;}
+
+/* ─── TESTIMONIALS ─── */
+#reviews{background:var(--blush);}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem;}
+.review-card{
+  background:white;border-radius:20px;padding:2rem;
+  border:1px solid rgba(181,96,106,0.1);
+  transition:all 0.3s;position:relative;
+}
+.review-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+.review-stars{color:var(--gold);font-size:0.9rem;margin-bottom:1rem;letter-spacing:2px;}
+.review-quote{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.05rem;color:var(--ink);line-height:1.65;margin-bottom:1.5rem;
+}
+.review-author{display:flex;align-items:center;gap:0.75rem;}
+.review-avatar{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,var(--rose-light),var(--gold-light));
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.85rem;font-weight:600;color:var(--rose-dark);
+  flex-shrink:0;
+}
+.review-name{font-size:0.88rem;font-weight:600;color:var(--ink);}
+.review-loc{font-size:0.75rem;color:var(--muted);}
+.review-verified{
+  position:absolute;top:1.5rem;right:1.5rem;
+  font-size:0.65rem;color:var(--rose);font-weight:500;
+  letter-spacing:0.08em;text-transform:uppercase;
+  background:rgba(181,96,106,0.08);
+  padding:0.25rem 0.6rem;border-radius:100px;
+  border:1px solid rgba(181,96,106,0.15);
+}
+
+/* ─── BOOKING ─── */
+#book{
+  background:linear-gradient(135deg,var(--rose-dark),#5c2a32);
+  position:relative;overflow:hidden;
+}
+#book::before{
+  content:'';position:absolute;
+  top:-100px;right:-100px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,169,110,0.15),transparent 70%);
+  pointer-events:none;
+}
+#book::after{
+  content:'';position:absolute;
+  bottom:-100px;left:-100px;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(181,96,106,0.2),transparent 70%);
+  pointer-events:none;
+}
+.book-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;
+  align-items:center;position:relative;z-index:2;
+}
+.book-left{color:white;}
+.book-left .section-label{color:var(--gold-light);}
+.book-left .section-label::before{background:var(--gold-light);}
+.book-title{
+  font-family:'Cormorant Garamond',serif;font-weight:700;
+  font-size:clamp(2rem,3.5vw,3rem);line-height:1.1;
+  color:white;margin-bottom:1.25rem;
+}
+.book-title em{font-style:italic;color:var(--gold-light);}
+.book-desc{font-size:0.95rem;color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:2rem;}
+.book-info{display:flex;flex-direction:column;gap:0.85rem;}
+.book-info-item{display:flex;align-items:center;gap:0.75rem;font-size:0.85rem;color:rgba(255,255,255,0.75);}
+.book-info-icon{font-size:1.1rem;}
+.book-whatsapp{
+  display:inline-flex;align-items:center;gap:0.75rem;
+  background:#25d366;color:white;
+  padding:0.9rem 1.8rem;border-radius:100px;
+  font-size:0.85rem;font-weight:500;letter-spacing:0.05em;
+  text-decoration:none;transition:all 0.3s;margin-top:1.75rem;
+  border:2px solid #25d366;
+}
+.book-whatsapp:hover{background:transparent;color:#25d366;}
+.book-form{
+  background:white;border-radius:24px;padding:2.5rem;
+  box-shadow:0 40px 80px rgba(0,0,0,0.2);
+}
+.book-form-title{
+  font-family:'Cormorant Garamond',serif;font-weight:700;
+  font-size:1.5rem;color:var(--ink);margin-bottom:1.75rem;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-bottom:0.85rem;}
+.form-field{margin-bottom:0.85rem;}
+.form-field label{display:block;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;}
+.form-field input,
+.form-field select,
+.form-field textarea{
+  width:100%;border:1.5px solid rgba(181,96,106,0.2);border-radius:10px;
+  padding:0.75rem 1rem;font-size:0.88rem;font-family:'Jost',sans-serif;
+  color:var(--ink);background:var(--cream);
+  transition:border-color 0.25s;outline:none;
+}
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus{border-color:var(--rose);}
+.form-field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a6a70' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;}
+.form-submit{
+  width:100%;background:var(--rose);color:white;border:none;
+  padding:0.95rem;border-radius:100px;font-size:0.88rem;font-weight:500;
+  letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;
+  font-family:'Jost',sans-serif;transition:all 0.3s;
+  border:2px solid var(--rose);
+}
+.form-submit:hover{background:transparent;color:var(--rose);}
+
+/* ─── INFO STRIP ─── */
+.info-strip{
+  background:var(--ink);padding:3rem 4rem;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:2rem;border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.info-strip-item{display:flex;align-items:flex-start;gap:1rem;}
+.info-icon{font-size:1.5rem;flex-shrink:0;margin-top:2px;}
+.info-label{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(253,248,245,0.35);margin-bottom:4px;}
+.info-val{font-size:0.9rem;color:rgba(253,248,245,0.8);line-height:1.6;}
+.info-val a{color:rgba(253,248,245,0.8);text-decoration:none;}
+.info-val a:hover{color:var(--gold-light);}
+
+/* ─── FOOTER ─── */
+footer{
+  background:var(--ink);padding:2rem 4rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1.5rem;border-top:1px solid rgba(255,255,255,0.06);
+}
+.footer-logo{
+  font-family:'Cormorant Garamond',serif;font-weight:700;
+  font-size:1.25rem;color:white;
+}
+.footer-logo em{font-style:italic;color:var(--rose-light);}
+.footer-copy{font-size:0.8rem;color:rgba(253,248,245,0.3);}
+.footer-links{display:flex;gap:1.75rem;}
+.footer-links a{font-size:0.78rem;color:rgba(253,248,245,0.4);text-decoration:none;letter-spacing:0.05em;transition:color 0.2s;}
+.footer-links a:hover{color:var(--gold-light);}
+
+/* ─── REVEAL ANIMATION ─── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:0.1s;}
+.reveal-delay-2{transition-delay:0.2s;}
+.reveal-delay-3{transition-delay:0.3s;}
+.reveal-delay-4{transition-delay:0.4s;}
+
+/* ─── LIGHTBOX ─── */
+.lightbox{
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(30,18,21,0.92);backdrop-filter:blur(12px);
+  align-items:center;justify-content:center;padding:2rem;
+}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:90vw;max-height:85vh;border-radius:12px;object-fit:contain;}
+.lightbox-close{
+  position:absolute;top:1.5rem;right:2rem;
+  background:none;border:none;color:white;font-size:1.8rem;cursor:pointer;opacity:0.7;
+  transition:opacity 0.2s;
+}
+.lightbox-close:hover{opacity:1;}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width:1100px){
+  nav{padding:1.1rem 2rem;}
+  nav.scrolled{padding:0.85rem 2rem;}
+  section{padding:5rem 2rem;}
+  .hero{grid-template-columns:1fr;}
+  .hero-right{height:420px;order:-1;}
+  .hero-right-overlay{background:linear-gradient(to bottom,var(--cream) 0%,transparent 30%,transparent 70%,var(--cream) 100%);}
+  .hero-left{padding:2rem 2rem 4rem;}
+  .hero-badges{justify-content:flex-start;}
+  .services-grid{grid-template-columns:repeat(2,1fr);}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto;}
+  .gal-item:first-child{grid-row:span 1;grid-column:span 1;}
+  .gal-item img,.gal-item{height:220px;}
+  .team-grid{grid-template-columns:repeat(2,1fr);}
+  .why-inner{grid-template-columns:1fr;gap:3rem;}
+  .why-img-grid{grid-template-columns:repeat(2,1fr);}
+  .why-img:first-child{margin-top:0;}
+  .why-img:last-child{margin-top:0;}
+  .reviews-grid{grid-template-columns:repeat(2,1fr);}
+  .book-inner{grid-template-columns:1fr;gap:3rem;}
+  .info-strip{grid-template-columns:1fr;gap:1.5rem;padding:2.5rem 2rem;}
+  footer{padding:1.75rem 2rem;}
+}
+@media (max-width:768px){
+  nav{padding:1rem 1.25rem;}
+  .nav-links,.nav-book{display:none;}
+  .hamburger{display:flex;}
+  section{padding:4rem 1.25rem;}
+  h1{font-size:2.6rem;}
+  .hero-right{height:300px;}
+  .hero-badges{flex-wrap:wrap;gap:1.5rem;}
+  .services-header{flex-direction:column;align-items:flex-start;}
+  .services-grid{grid-template-columns:1fr;}
+  .gallery-intro{flex-direction:column;gap:1rem;align-items:flex-start;}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .gal-item:first-child{grid-column:span 2;height:250px;}
+  .gal-item{height:170px;}
+  .team-grid{grid-template-columns:repeat(2,1fr);gap:1.25rem;}
+  .reviews-grid{grid-template-columns:1fr;}
+  .book-form{padding:1.75rem 1.25rem;}
+  .form-row{grid-template-columns:1fr;}
+  .info-strip{padding:2rem 1.25rem;}
+  footer{flex-direction:column;align-items:flex-start;gap:1rem;padding:1.5rem 1.25rem;}
+}
+@media (max-width:480px){
+  .team-grid{grid-template-columns:1fr 1fr;}
+  .stylist-img-wrap{width:100px;height:100px;}
+  .why-img-grid{grid-template-columns:1fr;gap:0.75rem;}
+  .why-img img{height:180px;}
+  .why-quote-card{grid-column:span 1;}
+  .hero-actions{flex-direction:column;}
+  .btn-primary,.btn-secondary{text-align:center;justify-content:center;}
+  .gallery-grid{grid-template-columns:1fr;}
+  .gal-item:first-child{grid-column:span 1;}
+  .gal-item{height:200px;}
+}
+
+/* Service tab visibility */
+.service-tab-content{display:none;}
+.service-tab-content.active{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+@media (max-width:1100px){.service-tab-content.active{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:768px){.service-tab-content.active{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">Glow &amp; <em>Grace</em></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#team">Our Team</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#book">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#book" class="nav-book">Book Now</a>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#gallery" onclick="closeMenu()">Gallery</a>
+  <a href="#team" onclick="closeMenu()">Our Team</a>
+  <a href="#reviews" onclick="closeMenu()">Reviews</a>
+  <a href="#book" onclick="closeMenu()">Contact</a>
+  <a href="#book" class="mobile-book" onclick="closeMenu()">Book Appointment →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;">
+  <div class="hero-left">
+    <div class="hero-tag reveal">Award-Winning Beauty Studio</div>
+    <h1 class="reveal reveal-delay-1">Where <em>Beauty</em><br>Meets Grace</h1>
+    <p class="hero-desc reveal reveal-delay-2">Your sanctuary for premium hair, skin, and wellness treatments — crafted with artistry, delivered with love. Because you deserve nothing but the best.</p>
+    <div class="hero-actions reveal reveal-delay-3">
+      <a href="#book" class="btn-primary">Book Appointment →</a>
+      <a href="#services" class="btn-secondary">Explore Services</a>
+    </div>
+    <div class="hero-badges reveal reveal-delay-4">
+      <div class="badge-item">
+        <div class="badge-num">12+</div>
+        <div class="badge-label">Years of Excellence</div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-num">8K+</div>
+        <div class="badge-label">Happy Clients</div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-num">4.9★</div>
+        <div class="badge-label">Google Rating</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1000&q=90" alt="Glow & Grace Beauty Studio">
+    <div class="hero-right-overlay"></div>
+    <div class="hero-floating-card">
+      <div class="fc-label">Next Available</div>
+      <div class="fc-value">Today at 3:00 PM ✓</div>
+    </div>
+    <div class="hero-decor"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Hair Styling <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Bridal Makeover <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Skin Treatments <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Nail Art <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Threading & Waxing <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Keratin & Smoothening <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Facials & Cleanup <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Mehendi & Makeup <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Hair Styling <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Bridal Makeover <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Skin Treatments <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Nail Art <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Threading & Waxing <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Keratin & Smoothening <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Facials & Cleanup <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Mehendi & Makeup <span class="marquee-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-label reveal">What We Offer</div>
+      <div class="section-title reveal reveal-delay-1">Our <em>Signature</em> Services</div>
+    </div>
+    <div class="services-tabs reveal">
+      <button class="tab-btn active" onclick="filterServices('hair')">Hair</button>
+      <button class="tab-btn" onclick="filterServices('skin')">Skin</button>
+      <button class="tab-btn" onclick="filterServices('nails')">Nails</button>
+      <button class="tab-btn" onclick="filterServices('bridal')">Bridal</button>
+    </div>
+  </div>
+
+  <!-- Hair Services -->
+  <div class="service-tab-content active" id="tab-hair">
+    <div class="service-card reveal">
+      <div class="service-icon">✂️</div>
+      <div class="service-top">
+        <div class="service-name">Haircut & Styling</div>
+        <div class="service-price">₹499+</div>
+      </div>
+      <div class="service-desc">Precision cuts by our master stylists tailored to your face shape, lifestyle, and hair texture. Includes blow-dry and finish.</div>
+      <div class="service-time">45 – 75 mins</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">💆</div>
+      <div class="service-top">
+        <div class="service-name">Hair Spa & Treatment</div>
+        <div class="service-price">₹799+</div>
+      </div>
+      <div class="service-desc">Deep nourishing treatments to restore shine, strength, and softness. Includes oil massage, steaming, and premium mask.</div>
+      <div class="service-time">60 – 90 mins</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">🌟</div>
+      <div class="service-top">
+        <div class="service-name">Keratin Smoothening</div>
+        <div class="service-price">₹2,999+</div>
+      </div>
+      <div class="service-desc">Salon-grade keratin treatment for frizz-free, silky smooth hair lasting 3–6 months. Safe for color-treated hair.</div>
+      <div class="service-time">2 – 3 hours</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🎨</div>
+      <div class="service-top">
+        <div class="service-name">Hair Coloring</div>
+        <div class="service-price">₹1,299+</div>
+      </div>
+      <div class="service-desc">Global coloring, highlights, balayage, ombre — using premium ammonia-free products for vibrant, long-lasting color.</div>
+      <div class="service-time">90 – 180 mins</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">💫</div>
+      <div class="service-top">
+        <div class="service-name">Hair Rebonding</div>
+        <div class="service-price">₹3,499+</div>
+      </div>
+      <div class="service-desc">Permanent hair straightening for perfectly straight, lustrous hair. Includes aftercare kit worth ₹500.</div>
+      <div class="service-time">3 – 4 hours</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">🌺</div>
+      <div class="service-top">
+        <div class="service-name">Blowout & Occasion</div>
+        <div class="service-price">₹699+</div>
+      </div>
+      <div class="service-desc">Glamorous blowouts, braids, updos, and party styling for any occasion. Look camera-ready in under an hour.</div>
+      <div class="service-time">45 – 60 mins</div>
+    </div>
+  </div>
+
+  <!-- Skin Services -->
+  <div class="service-tab-content" id="tab-skin">
+    <div class="service-card reveal">
+      <div class="service-icon">✨</div>
+      <div class="service-top">
+        <div class="service-name">Signature Facial</div>
+        <div class="service-price">₹999+</div>
+      </div>
+      <div class="service-desc">Custom facial designed for your skin type — cleansing, exfoliation, steam, extraction, and hydration masque.</div>
+      <div class="service-time">60 – 75 mins</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">🌿</div>
+      <div class="service-top">
+        <div class="service-name">Anti-Aging Treatment</div>
+        <div class="service-price">₹1,799+</div>
+      </div>
+      <div class="service-desc">Advanced peptide and collagen infusion therapy to visibly reduce fine lines, dark spots, and restore youthful radiance.</div>
+      <div class="service-time">75 – 90 mins</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">💎</div>
+      <div class="service-top">
+        <div class="service-name">Diamond Dermabrasion</div>
+        <div class="service-price">₹1,499+</div>
+      </div>
+      <div class="service-desc">Microdermabrasion for a polished, glowing complexion. Minimizes pores, acne scars, and uneven skin texture.</div>
+      <div class="service-time">60 mins</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🧖</div>
+      <div class="service-top">
+        <div class="service-name">Gold Facial</div>
+        <div class="service-price">₹1,299+</div>
+      </div>
+      <div class="service-desc">Luxurious 24K gold facial that brightens skin tone, reduces inflammation, and leaves you with an instant glow.</div>
+      <div class="service-time">70 – 80 mins</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">🧴</div>
+      <div class="service-top">
+        <div class="service-name">Threading & Waxing</div>
+        <div class="service-price">₹99+</div>
+      </div>
+      <div class="service-desc">Precise threading for brows, lips & chin. Full-body waxing available with gentle, skin-safe wax formulas.</div>
+      <div class="service-time">15 – 45 mins</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">🌸</div>
+      <div class="service-top">
+        <div class="service-name">Body Polishing</div>
+        <div class="service-price">₹1,999+</div>
+      </div>
+      <div class="service-desc">Full-body scrub and moisturizing treatment to exfoliate dead cells, improve circulation, and reveal silky smooth skin.</div>
+      <div class="service-time">90 mins</div>
+    </div>
+  </div>
+
+  <!-- Nails Services -->
+  <div class="service-tab-content" id="tab-nails">
+    <div class="service-card reveal">
+      <div class="service-icon">💅</div>
+      <div class="service-top">
+        <div class="service-name">Classic Manicure</div>
+        <div class="service-price">₹399+</div>
+      </div>
+      <div class="service-desc">Nail shaping, cuticle care, hand massage, and your choice of regular nail polish — a complete nail care experience.</div>
+      <div class="service-time">40 – 50 mins</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">🌈</div>
+      <div class="service-top">
+        <div class="service-name">Gel Nail Extensions</div>
+        <div class="service-price">₹899+</div>
+      </div>
+      <div class="service-desc">Long-lasting gel extensions in any shape and length. Perfect for special occasions or everyday glamour.</div>
+      <div class="service-time">60 – 90 mins</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">🎨</div>
+      <div class="service-top">
+        <div class="service-name">3D Nail Art</div>
+        <div class="service-price">₹699+</div>
+      </div>
+      <div class="service-desc">Intricate hand-painted designs, embellishments, and sculpted 3D nail art by our certified nail artists.</div>
+      <div class="service-time">60 – 120 mins</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🦋</div>
+      <div class="service-top">
+        <div class="service-name">Spa Pedicure</div>
+        <div class="service-price">₹599+</div>
+      </div>
+      <div class="service-desc">Relaxing foot soak, callus removal, exfoliation, massage, and nail polish. Your feet deserve this treat.</div>
+      <div class="service-time">60 – 75 mins</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">✨</div>
+      <div class="service-top">
+        <div class="service-name">Ombre & Chrome Nails</div>
+        <div class="service-price">₹799+</div>
+      </div>
+      <div class="service-desc">Trendy gradient and chrome powder nails for a high-fashion, Instagram-worthy look that lasts 2–3 weeks.</div>
+      <div class="service-time">60 – 80 mins</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">💍</div>
+      <div class="service-top">
+        <div class="service-name">Nail Repair & Fix</div>
+        <div class="service-price">₹199+</div>
+      </div>
+      <div class="service-desc">Quick nail repairs, removal of gel/acrylics, and nail strengthening treatments to keep your nails healthy.</div>
+      <div class="service-time">20 – 40 mins</div>
+    </div>
+  </div>
+
+  <!-- Bridal -->
+  <div class="service-tab-content" id="tab-bridal">
+    <div class="service-card reveal">
+      <div class="service-icon">👑</div>
+      <div class="service-top">
+        <div class="service-name">Bridal Makeup</div>
+        <div class="service-price">₹8,999+</div>
+      </div>
+      <div class="service-desc">Flawless bridal makeup by our senior artists using airbrush and HD products. Includes trial session and 8-hour staying power.</div>
+      <div class="service-time">2.5 – 3 hours</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">💒</div>
+      <div class="service-top">
+        <div class="service-name">Complete Bridal Package</div>
+        <div class="service-price">₹24,999+</div>
+      </div>
+      <div class="service-desc">Full bridal experience: makeup, hairstyle, mehendi, waxing, facial, and mani-pedi. Includes 2 trial sessions.</div>
+      <div class="service-time">Full Day</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">🌹</div>
+      <div class="service-top">
+        <div class="service-name">Bridal Mehendi</div>
+        <div class="service-price">₹3,999+</div>
+      </div>
+      <div class="service-desc">Intricate bridal mehendi designs for both hands and feet by our experienced mehendi artists. Pre-bridal consultation included.</div>
+      <div class="service-time">3 – 5 hours</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">💇</div>
+      <div class="service-top">
+        <div class="service-name">Bridal Hairstyling</div>
+        <div class="service-price">₹2,499+</div>
+      </div>
+      <div class="service-desc">Elaborate bridal hairstyles — juda, braids, open waves, or updos — perfectly matched to your lehenga, dupatta, and accessories.</div>
+      <div class="service-time">90 – 120 mins</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">🪄</div>
+      <div class="service-top">
+        <div class="service-name">Pre-Bridal Ritual</div>
+        <div class="service-price">₹5,999+</div>
+      </div>
+      <div class="service-desc">5-session pre-bridal glow package: gold facial, body polishing, bleach, waxing, and hair spa spread across 2 weeks.</div>
+      <div class="service-time">5 Sessions</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">🎀</div>
+      <div class="service-top">
+        <div class="service-name">Bridesmaid Package</div>
+        <div class="service-price">₹3,499+</div>
+      </div>
+      <div class="service-desc">Coordinated makeup and hairstyling for bridesmaids and family members. Group discount available for 4+ people.</div>
+      <div class="service-time">60 – 90 mins</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-intro">
+    <div>
+      <div class="section-label reveal">Our Work</div>
+      <div class="section-title reveal reveal-delay-1">Beauty in Every <em>Detail</em></div>
+    </div>
+    <a href="#book" class="btn-primary reveal" style="align-self:flex-end;">Book Your Look →</a>
+  </div>
+  <div class="gallery-grid">
+    <div class="gal-item reveal" onclick="openLightbox('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200&q=90')">
+      <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=85" alt="Salon">
+      <div class="gal-overlay"><span class="gal-label">Hair Styling</span></div>
+    </div>
+    <div class="gal-item reveal reveal-delay-1" onclick="openLightbox('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1200&q=90')">
+      <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=85" alt="Makeup">
+      <div class="gal-overlay"><span class="gal-label">Bridal Makeup</span></div>
+    </div>
+    <div class="gal-item reveal reveal-delay-2" onclick="openLightbox('https://images.unsplash.com/photo-1457972729786-0411a3b2b626?w=1200&q=90')">
+      <img src="https://images.unsplash.com/photo-1457972729786-0411a3b2b626?w=600&q=85" alt="Nails">
+      <div class="gal-overlay"><span class="gal-label">Nail Art</span></div>
+    </div>
+    <div class="gal-item reveal reveal-delay-3" onclick="openLightbox('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=1200&q=90')">
+      <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=85" alt="Facial">
+      <div class="gal-overlay"><span class="gal-label">Skin Treatment</span></div>
+    </div>
+    <div class="gal-item reveal reveal-delay-1" onclick="openLightbox('https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=1200&q=90')">
+      <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=600&q=85" alt="Hair Color">
+      <div class="gal-overlay"><span class="gal-label">Hair Coloring</span></div>
+    </div>
+    <div class="gal-item reveal reveal-delay-2" onclick="openLightbox('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1200&q=90')">
+      <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=85" alt="Spa">
+      <div class="gal-overlay"><span class="gal-label">Spa & Wellness</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div style="text-align:center;margin-bottom:0.5rem;">
+    <div class="section-label reveal" style="justify-content:center;">Expert Team</div>
+    <div class="section-title reveal reveal-delay-1" style="text-align:center;">Meet Your <em>Stylists</em></div>
+    <p class="section-sub reveal reveal-delay-2" style="margin:0 auto;text-align:center;">Certified artists with a passion for beauty and years of professional experience.</p>
+  </div>
+  <div class="team-grid">
+    <div class="stylist-card reveal">
+      <div class="stylist-img-wrap">
+        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=85" alt="Priya Sharma">
+      </div>
+      <div class="stylist-name">Priya Sharma</div>
+      <div class="stylist-role">Creative Director & Senior Stylist</div>
+      <div class="stylist-exp">12 years · Bridal & Color Specialist</div>
+      <div class="stylist-socials">
+        <a href="#" class="stylist-social">📸</a>
+        <a href="#" class="stylist-social">💼</a>
+      </div>
+    </div>
+    <div class="stylist-card reveal reveal-delay-1">
+      <div class="stylist-img-wrap">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=85" alt="Meera Kapoor">
+      </div>
+      <div class="stylist-name">Meera Kapoor</div>
+      <div class="stylist-role">Makeup Artist & Skin Expert</div>
+      <div class="stylist-exp">8 years · HD & Airbrush Makeup</div>
+      <div class="stylist-socials">
+        <a href="#" class="stylist-social">📸</a>
+        <a href="#" class="stylist-social">💼</a>
+      </div>
+    </div>
+    <div class="stylist-card reveal reveal-delay-2">
+      <div class="stylist-img-wrap">
+        <img src="https://images.unsplash.com/photo-1598550874175-4d0ef436c909?w=400&q=85" alt="Anjali Verma">
+      </div>
+      <div class="stylist-name">Anjali Verma</div>
+      <div class="stylist-role">Nail Art Technician</div>
+      <div class="stylist-exp">6 years · 3D Nail & Gel Extensions</div>
+      <div class="stylist-socials">
+        <a href="#" class="stylist-social">📸</a>
+        <a href="#" class="stylist-social">💼</a>
+      </div>
+    </div>
+    <div class="stylist-card reveal reveal-delay-3">
+      <div class="stylist-img-wrap">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=85" alt="Sunita Jain">
+      </div>
+      <div class="stylist-name">Sunita Jain</div>
+      <div class="stylist-role">Skincare & Wellness Therapist</div>
+      <div class="stylist-exp">10 years · Anti-Aging & Facials</div>
+      <div class="stylist-socials">
+        <a href="#" class="stylist-social">📸</a>
+        <a href="#" class="stylist-social">💼</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-inner">
+    <div class="why-left">
+      <div class="section-label reveal">Why Choose Us</div>
+      <div class="section-title reveal reveal-delay-1">The <em>Glow & Grace</em><br>Difference</div>
+      <p class="section-sub reveal reveal-delay-2">We don't just do beauty — we create experiences that make you feel confident, pampered, and truly yourself.</p>
+      <div class="why-list">
+        <div class="why-item reveal">
+          <div class="why-icon">🏆</div>
+          <div>
+            <div class="why-text-title">Award-Winning Artistry</div>
+            <div class="why-text-desc">Recognized as the Best Bridal Studio in Delhi 2023 & 2024. Our team has trained with global beauty experts.</div>
+          </div>
+        </div>
+        <div class="why-item reveal reveal-delay-1">
+          <div class="why-icon">🌿</div>
+          <div>
+            <div class="why-text-title">100% Safe & Premium Products</div>
+            <div class="why-text-desc">We use only internationally certified, cruelty-free products — safe for sensitive skin and color-treated hair.</div>
+          </div>
+        </div>
+        <div class="why-item reveal reveal-delay-2">
+          <div class="why-icon">📅</div>
+          <div>
+            <div class="why-text-title">Easy Online Booking</div>
+            <div class="why-text-desc">Book instantly via WhatsApp or our form. Get reminders 24 hours before your appointment. No waiting, no hassle.</div>
+          </div>
+        </div>
+        <div class="why-item reveal reveal-delay-3">
+          <div class="why-icon">💆</div>
+          <div>
+            <div class="why-text-title">Hygienic, Luxurious Space</div>
+            <div class="why-text-desc">Our studio is meticulously sanitized after every client. Relax in a calm, welcoming environment designed for you.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-right reveal reveal-delay-1">
+      <div class="why-img-grid">
+        <div class="why-img">
+          <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=500&q=85" alt="Salon interior">
+        </div>
+        <div class="why-img">
+          <img src="https://images.unsplash.com/photo-1582095133179-bfd08e2fb6b8?w=500&q=85" alt="Beauty treatment">
+        </div>
+        <div class="why-quote-card">
+          <div class="why-quote-text">"Every woman deserves to feel beautiful — not just on her special day, but every single day."</div>
+          <div class="why-quote-author">— Priya Sharma, Creative Director</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div style="text-align:center;">
+    <div class="section-label reveal" style="justify-content:center;">Client Love</div>
+    <div class="section-title reveal reveal-delay-1" style="text-align:center;">What Our <em>Clients</em> Say</div>
+    <p class="section-sub reveal reveal-delay-2" style="margin:0 auto 0;text-align:center;">Real experiences from real women who trust us with their beauty.</p>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="review-verified">Verified Client</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-quote">"Priya did my bridal makeup and I've never felt more beautiful in my life. She listened to every detail and made me look absolutely stunning. My photos are breathtaking!"</div>
+      <div class="review-author">
+        <div class="review-avatar">R</div>
+        <div>
+          <div class="review-name">Riya Malhotra</div>
+          <div class="review-loc">Bride, South Delhi</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal reveal-delay-1">
+      <div class="review-verified">Verified Client</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-quote">"I've tried so many salons but Glow & Grace is on a different level. The keratin treatment was perfect and Meera gave me the best haircut — everyone keeps asking who did my hair!"</div>
+      <div class="review-author">
+        <div class="review-avatar">S</div>
+        <div>
+          <div class="review-name">Simran Arora</div>
+          <div class="review-loc">Regular Client, Gurgaon</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal reveal-delay-2">
+      <div class="review-verified">Verified Client</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-quote">"Anjali's nail art is honestly art! Got a custom 3D design for my anniversary dinner and received so many compliments. Will never go anywhere else for my nails!"</div>
+      <div class="review-author">
+        <div class="review-avatar">P</div>
+        <div>
+          <div class="review-name">Preeti Joshi</div>
+          <div class="review-loc">Client, Noida</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-verified">Verified Client</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-quote">"The gold facial left my skin glowing for days! Sunita is so knowledgeable and gentle. The studio is spotlessly clean and the ambience is so relaxing. Pure luxury!"</div>
+      <div class="review-author">
+        <div class="review-avatar">A</div>
+        <div>
+          <div class="review-name">Aditi Sharma</div>
+          <div class="review-loc">Regular Client, Dwarka</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal reveal-delay-1">
+      <div class="review-verified">Verified Client</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-quote">"Booked the complete bridal package for my sister's wedding — the team was professional, punctual, and so warm. She cried happy tears looking in the mirror. Highly recommend!"</div>
+      <div class="review-author">
+        <div class="review-avatar">N</div>
+        <div>
+          <div class="review-name">Nisha Patel</div>
+          <div class="review-loc">Client, East Delhi</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal reveal-delay-2">
+      <div class="review-verified">Verified Client</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-quote">"Monthly hair spa here is my self-care ritual now. My hair has genuinely transformed — stronger, shinier, and healthier. The team remembers my preferences every time!"</div>
+      <div class="review-author">
+        <div class="review-avatar">K</div>
+        <div>
+          <div class="review-name">Kavya Reddy</div>
+          <div class="review-loc">Regular Client, West Delhi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="book">
+  <div class="book-inner">
+    <div class="book-left">
+      <div class="section-label reveal">Book an Appointment</div>
+      <div class="book-title reveal reveal-delay-1">Ready for Your<br><em>Glow Up?</em></div>
+      <p class="book-desc reveal reveal-delay-2">Walk in or book ahead — we'd love to welcome you. Our team is here to make every visit feel special.</p>
+      <div class="book-info reveal reveal-delay-3">
+        <div class="book-info-item"><span class="book-info-icon">📍</span>Shop 7, Lajpat Nagar Market, Near Metro Gate 2, New Delhi – 110024</div>
+        <div class="book-info-item"><span class="book-info-icon">⏰</span>Mon – Sat: 9:00 AM – 8:30 PM &nbsp;|&nbsp; Sun: 10:00 AM – 6:00 PM</div>
+        <div class="book-info-item"><span class="book-info-icon">📞</span>+91 98104-77832</div>
+        <div class="book-info-item"><span class="book-info-icon">📧</span>hello@glowandgrace.in</div>
+      </div>
+      <a href="https://wa.me/919810477832" class="book-whatsapp reveal reveal-delay-4">
+        💬 &nbsp;Book via WhatsApp
+      </a>
+    </div>
+    <div class="book-form reveal reveal-delay-2">
+      <div class="book-form-title">Book Your Appointment</div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>First Name</label>
+          <input type="text" placeholder="Priya">
+        </div>
+        <div class="form-field">
+          <label>Last Name</label>
+          <input type="text" placeholder="Sharma">
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="+91 98765-XXXXX">
+      </div>
+      <div class="form-field">
+        <label>Select Service</label>
+        <select>
+          <option value="" disabled selected>Choose a service...</option>
+          <optgroup label="Hair">
+            <option>Haircut & Styling</option>
+            <option>Hair Spa & Treatment</option>
+            <option>Keratin Smoothening</option>
+            <option>Hair Coloring</option>
+            <option>Hair Rebonding</option>
+          </optgroup>
+          <optgroup label="Skin">
+            <option>Signature Facial</option>
+            <option>Gold Facial</option>
+            <option>Diamond Dermabrasion</option>
+            <option>Threading & Waxing</option>
+            <option>Body Polishing</option>
+          </optgroup>
+          <optgroup label="Nails">
+            <option>Classic Manicure</option>
+            <option>Gel Nail Extensions</option>
+            <option>3D Nail Art</option>
+            <option>Spa Pedicure</option>
+          </optgroup>
+          <optgroup label="Bridal">
+            <option>Bridal Makeup</option>
+            <option>Complete Bridal Package</option>
+            <option>Bridal Mehendi</option>
+            <option>Pre-Bridal Ritual</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>Preferred Date</label>
+          <input type="date">
+        </div>
+        <div class="form-field">
+          <label>Preferred Time</label>
+          <select>
+            <option>9:00 AM</option>
+            <option>10:00 AM</option>
+            <option>11:00 AM</option>
+            <option>12:00 PM</option>
+            <option>1:00 PM</option>
+            <option>2:00 PM</option>
+            <option>3:00 PM</option>
+            <option>4:00 PM</option>
+            <option>5:00 PM</option>
+            <option>6:00 PM</option>
+          </select>
+        </div>
+      </div>
+      <button class="form-submit" onclick="submitForm(this)">Confirm Appointment →</button>
+    </div>
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-strip-item">
+    <span class="info-icon">📍</span>
+    <div>
+      <div class="info-label">Visit Us</div>
+      <div class="info-val">Shop 7, Lajpat Nagar Market<br>Near Metro Gate 2, New Delhi – 110024</div>
+    </div>
+  </div>
+  <div class="info-strip-item">
+    <span class="info-icon">⏰</span>
+    <div>
+      <div class="info-label">Working Hours</div>
+      <div class="info-val">Mon – Sat: 9 AM – 8:30 PM<br>Sunday: 10 AM – 6 PM</div>
+    </div>
+  </div>
+  <div class="info-strip-item">
+    <span class="info-icon">📲</span>
+    <div>
+      <div class="info-label">Get in Touch</div>
+      <div class="info-val">
+        <a href="tel:+919810477832">+91 98104-77832</a><br>
+        <a href="mailto:hello@glowandgrace.in">hello@glowandgrace.in</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Glow &amp; <em>Grace</em></a>
+  <div class="footer-copy">© 2025 Glow & Grace Beauty Studio · All Rights Reserved</div>
+  <div class="footer-links">
+    <a href="#">Instagram</a>
+    <a href="#">Facebook</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">WhatsApp</a>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="Gallery">
+</div>
+
+<script>
+// NAV SCROLL
+window.addEventListener('scroll',()=>{
+  document.getElementById('main-nav').classList.toggle('scrolled',window.scrollY>60);
+});
+
+// MOBILE MENU
+function toggleMenu(){
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+
+// SERVICE TABS
+function filterServices(tab){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.service-tab-content').forEach(c=>{c.classList.remove('active');});
+  event.target.classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+  // re-trigger reveal for new cards
+  document.querySelectorAll('#tab-'+tab+' .reveal').forEach((el,i)=>{
+    el.classList.remove('visible');
+    setTimeout(()=>el.classList.add('visible'),i*60);
+  });
+}
+
+// REVEAL ON SCROLL
+const revealObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+// LIGHTBOX
+function openLightbox(src){
+  document.getElementById('lightbox-img').src=src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
+
+// FORM SUBMIT
+function submitForm(btn){
+  btn.textContent='✓ Appointment Requested!';
+  btn.style.background='var(--gold)';
+  btn.style.borderColor='var(--gold)';
+  btn.disabled=true;
+  setTimeout(()=>{
+    btn.textContent='Confirm Appointment →';
+    btn.style.background='';
+    btn.style.borderColor='';
+    btn.disabled=false;
+  },4000);
+}
+
+// Set min date for date input
+const dateInput=document.querySelector('input[type="date"]');
+if(dateInput){
+  const today=new Date().toISOString().split('T')[0];
+  dateInput.setAttribute('min',today);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertex WebStudio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0e0e0e; --paper: #f5f2ec; --accent: #ff5c1a; --muted: #7a7770;
+  --border: rgba(14,14,14,0.12); --card-bg: #ffffff;
+  --nav-bg: rgba(245,242,236,0.92);
+  --theme-transition: background 0.45s ease, color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease;
+}
+[data-theme="dark"] {
+  --ink: #f0ede6; --paper: #111110; --accent: #ff6b2b; --muted: #8a8580;
+  --border: rgba(240,237,230,0.1); --card-bg: #1c1b19;
+  --nav-bg: rgba(17,17,16,0.92);
+}
+/* Smooth theme transitions */
+body, nav, .demo-card, .price-card, .how-card, .why-visual, footer, .modal-container, .modal-topbar, .feature-pill, .sector-chip { transition: var(--theme-transition); }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 4rem;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+
+/* THEME TOGGLE */
+.theme-toggle{position:relative;width:56px;height:28px;background:var(--ink);border-radius:100px;border:none;cursor:pointer;padding:0;transition:background 0.45s ease;flex-shrink:0;}
+.theme-toggle::before{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--paper);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),background 0.45s ease;}
+[data-theme="dark"] .theme-toggle::before{transform:translateX(28px);}
+.theme-toggle .t-sun,.theme-toggle .t-moon{position:absolute;top:50%;font-size:0.7rem;transform:translateY(-50%);transition:opacity 0.3s;pointer-events:none;}
+.theme-toggle .t-sun{right:7px;opacity:1;}
+.theme-toggle .t-moon{left:7px;opacity:0;}
+[data-theme="dark"] .theme-toggle .t-sun{opacity:0;}
+[data-theme="dark"] .theme-toggle .t-moon{opacity:1;}
+/* Dark mode overrides */
+[data-theme="dark"] section[style*="background:#f8f6f0"]{background:#1a1916 !important;}
+[data-theme="dark"] .price-card:not(.featured){border-color:rgba(240,237,230,0.15);}
+[data-theme="dark"] .feature-pill{background:rgba(255,255,255,0.06);color:var(--muted);}
+[data-theme="dark"] .mockup-card{background:#1c1b19;}
+[data-theme="dark"] .modal-container{background:#1c1b19;}
+[data-theme="dark"] .modal-topbar{background:rgba(28,27,25,0.95);}
+[data-theme="dark"] .modal-url{background:#2a2926;color:#aaa;}
+[data-theme="dark"] .modal-close{background:#2a2926;color:#aaa;}
+[data-theme="dark"] .demo-hover-btn{background:#f0ede6;color:#111;}
+[data-theme="dark"] .why-icon{background:rgba(255,255,255,0.08);}
+/* Floating badge pulse */
+.hero-tag{animation:pulseBorder 2.5s ease-in-out infinite;}
+@keyframes pulseBorder{0%,100%{box-shadow:0 0 0 0 rgba(255,92,26,0);}50%{box-shadow:0 0 0 6px rgba(255,92,26,0.12);}}
+/* Card hover glow */
+.demo-card:hover{box-shadow:0 32px 64px rgba(255,92,26,0.12),0 0 0 1px rgba(255,92,26,0.15);}
+nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.08);}
+/* Improved CTA section */
+.cta-btn-ghost{display:inline-flex;align-items:center;gap:0.5rem;}
+/* Nav right group */
+.nav-right{display:flex;align-items:center;gap:1rem;}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-size:0.88rem;font-weight:500;color:var(--ink);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--accent);}
+.nav-cta{background:var(--ink)!important;color:var(--paper)!important;padding:0.55rem 1.25rem!important;border-radius:100px;}
+.nav-cta:hover{background:var(--accent)!important;}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding:8rem 4rem 4rem;gap:3rem;align-items:center;position:relative;overflow:hidden;}
+.hero-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(8rem,18vw,18rem);color:rgba(14,14,14,0.04);white-space:nowrap;pointer-events:none;user-select:none;letter-spacing:-0.05em;}
+.hero-left{position:relative;z-index:2;}
+.hero-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);border-radius:100px;padding:0.35rem 0.9rem;margin-bottom:1.5rem;}
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);}
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.8rem,5vw,4.2rem);line-height:1.05;letter-spacing:-0.03em;margin-bottom:1.5rem;}
+h1 em{font-style:normal;color:var(--accent);}
+.hero-desc{font-size:1.05rem;color:var(--muted);line-height:1.7;max-width:460px;margin-bottom:2.5rem;font-weight:300;}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-primary{background:var(--ink);color:var(--paper);padding:0.85rem 2rem;border-radius:100px;font-size:0.9rem;font-weight:500;text-decoration:none;transition:all 0.25s;display:inline-flex;align-items:center;gap:0.5rem;}
+.btn-primary:hover{background:var(--accent);transform:translateY(-2px);}
+.btn-secondary{background:transparent;color:var(--ink);padding:0.85rem 2rem;border-radius:100px;border:1.5px solid var(--ink);font-size:0.9rem;font-weight:500;text-decoration:none;transition:all 0.25s;}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);}
+.hero-stats{display:flex;gap:2.5rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);}
+.stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;letter-spacing:-0.03em;}
+.stat-label{font-size:0.8rem;color:var(--muted);margin-top:2px;}
+
+/* FLOATING CARDS */
+.hero-right{position:relative;z-index:2;}
+.mockup-stack{position:relative;height:480px;}
+.mockup-card{position:absolute;background:white;border-radius:16px;border:1px solid var(--border);box-shadow:0 24px 64px rgba(0,0,0,0.1);overflow:hidden;animation:float 6s ease-in-out infinite;}
+.mockup-card:nth-child(2){animation-delay:-2s;}
+.mockup-card:nth-child(3){animation-delay:-4s;}
+@keyframes float{0%,100%{transform:translateY(0) rotate(var(--rot,0deg));}50%{transform:translateY(-12px) rotate(var(--rot,0deg));}}
+.mc-clinic{top:0;left:0;width:280px;--rot:-3deg;}
+.mc-gym{top:80px;right:0;width:240px;--rot:4deg;}
+.mc-salon{bottom:0;left:60px;width:220px;--rot:-1.5deg;}
+.mc-bar{height:28px;display:flex;align-items:center;padding:0 12px;gap:6px;}
+.mc-dot{width:8px;height:8px;border-radius:50%;}
+.mc-body{padding:12px;}
+.mc-thumb{width:100%;height:90px;object-fit:cover;border-radius:8px;margin-bottom:8px;}
+.mc-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;margin-bottom:4px;}
+.mc-sub{font-size:0.7rem;color:var(--muted);line-height:1.5;}
+.mc-tag{display:inline-block;font-size:0.65rem;font-weight:600;padding:2px 8px;border-radius:100px;margin-top:6px;}
+
+/* MARQUEE */
+.marquee-section{padding:1.5rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;background:var(--ink);}
+.marquee-track{display:flex;gap:3rem;white-space:nowrap;animation:marquee 22s linear infinite;}
+.marquee-item{font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--paper);opacity:0.7;display:flex;align-items:center;gap:1rem;flex-shrink:0;}
+.marquee-sep{color:var(--accent);font-size:1.2rem;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SECTIONS */
+section{padding:6rem 4rem;}
+.section-label{font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem;}
+.section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,3.5vw,2.8rem);letter-spacing:-0.03em;line-height:1.1;margin-bottom:1rem;}
+.section-desc{color:var(--muted);font-size:1rem;line-height:1.7;max-width:520px;}
+
+/* DEMO CARDS */
+.demos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3rem;}
+.demo-card{background:var(--card-bg);border-radius:20px;border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:transform 0.3s,box-shadow 0.3s;}
+.demo-card:hover{transform:translateY(-6px);box-shadow:0 32px 64px rgba(0,0,0,0.12);}
+.demo-preview{height:220px;position:relative;overflow:hidden;}
+.demo-preview img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;}
+.demo-card:hover .demo-preview img{transform:scale(1.05);}
+.demo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 60%);display:flex;align-items:flex-end;padding:1rem;}
+.demo-badge{font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:white;background:rgba(255,255,255,0.2);backdrop-filter:blur(8px);padding:0.3rem 0.75rem;border-radius:100px;border:1px solid rgba(255,255,255,0.3);}
+.demo-hover-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:white;color:var(--ink);font-family:'Syne',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;padding:0.65rem 1.4rem;border-radius:100px;opacity:0;transition:opacity 0.3s;white-space:nowrap;}
+.demo-card:hover .demo-hover-btn{opacity:1;}
+.demo-info{padding:1.25rem 1.5rem 1.5rem;}
+.demo-type{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;}
+.demo-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:0.5rem;letter-spacing:-0.02em;}
+.demo-desc{font-size:0.85rem;color:var(--muted);line-height:1.6;}
+.demo-features{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem;}
+.feature-pill{font-size:0.7rem;background:var(--paper);border:1px solid var(--border);border-radius:100px;padding:0.25rem 0.7rem;color:var(--muted);}
+
+/* PROCESS */
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem;}
+.how-card{background:rgba(255,255,255,0.05);border-radius:16px;border:1px solid rgba(255,255,255,0.1);color:var(--paper);padding:1.75rem;transition:transform 0.3s;}
+.how-card:hover{transform:translateY(-4px);}
+.how-num{font-family:'Syne',sans-serif;font-weight:800;font-size:3.5rem;color:rgba(255,255,255,0.08);line-height:1;margin-bottom:1rem;letter-spacing:-0.05em;}
+.how-icon{font-size:1.75rem;margin-bottom:0.75rem;display:block;}
+.how-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:0.5rem;}
+.how-desc{font-size:0.85rem;color:rgba(245,242,236,0.6);line-height:1.6;}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;align-items:start;}
+.price-card{background:var(--card-bg);border-radius:20px;border:1px solid var(--border);padding:2rem;transition:transform 0.3s;}
+.price-card:hover{transform:translateY(-4px);}
+.price-card.featured{background:var(--ink);color:var(--paper);border-color:var(--ink);transform:scale(1.03);}
+.price-card.featured:hover{transform:scale(1.03) translateY(-4px);}
+.price-label{font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;}
+.price-card.featured .price-label{color:rgba(245,242,236,0.5);}
+.price-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;margin-bottom:1.5rem;letter-spacing:-0.02em;}
+.price-amount{font-family:'Syne',sans-serif;font-weight:800;font-size:2.5rem;letter-spacing:-0.04em;margin-bottom:0.25rem;}
+.price-note{font-size:0.8rem;color:var(--muted);margin-bottom:1.75rem;}
+.price-card.featured .price-note{color:rgba(245,242,236,0.45);}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-bottom:2rem;}
+.price-features li{font-size:0.88rem;display:flex;align-items:center;gap:0.6rem;}
+.price-features li::before{content:'✓';font-weight:700;color:var(--accent);flex-shrink:0;}
+.price-btn{display:block;text-align:center;padding:0.85rem;border-radius:100px;font-weight:500;font-size:0.9rem;text-decoration:none;transition:all 0.25s;border:1.5px solid var(--ink);cursor:pointer;background:transparent;color:var(--ink);width:100%;}
+.price-btn:hover{background:var(--accent);border-color:var(--accent);color:white;}
+.price-card.featured .price-btn{background:var(--accent);color:white;border-color:var(--accent);}
+.price-card.featured .price-btn:hover{background:white;color:var(--ink);border-color:white;}
+
+/* WHY */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.why-list{display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem;}
+.why-item{display:flex;gap:1rem;align-items:flex-start;}
+.why-icon{width:44px;height:44px;border-radius:12px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.why-text-title{font-weight:600;font-size:0.95rem;margin-bottom:0.25rem;}
+.why-text-desc{font-size:0.85rem;color:var(--muted);line-height:1.6;}
+.why-visual{background:var(--ink);border-radius:24px;padding:2.5rem;color:var(--paper);position:relative;overflow:hidden;}
+.why-visual-bg{position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:var(--accent);opacity:0.12;}
+.why-quote{font-family:'Syne',sans-serif;font-weight:700;font-size:1.4rem;line-height:1.3;margin-bottom:1.5rem;}
+.why-sectors{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
+.sector-chip{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:0.75rem;font-size:0.82rem;font-weight:500;display:flex;align-items:center;gap:0.5rem;}
+
+/* CTA */
+.cta-section{margin:0 4rem 6rem;background:var(--ink);border-radius:28px;padding:5rem 4rem;text-align:center;color:var(--paper);position:relative;overflow:hidden;}
+.cta-circle{position:absolute;border-radius:50%;background:var(--accent);opacity:0.1;}
+.cta-section h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.03em;line-height:1.1;margin-bottom:1rem;position:relative;}
+.cta-section p{color:rgba(245,242,236,0.6);font-size:1rem;margin-bottom:2rem;position:relative;}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;}
+.cta-btn-primary{background:var(--accent);color:white;padding:0.95rem 2.25rem;border-radius:100px;font-weight:500;font-size:0.95rem;text-decoration:none;transition:all 0.25s;}
+.cta-btn-primary:hover{background:white;color:var(--ink);}
+.cta-btn-ghost{background:transparent;color:var(--paper);padding:0.95rem 2.25rem;border-radius:100px;border:1.5px solid rgba(255,255,255,0.3);font-weight:500;font-size:0.95rem;text-decoration:none;transition:all 0.25s;}
+.cta-btn-ghost:hover{border-color:white;}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between;font-size:0.83rem;color:var(--muted);}
+.footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--ink);}
+.footer-logo span{color:var(--accent);}
+footer a{color:var(--muted);text-decoration:none;}
+footer a:hover{color:var(--accent);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* DEMO MODAL */
+#demo-modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(5,5,5,0.85);backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding:1.5rem;overflow-y:auto;}
+#demo-modal.open{display:flex;}
+.modal-container{background:white;border-radius:20px;width:100%;max-width:1100px;position:relative;margin:auto;overflow:hidden;animation:modalIn 0.35s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes modalIn{from{opacity:0;transform:scale(0.93) translateY(20px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.modal-topbar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,0.08);padding:0.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.modal-topbar-left{display:flex;align-items:center;gap:0.75rem;}
+.modal-dots{display:flex;gap:5px;}
+.modal-dot{width:11px;height:11px;border-radius:50%;}
+.modal-url{font-size:0.78rem;color:#666;background:#f0f0f0;border-radius:6px;padding:0.3rem 1rem;font-family:monospace;}
+.modal-close{width:32px;height:32px;border-radius:50%;background:#f0f0f0;border:none;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;color:#666;transition:all 0.2s;}
+.modal-close:hover{background:#ff5c1a;color:white;}
+.modal-body{overflow-y:auto;max-height:calc(90vh - 55px);}
+
+/* COLOR ACCENTS */
+.acc-clinic{color:#0a9e7f;}.acc-gym{color:#d4380d;}.acc-salon{color:#722ed1;}.acc-biz{color:#1677ff;}
+
+/* =========================================
+   HAMBURGER MENU
+   ========================================= */
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:none;border:none;cursor:pointer;padding:4px;border-radius:8px;transition:background 0.2s;}
+.hamburger:hover{background:rgba(128,128,128,0.1);}
+.hamburger span{display:block;height:2px;width:100%;background:var(--ink);border-radius:2px;transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),opacity 0.2s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* Mobile nav drawer */
+.mobile-nav{display:none;position:fixed;inset:0;top:0;z-index:99;background:var(--paper);flex-direction:column;padding:5.5rem 2rem 2rem;gap:0;transition:opacity 0.3s,transform 0.35s cubic-bezier(0.34,1.56,0.64,1);}
+.mobile-nav.open{display:flex;}
+.mobile-nav a{font-family:'Syne',sans-serif;font-weight:700;font-size:2rem;color:var(--ink);text-decoration:none;padding:0.75rem 0;border-bottom:1px solid var(--border);transition:color 0.2s,padding-left 0.2s;}
+.mobile-nav a:hover{color:var(--accent);padding-left:0.5rem;}
+.mobile-nav .mob-cta{margin-top:1.5rem;background:var(--accent);color:white!important;padding:1rem 2rem!important;border-radius:100px;text-align:center;border:none!important;}
+.mobile-nav-footer{margin-top:auto;display:flex;gap:1rem;align-items:center;}
+.mobile-nav-footer a{font-size:0.9rem;color:var(--muted);text-decoration:none;}
+
+/* =========================================
+   FLOATING WHATSAPP BUTTON
+   ========================================= */
+.float-wa{position:fixed;bottom:1.75rem;right:1.75rem;z-index:400;display:flex;align-items:center;gap:0.55rem;background:#25d366;color:white;padding:0.8rem 1.3rem;border-radius:100px;font-weight:600;font-size:0.85rem;text-decoration:none;box-shadow:0 6px 28px rgba(37,211,102,0.45);transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;}
+.float-wa:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 12px 36px rgba(37,211,102,0.55);}
+.float-wa svg{width:20px;height:20px;fill:white;flex-shrink:0;}
+.float-wa-label{white-space:nowrap;}
+
+/* =========================================
+   LARGE DESKTOPS (1400px+)
+   ========================================= */
+@media(min-width:1400px){
+  nav{padding:1.1rem 6rem;}
+  .hero{padding:8rem 6rem 4rem;}
+  section{padding:7rem 6rem;}
+  .cta-section{margin:0 6rem 7rem;}
+  footer{padding:2rem 6rem;}
+}
+
+/* =========================================
+   TABLETS LANDSCAPE (901px – 1199px)
+   ========================================= */
+@media(max-width:1199px){
+  nav{padding:1rem 2.5rem;}
+  .hero{padding:8rem 2.5rem 4rem;gap:2rem;}
+  section{padding:5rem 2.5rem;}
+  .cta-section{margin:0 2.5rem 5rem;padding:4rem 2.5rem;}
+  footer{padding:2rem 2.5rem;}
+  .how-grid{grid-template-columns:repeat(2,1fr);}
+  .mc-clinic{width:230px;}
+  .mc-gym{width:200px;}
+  .mc-salon{width:190px;}
+}
+
+/* =========================================
+   TABLETS PORTRAIT (768px – 900px)
+   ========================================= */
+@media(max-width:900px){
+  /* NAV */
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .nav-right{gap:0.6rem;}
+
+  /* HERO */
+  .hero{grid-template-columns:1fr;padding:6.5rem 1.5rem 3rem;gap:2rem;}
+  .hero-right{display:none;}
+  .hero-bg-text{font-size:clamp(5rem,14vw,10rem);}
+
+  /* SECTIONS */
+  section{padding:4rem 1.5rem;}
+  .demos-grid{grid-template-columns:1fr;}
+  .how-grid{grid-template-columns:1fr 1fr;gap:1rem;}
+  .pricing-grid{grid-template-columns:1fr;max-width:480px;margin-left:auto;margin-right:auto;}
+  .price-card.featured{transform:none;}
+  .price-card.featured:hover{transform:translateY(-4px);}
+  .why-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .cta-section{margin:0 1.5rem 4rem;padding:3rem 1.5rem;}
+  .cta-actions{flex-direction:column;align-items:stretch;}
+  .cta-btn-primary,.cta-btn-ghost{text-align:center;justify-content:center;}
+  footer{flex-direction:column;gap:1rem;text-align:center;padding:1.75rem 1.5rem;}
+  footer > div:last-child{justify-content:center;}
+}
+
+/* =========================================
+   MOBILE LARGE (481px – 767px)
+   ========================================= */
+@media(max-width:767px){
+  .hero{padding:6rem 1.25rem 2.5rem;}
+  h1{font-size:clamp(2.2rem,8vw,3rem);}
+  .hero-desc{font-size:0.95rem;}
+  .hero-stats{gap:1.5rem;}
+  .stat-num{font-size:1.4rem;}
+  section{padding:3.5rem 1.25rem;}
+  .section-title{font-size:clamp(1.7rem,5vw,2.2rem);}
+  .how-grid{grid-template-columns:1fr;}
+  .demos-grid{gap:1rem;}
+  .demo-preview{height:190px;}
+  .pricing-grid{max-width:100%;}
+  .cta-section{margin:0 1.25rem 3rem;padding:2.5rem 1.25rem;border-radius:20px;}
+  .cta-section h2{font-size:clamp(1.6rem,6vw,2.2rem);}
+  .modal-topbar{padding:0.6rem 1rem;}
+  .modal-dots{display:none;}
+  .modal-url{font-size:0.72rem;max-width:180px;overflow:hidden;text-overflow:ellipsis;}
+  .float-wa-label{display:none;}
+  .float-wa{padding:0.9rem;}
+  .float-wa svg{width:24px;height:24px;}
+  footer{padding:1.5rem 1.25rem;}
+}
+
+/* =========================================
+   MOBILE SMALL (≤ 480px)
+   ========================================= */
+@media(max-width:480px){
+  nav{padding:0.85rem 1rem;}
+  .nav-logo{font-size:1rem;}
+  .hero{padding:5.5rem 1rem 2rem;}
+  h1{font-size:clamp(2rem,7vw,2.6rem);}
+  .hero-actions{flex-direction:column;}
+  .btn-primary,.btn-secondary{text-align:center;justify-content:center;}
+  .hero-stats{flex-wrap:wrap;gap:1.25rem;}
+  section{padding:3rem 1rem;}
+  .section-title{font-size:1.6rem;}
+  .section-desc{font-size:0.9rem;}
+  .how-card{padding:1.25rem;}
+  .how-num{font-size:2.5rem;}
+  .why-sectors{grid-template-columns:1fr 1fr;}
+  .why-quote{font-size:1.15rem;}
+  .price-card{padding:1.5rem;}
+  .price-amount{font-size:2rem;}
+  .cta-section{margin:0 1rem 2.5rem;padding:2rem 1rem;border-radius:16px;}
+  .cta-section h2{font-size:1.5rem;}
+  footer{padding:1.5rem 1rem;font-size:0.78rem;}
+  .modal-container{border-radius:14px;}
+  #demo-modal{padding:0.75rem;}
+  .modal-body{max-height:calc(95vh - 55px);}
+  .float-wa{bottom:1.25rem;right:1.25rem;padding:0.8rem;}
+  .marquee-item{font-size:0.75rem;}
+  .hero-tag{font-size:0.72rem;}
+  .demo-info{padding:1rem 1.1rem 1.25rem;}
+  .demo-name{font-size:1rem;}
+}
+
+/* =========================================
+   VERY SMALL (≤ 360px)
+   ========================================= */
+@media(max-width:360px){
+  h1{font-size:1.85rem;}
+  .section-title{font-size:1.45rem;}
+  .hero-stats{gap:1rem;}
+  .stat-num{font-size:1.2rem;}
+  .price-card{padding:1.25rem;}
+  .cta-section{padding:1.75rem 0.85rem;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Vertex<span>Web</span> Studio</div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#demos">Our Work</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact" class="nav-cta">Get Started</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle day/night mode">
+      <span class="t-moon">🌙</span>
+      <span class="t-sun">☀️</span>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg-text">WEB</div>
+  <div class="hero-left">
+    <div class="hero-tag">Business Specialists</div>
+    <h1>Your Business<br>Deserves a<br><em>Stunning</em> Website</h1>
+    <p class="hero-desc">We build high-converting websites that help you attract more customers and grow your business.</p>
+    <div class="hero-actions">
+      <a href="#demos" class="btn-primary">See Live Demos →</a>
+      <a href="#contact" class="btn-secondary">Get a Free Quote</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">48hr</div><div class="stat-label">Avg. Delivery</div></div>
+      <div><div class="stat-num">₹8K+</div><div class="stat-label">Starting Price</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-label">Client Satisfaction</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="mockup-stack">
+      <div class="mockup-card mc-clinic">
+        <div class="mc-bar" style="background:#e6f9f5"><div class="mc-dot" style="background:#ff5f57"></div><div class="mc-dot" style="background:#febc2e"></div><div class="mc-dot" style="background:#28c840"></div></div>
+        <div class="mc-body">
+          <img class="mc-thumb" src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=300&q=80" alt="clinic">
+          <div class="mc-title">MedCare Hospital</div>
+          <div class="mc-sub">Book appointments, view doctors</div>
+          <div class="mc-tag" style="background:#e6f9f5;color:#0a9e7f">Healthcare</div>
+        </div>
+      </div>
+      <div class="mockup-card mc-gym">
+        <div class="mc-bar" style="background:#fff2ec"><div class="mc-dot" style="background:#ff5f57"></div><div class="mc-dot" style="background:#febc2e"></div><div class="mc-dot" style="background:#28c840"></div></div>
+        <div class="mc-body">
+          <img class="mc-thumb" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=300&q=80" alt="gym" style="height:65px;">
+          <div class="mc-title">PowerZone Gym</div>
+          <div class="mc-sub">Memberships & schedules</div>
+          <div class="mc-tag" style="background:#fff2ec;color:#d4380d">Fitness</div>
+        </div>
+      </div>
+      <div class="mockup-card mc-salon">
+        <div class="mc-bar" style="background:#f5edff"><div class="mc-dot" style="background:#ff5f57"></div><div class="mc-dot" style="background:#febc2e"></div><div class="mc-dot" style="background:#28c840"></div></div>
+        <div class="mc-body">
+          <img class="mc-thumb" src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=300&q=80" alt="salon" style="height:60px;">
+          <div class="mc-title">Glow Studio</div>
+          <div class="mc-sub">Services & booking</div>
+          <div class="mc-tag" style="background:#f5edff;color:#722ed1">Beauty</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Clinics <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Gyms & Fitness Studios <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Salons & Spas <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Restaurants <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Retail Shops <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Coaching Centers <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Diagnostic Labs <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Boutiques <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Clinics <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Gyms & Fitness Studios <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Salons & Spas <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Restaurants <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Retail Shops <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Coaching Centers <span class="marquee-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- DEMOS -->
+<section id="demos">
+  <div class="reveal">
+    <div class="section-label">Live Demo Websites</div>
+    <div class="section-title">Click Any Card to See<br>the Full Website</div>
+    <p class="section-desc">Every demo is a fully functional website — exactly what your business will receive.</p>
+  </div>
+  <div class="demos-grid">
+    <div class="demo-card reveal">
+      <div class="demo-preview">
+        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=700&q=85" alt="Clinic">
+        <div class="demo-overlay"><span class="demo-badge">Healthcare</span></div>
+        <a href="hospital.html"target="_blank" style="text-decoration:none; color:inherit;"><div class="demo-hover-btn">View Full Website →</div></a>
+      </div>
+  
+  <div class="demo-card"onclick="openDemo('clinic')">
+    
+    <!-- preview image section (if you have) -->
+
+    <div class="demo-info">
+      <div class="demo-type acc-clinic">Clinic / Hospital</div>
+      <div class="demo-name">MedCare Multi-Specialty Hospital</div>
+      <div class="demo-desc">
+        A complete clinic website with doctor profiles, appointment booking, services, patient testimonials, and emergency contact.
+      </div>
+      
+      <div class="demo-features">
+        <span class="feature-pill">Online Booking</span>
+        <span class="feature-pill">Doctor Profiles</span>
+        <span class="feature-pill">Services</span>
+        <span class="feature-pill">WhatsApp</span>
+        <span class="feature-pill">Google Maps</span>
+      </div>
+    </div>
+
+  </div>
+
+</a>
+    </div>
+
+    <div class="demo-card reveal">
+      <div class="demo-preview">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&q=85" alt="Gym">
+        <div class="demo-overlay"><span class="demo-badge">Fitness</span></div>
+        <a href="gym.html"target="_blank" style="text-decoration:none; color:inherit;"><div class="demo-hover-btn">View Full Website →</div></a>
+      </div>
+      <div class="demo-info" onclick="openDemo('gym')">
+        <div class="demo-type acc-gym">Gym / Fitness Studio</div>
+        <div class="demo-name">PowerZone Fitness Center</div>
+        <div class="demo-desc">High-energy gym website with membership plans, class schedules, trainer profiles, gallery, and a free trial offer.</div>
+        <div class="demo-features">
+          <span class="feature-pill">Membership Plans</span><span class="feature-pill">Class Schedule</span><span class="feature-pill">Trainers</span><span class="feature-pill">Gallery</span><span class="feature-pill">Free Trial CTA</span>
+        </div>
+      </div>
+    </div>
+    <div class="demo-card reveal">
+      <div class="demo-preview">
+        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&q=85" alt="Salon">
+        <div class="demo-overlay"><span class="demo-badge">Beauty</span></div>
+        <a href="parlour.html"target="_blank" style="text-decoration:none; color:inherit;"><div class="demo-hover-btn">View Full Website →</div></a>
+      </div>
+      <div class="demo-info" onclick="openDemo('salon')">
+        <div class="demo-type acc-salon">Salon / Spa</div>
+        <div class="demo-name">Glow & Grace Beauty Studio</div>
+        <div class="demo-desc">Elegant salon website with services menu, pricing, gallery, stylist team, reviews, and WhatsApp booking.</div>
+        <div class="demo-features">
+          <span class="feature-pill">Services & Pricing</span><span class="feature-pill">Gallery</span><span class="feature-pill">Stylists</span><span class="feature-pill">Reviews</span><span class="feature-pill">Booking</span>
+        </div>
+      </div>
+    </div>
+    <div class="demo-card reveal">
+      <div class="demo-preview">
+        <img src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=700&q=85" alt="Business">
+        <div class="demo-overlay"><span class="demo-badge">Retail / Business</span></div>
+        <a href="mart.html"target="_blank" style="text-decoration:none; color:inherit;"><div class="demo-hover-btn">View Full Website →</div></a>
+      </div>
+      <div class="demo-info" onclick="openDemo('biz')">
+        <div class="demo-type acc-biz">Small Business / Retail Shop</div>
+        <div class="demo-name">SevenDays Mart Store</div>
+        <div class="demo-desc">Versatile business website with product catalog, offers section, customer reviews, store info, and contact form.</div>
+        <div class="demo-features">
+          <span class="feature-pill">Product Catalog</span><span class="feature-pill">Offers</span><span class="feature-pill">Reviews</span><span class="feature-pill">Contact Form</span><span class="feature-pill">Maps</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" style="background:var(--ink);color:var(--paper);">
+  <div class="reveal">
+    <div class="section-label" style="color:var(--accent)">How It Works</div>
+    <div class="section-title" style="color:var(--paper)">From Idea to Live<br>in 48 Hours</div>
+  </div>
+  <div class="how-grid">
+    <div class="how-card reveal"><div class="how-num">01</div><span class="how-icon">📞</span><div class="how-title">Free Discovery Call</div><div class="how-desc">We understand your business, goals, and what you need from your website in a quick 20-min call.</div></div>
+    <div class="how-card reveal"><div class="how-num">02</div><span class="how-icon">🎨</span><div class="how-title">Design & Build</div><div class="how-desc">We create a custom design using your brand, photos, and content. You see a preview before anything goes live.</div></div>
+    <div class="how-card reveal"><div class="how-num">03</div><span class="how-icon">✅</span><div class="how-title">Review & Revise</div><div class="how-desc">You give feedback. We make unlimited revisions until every page is exactly how you want it.</div></div>
+    <div class="how-card reveal"><div class="how-num">04</div><span class="how-icon">🚀</span><div class="how-title">Launch & Support</div><div class="how-desc">We go live, handle your domain setup, and give you 30 days of free support after launch.</div></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section>
+  <div class="why-grid">
+    <div>
+      <div class="section-label">Why Choose Us</div>
+      <div class="section-title">Built for Results,<br>Not Just Design</div>
+      <div class="why-list">
+        <div class="why-item reveal"><div class="why-icon">🔹</div><div><div class="why-text-title">Built for Business Growth</div><div class="why-text-desc">We design websites that are not just visually strong but built to convert visitors into real customers.</div></div></div>
+        <div class="why-item reveal"><div class="why-icon">⚡</div><div><div class="why-text-title">Fast, Efficient Delivery</div><div class="why-text-desc">Your website goes live in days, not weeks — without compromising on quality.</div></div></div>
+        <div class="why-item reveal"><div class="why-icon">💬</div><div><div class="why-text-title">Direct & Responsive Support</div><div class="why-text-desc">Reach us on WhatsApp anytime. Quick responses from a real person — no ticket systems.</div></div></div>
+        <div class="why-item reveal"><div class="why-icon">📱</div><div><div class="why-text-title">Mobile-Optimized Experience</div><div class="why-text-desc">All sites are designed mobile-first since most customers find you on their phones.</div></div></div>
+      </div>
+    </div>
+    <div class="why-visual reveal">
+      <div class="why-visual-bg"></div>
+      <div class="why-quote">"Your customers Google you before they walk in. Make sure they like what they see."</div>
+      <div class="why-sectors">
+        <div class="sector-chip">🏥 Clinics</div><div class="sector-chip">💪 Gyms</div>
+        <div class="sector-chip">💇 Salons</div><div class="sector-chip">🍽️ Restaurants</div>
+        <div class="sector-chip">📚 Coaching</div><div class="sector-chip">🛒 Retail</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="background:#f8f6f0;">
+  <div style="text-align:center" class="reveal">
+    <div class="section-label">Transparent Pricing</div>
+    <div class="section-title">Simple, Affordable Plans</div>
+    <p class="section-desc" style="margin:0 auto">No hidden charges. No long contracts. Just great websites at honest prices.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-label">Starter</div><div class="price-name">Basic Presence</div>
+      <div class="price-amount">₹8,999</div><div class="price-note">One-time payment</div>
+      <ul class="price-features"><li>Up to 3 pages</li><li>Mobile responsive design</li><li>Contact form + WhatsApp</li><li>Google Maps</li><li>Basic SEO setup</li><li>30 days support</li></ul>
+      <a href="#contact" class="price-btn">Get Started</a>
+    </div>
+    <div class="price-card featured reveal">
+      <div class="price-label">Most Popular</div><div class="price-name">Professional</div>
+      <div class="price-amount">₹17,999</div><div class="price-note">One-time payment</div>
+      <ul class="price-features"><li>Up to 7 pages</li><li>Custom design & branding</li><li>Online booking form</li><li>Gallery & testimonials</li><li>WhatsApp chat widget</li><li>Google Business setup</li><li>Advanced SEO</li><li>60 days support</li></ul>
+      <a href="#contact" class="price-btn">Get Started</a>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-label">Growth</div><div class="price-name">Full Package</div>
+      <div class="price-amount">₹29,999</div><div class="price-note">One-time + ₹999/mo maintenance</div>
+      <ul class="price-features"><li>Unlimited pages</li><li>Admin dashboard / CMS</li><li>Online appointment system</li><li>Staff / doctor profiles</li><li>Blog / news section</li><li>Instagram feed</li><li>Priority support</li><li>90 days support</li></ul>
+      <a href="#contact" class="price-btn">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div id="contact">
+  <div class="cta-section reveal">
+    <div class="cta-circle" style="width:400px;height:400px;top:-150px;right:-100px;"></div>
+    <div class="cta-circle" style="width:200px;height:200px;bottom:-80px;left:10%;"></div>
+    <h2>Ready to Get<br>Your Business Online?</h2>
+    <p>Let's talk! A free 20-minute consultation is all it takes to get started.</p>
+    <div class="cta-actions">
+      <a href="https://wa.me/919953752331" target="_blank" class="cta-btn-primary">📱 WhatsApp Us Now</a>
+      <a href="mailto:sharmadeepanshu576@gmail.com" class="cta-btn-ghost">✉ sharmadeepanshu576@gmail.com</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Vertex<span>Web</span> Studio</div>
+  <div>© 2025 Vertex WebStudio. All rights reserved.</div>
+  <div style="display:flex;gap:1.5rem;"><a href="#">Privacy</a><a href="https://wa.me/919953752331" target="_blank">WhatsApp</a><a href="mailto:sharmadeepanshu576@gmail.com">Email</a></div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/919953752331" target="_blank" class="float-wa" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="float-wa-label">Chat with us</span>
+</a>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#demos" onclick="closeMobileNav()">Our Work</a>
+  <a href="#process" onclick="closeMobileNav()">Process</a>
+  <a href="#pricing" onclick="closeMobileNav()">Pricing</a>
+  <a href="#contact" class="mob-cta" onclick="closeMobileNav()">Get Started →</a>
+  <div class="mobile-nav-footer">
+    <a href="https://wa.me/919953752331" target="_blank">📱 WhatsApp</a>
+    <a href="mailto:sharmadeepanshu576@gmail.com">✉ Email</a>
+  </div>
+</div>
+
+<!-- DEMO MODAL -->
+<div id="demo-modal">
+  <div class="modal-container">
+    <div class="modal-topbar">
+      <div class="modal-topbar-left">
+        <div class="modal-dots">
+          <div class="modal-dot" style="background:#ff5f57"></div>
+          <div class="modal-dot" style="background:#febc2e"></div>
+          <div class="modal-dot" style="background:#28c840"></div>
+        </div>
+        <div class="modal-url" id="modal-url">healthpointclinic.in</div>
+      </div>
+      <button class="modal-close" onclick="closeDemo()">✕</button>
+    </div>
+    <div class="modal-body" id="demo-content"></div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ===== THEME TOGGLE ===== */
+const toggle = document.getElementById('themeToggle');
+const html = document.documentElement;
+// Load saved preference
+const saved = localStorage.getItem('theme');
+if (saved) html.setAttribute('data-theme', saved);
+toggle.addEventListener('click', () => {
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const next = isDark ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+});
+
+/* ===== NAV SCROLL SHADOW ===== */
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+/* ===== HAMBURGER MENU ===== */
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+function closeMobileNav() {
+  hamburger.classList.remove('open');
+  mobileNav.classList.remove('open');
+  document.body.style.overflow = '';
+}
+hamburger.addEventListener('click', () => {
+  const isOpen = hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
+
+/* ===================== DEMO SITES ===================== */
+const demos = {
+
+/* ============ CLINIC ============ */
+clinic: {
+  url: 'medcarehospitals.in',
+  html: `
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap');
+.cl *{box-sizing:border-box;margin:0;padding:0;}
+.cl{font-family:'DM Sans',sans-serif;color:#1a2332;}
+.cl-nav{background:#fff;padding:1rem 2.5rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e8f0f5;position:sticky;top:0;z-index:50;}
+.cl-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:800;color:#0a6e59;display:flex;align-items:center;gap:0.5rem;}
+.cl-logo span{background:#0a9e7f;color:white;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;}
+.cl-nav-links{display:flex;gap:1.75rem;}
+.cl-nav-links a{font-size:0.85rem;color:#444;text-decoration:none;font-weight:500;}
+.cl-nav-links a:hover{color:#0a9e7f;}
+.cl-nav-btn{background:#0a9e7f;color:white;border:none;padding:0.55rem 1.25rem;border-radius:100px;font-size:0.85rem;font-weight:500;cursor:pointer;}
+
+
+/* HERO */
+.cl-hero{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:480px;}
+.cl-hero-left{padding:3rem 2.5rem;background:linear-gradient(135deg,#f0fdf8 0%,#e6f9f2 100%);display:flex;flex-direction:column;justify-content:center;}
+.cl-hero-tag{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0a9e7f;margin-bottom:0.75rem;}
+.cl-hero-h1{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:800;line-height:1.15;color:#0d2b22;margin-bottom:1rem;}
+.cl-hero-h1 em{font-style:normal;color:#0a9e7f;}
+.cl-hero-p{font-size:0.92rem;color:#4a6b5e;line-height:1.7;margin-bottom:1.75rem;font-weight:300;}
+.cl-hero-btns{display:flex;gap:0.75rem;flex-wrap:wrap;}
+.cl-btn-g{background:#0a9e7f;color:white;border:none;padding:0.7rem 1.5rem;border-radius:100px;font-size:0.88rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:0.4rem;}
+.cl-btn-w{background:white;color:#0a9e7f;border:1.5px solid #0a9e7f;padding:0.7rem 1.5rem;border-radius:100px;font-size:0.88rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:0.4rem;}
+.cl-hero-badges{display:flex;gap:1rem;margin-top:1.5rem;}
+.cl-badge{background:white;border-radius:10px;padding:0.6rem 0.9rem;display:flex;align-items:center;gap:0.5rem;box-shadow:0 2px 12px rgba(10,158,127,0.12);}
+.cl-badge-icon{font-size:1rem;}
+.cl-badge-text{font-size:0.72rem;font-weight:500;color:#1a2332;line-height:1.3;}
+.cl-hero-right{position:relative;overflow:hidden;}
+.cl-hero-right img{width:100%;height:100%;object-fit:cover;}
+.cl-hero-right-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(240,253,248,0.5) 0%,transparent 40%);}
+.cl-emergency{position:absolute;bottom:1.5rem;right:1.5rem;background:#ff4444;color:white;border-radius:12px;padding:0.75rem 1rem;font-size:0.8rem;font-weight:600;display:flex;align-items:center;gap:0.5rem;}
+
+/* STATS */
+.cl-stats{background:#0a6e59;display:grid;grid-template-columns:repeat(4,1fr);text-align:center;padding:1.5rem 2.5rem;}
+.cl-stat{padding:1rem;border-right:1px solid rgba(255,255,255,0.15);}
+.cl-stat:last-child{border:none;}
+.cl-stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:800;color:white;}
+.cl-stat-label{font-size:0.75rem;color:rgba(255,255,255,0.7);margin-top:2px;}
+
+/* SPECIALITIES */
+.cl-section{padding:2.5rem;}
+.cl-section-label{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0a9e7f;margin-bottom:0.5rem;}
+.cl-section-title{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:800;color:#0d2b22;margin-bottom:0.5rem;}
+.cl-section-sub{font-size:0.88rem;color:#6a8a80;margin-bottom:1.75rem;line-height:1.6;}
+.cl-specs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;}
+.cl-spec{background:#f0fdf8;border-radius:14px;padding:1.25rem;text-align:center;border:1px solid #c8ede3;transition:transform 0.2s,background 0.2s;cursor:default;}
+.cl-spec:hover{transform:translateY(-3px);background:#0a9e7f;}
+.cl-spec:hover .cl-spec-name{color:white;}
+.cl-spec:hover .cl-spec-sub{color:rgba(255,255,255,0.8);}
+.cl-spec-icon{font-size:1.5rem;margin-bottom:0.5rem;}
+.cl-spec-name{font-size:0.82rem;font-weight:600;color:#0d2b22;margin-bottom:2px;}
+.cl-spec-sub{font-size:0.72rem;color:#5a8070;}
+
+/* DOCTORS */
+.cl-doctors-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem;}
+.cl-doc{background:white;border-radius:16px;border:1px solid #e0ede8;overflow:hidden;transition:box-shadow 0.2s;}
+.cl-doc:hover{box-shadow:0 12px 32px rgba(10,158,127,0.12);}
+.cl-doc-img{width:100%;height:160px;object-fit:cover;object-position:top;}
+.cl-doc-body{padding:1rem;}
+.cl-doc-name{font-family:'Playfair Display',serif;font-weight:700;font-size:0.95rem;color:#0d2b22;margin-bottom:2px;}
+.cl-doc-spec{font-size:0.75rem;color:#0a9e7f;font-weight:500;margin-bottom:0.5rem;}
+.cl-doc-exp{font-size:0.72rem;color:#888;display:flex;align-items:center;gap:0.3rem;}
+.cl-doc-btn{margin-top:0.75rem;width:100%;background:#f0fdf8;color:#0a9e7f;border:1px solid #c8ede3;border-radius:100px;padding:0.5rem;font-size:0.78rem;font-weight:500;cursor:pointer;}
+
+/* BOOKING */
+.cl-booking{background:linear-gradient(135deg,#0a9e7f,#0a6e59);padding:2.5rem;display:grid;grid-template-columns:1fr 1.2fr;gap:2.5rem;align-items:center;}
+.cl-booking-left{color:white;}
+.cl-booking-left h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800;margin-bottom:0.5rem;}
+.cl-booking-left p{font-size:0.88rem;opacity:0.8;line-height:1.6;margin-bottom:1rem;}
+.cl-contact-items{display:flex;flex-direction:column;gap:0.6rem;}
+.cl-contact-item{display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:rgba(255,255,255,0.85);}
+.cl-booking-form{background:white;border-radius:16px;padding:1.5rem;}
+.cl-form-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:#0d2b22;margin-bottom:1rem;}
+.cl-form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:0.6rem;}
+.cl-input{width:100%;border:1px solid #dde8e3;border-radius:8px;padding:0.6rem 0.9rem;font-size:0.83rem;font-family:'DM Sans',sans-serif;color:#1a2332;}
+.cl-select{width:100%;border:1px solid #dde8e3;border-radius:8px;padding:0.6rem 0.9rem;font-size:0.83rem;font-family:'DM Sans',sans-serif;color:#1a2332;background:white;}
+.cl-form-submit{width:100%;background:#0a9e7f;color:white;border:none;border-radius:100px;padding:0.75rem;font-size:0.88rem;font-weight:500;cursor:pointer;margin-top:0.75rem;}
+
+/* TESTIMONIALS */
+.cl-test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem;}
+.cl-test{background:#f9fdfc;border:1px solid #ddeee8;border-radius:14px;padding:1.25rem;}
+.cl-stars{color:#f5a623;font-size:0.85rem;margin-bottom:0.5rem;}
+.cl-test-text{font-size:0.82rem;color:#444;line-height:1.6;font-style:italic;margin-bottom:0.75rem;}
+.cl-test-author{font-size:0.78rem;font-weight:600;color:#0a6e59;}
+
+/* FOOTER */
+.cl-footer{background:#0d2b22;color:rgba(255,255,255,0.75);padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;}
+.cl-footer-logo{font-family:'Playfair Display',serif;font-weight:800;color:white;font-size:1rem;}
+.cl-footer-links{display:flex;gap:1.5rem;font-size:0.8rem;}
+.cl-footer-links a{color:rgba(255,255,255,0.6);text-decoration:none;}
+/* ================= RESPONSIVE ================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .cl-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .cl-hero-right {
+    height: 300px;
+  }
+
+  .cl-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .cl-specs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cl-doctors-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cl-test-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cl-booking {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+
+  .cl-nav {
+    padding: 1rem;
+  }
+
+  .cl-nav-links {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: white;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    display: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  .cl-nav-links.active {
+    display: flex;
+  }
+
+  .cl-menu-toggle {
+    display: block;
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+
+  .cl-nav-btn {
+    display: none;
+  }
+
+  .cl-hero-left {
+    padding: 2rem 1.2rem;
+  }
+
+  .cl-hero-h1 {
+    font-size: 1.8rem;
+  }
+
+  .cl-hero-p {
+    font-size: 0.85rem;
+  }
+
+  .cl-hero-badges {
+    flex-direction: column;
+  }
+
+  .cl-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .cl-specs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cl-doctors-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cl-test-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cl-section {
+    padding: 1.5rem 1rem;
+  }
+
+  .cl-booking {
+    padding: 1.5rem 1rem;
+  }
+
+  .cl-footer {
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: center;
+  }
+}
+
+/* Hide menu toggle on desktop */
+.cl-menu-toggle {
+  display: none;
+}
+
+/* WHATSAPP */
+.cl-wa{position:fixed;bottom:1.5rem;right:1.5rem;background:#25d366;color:white;border-radius:50%;width:50px;height:50px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 4px 16px rgba(37,211,102,0.4);cursor:pointer;z-index:100;}
+</style>
+<div class="cl">
+<nav class="cl-nav">
+  <div class="cl-logo"><span>H</span> MedCare MultiSpeciality Hospital</div>
+  <div class="cl-nav-links">
+    <a href="#">Home</a><a href="#">Doctors</a><a href="#">Services</a><a href="#">Book Appointment</a><a href="#">Contact</a>
+  </div>
+  <button class="cl-nav-btn">📅 Book Now</button>
+</nav>
+
+<div class="cl-hero">
+  <div class="cl-hero-left">
+    <div class="cl-hero-tag">🏅 NABH Accredited Clinic</div>
+    <h1 class="cl-hero-h1">Your Health,<br>Our <em>Priority</em></h1>
+    <p class="cl-hero-p">Expert care from 15+ specialist doctors. Same-day appointments available. We treat you like family, not a number.</p>
+    <div class="cl-hero-btns">
+      <button class="cl-btn-g">📅 Book Appointment</button>
+      <button class="cl-btn-w">📞 Call: 98765-43210</button>
+    </div>
+    <div class="cl-hero-badges">
+      <div class="cl-badge"><div class="cl-badge-icon">⭐</div><div class="cl-badge-text">4.9/5 Rating<br>800+ Reviews</div></div>
+      <div class="cl-badge"><div class="cl-badge-icon">⏱️</div><div class="cl-badge-text">Same Day<br>Appointments</div></div>
+      <div class="cl-badge"><div class="cl-badge-icon">🏥</div><div class="cl-badge-text">15+ Years<br>of Service</div></div>
+    </div>
+  </div>
+  <div class="cl-hero-right">
+    <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=700&q=85" alt="Clinic">
+    <div class="cl-hero-right-overlay"></div>
+    <div class="cl-emergency">🚨 24/7 Emergency: 1800-XXX-XXXX</div>
+  </div>
+</div>
+
+<div class="cl-stats">
+  <div class="cl-stat"><div class="cl-stat-num">15+</div><div class="cl-stat-label">Years of Service</div></div>
+  <div class="cl-stat"><div class="cl-stat-num">20K+</div><div class="cl-stat-label">Patients Treated</div></div>
+  <div class="cl-stat"><div class="cl-stat-num">15+</div><div class="cl-stat-label">Specialist Doctors</div></div>
+  <div class="cl-stat"><div class="cl-stat-num">98%</div><div class="cl-stat-label">Patient Satisfaction</div></div>
+</div>
+
+<div class="cl-section">
+  <div class="cl-section-label">What We Treat</div>
+  <div class="cl-section-title">Our Specialities</div>
+  <div class="cl-section-sub">Comprehensive care across all major medical departments under one roof.</div>
+  <div class="cl-specs-grid">
+    <div class="cl-spec"><div class="cl-spec-icon">🫀</div><div class="cl-spec-name">Cardiology</div><div class="cl-spec-sub">Heart & Vascular</div></div>
+    <div class="cl-spec"><div class="cl-spec-icon">🧠</div><div class="cl-spec-name">Neurology</div><div class="cl-spec-sub">Brain & Nerves</div></div>
+    <div class="cl-spec"><div class="cl-spec-icon">🦴</div><div class="cl-spec-name">Orthopaedics</div><div class="cl-spec-sub">Bones & Joints</div></div>
+    <div class="cl-spec"><div class="cl-spec-icon">👶</div><div class="cl-spec-name">Paediatrics</div><div class="cl-spec-sub">Child Health</div></div>
+    <div class="cl-spec"><div class="cl-spec-icon">🦷</div><div class="cl-spec-name">Dental</div><div class="cl-spec-sub">Oral Health</div></div>
+    <div class="cl-spec"><div class="cl-spec-icon">👁️</div><div class="cl-spec-name">Ophthalmology</div><div class="cl-spec-sub">Eye Care</div></div>
+    <div class="cl-spec"><div class="cl-spec-icon">🩺</div><div class="cl-spec-name">General Medicine</div><div class="cl-spec-sub">Primary Care</div></div>
+    <div class="cl-spec"><div class="cl-spec-icon">🔬</div><div class="cl-spec-name">Diagnostics</div><div class="cl-spec-sub">Lab & Imaging</div></div>
+  </div>
+</div>
+
+<div class="cl-section" style="background:#f9fdfc;">
+  <div class="cl-section-label">Meet the Team</div>
+  <div class="cl-section-title">Our Expert Doctors</div>
+  <div class="cl-section-sub">All our doctors are certified specialists with 10+ years of experience.</div>
+  <div class="cl-doctors-grid">
+    <div class="cl-doc">
+      <img class="cl-doc-img" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80" alt="Dr. Agarwal">
+      <div class="cl-doc-body">
+        <div class="cl-doc-name">Dr. Rajiv Agarwal</div>
+        <div class="cl-doc-spec">Senior Cardiologist</div>
+        <div class="cl-doc-exp">🎓 MBBS, MD, DM — 18 yrs exp.</div>
+        <button class="cl-doc-btn">Book Appointment →</button>
+      </div>
+    </div>
+    <div class="cl-doc">
+      <img class="cl-doc-img" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80" alt="Dr. Priya">
+      <div class="cl-doc-body">
+        <div class="cl-doc-name">Dr. Priya Sharma</div>
+        <div class="cl-doc-spec">Gynaecologist & Obstetrician</div>
+        <div class="cl-doc-exp">🎓 MBBS, MS — 12 yrs exp.</div>
+        <button class="cl-doc-btn">Book Appointment →</button>
+      </div>
+    </div>
+    <div class="cl-doc">
+      <img class="cl-doc-img" src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&q=80" alt="Dr. Kumar">
+      <div class="cl-doc-body">
+        <div class="cl-doc-name">Dr. Suresh Kumar</div>
+        <div class="cl-doc-spec">Orthopaedic Surgeon</div>
+        <div class="cl-doc-exp">🎓 MBBS, MS (Ortho) — 15 yrs exp.</div>
+        <button class="cl-doc-btn">Book Appointment →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cl-booking">
+  <div class="cl-booking-left">
+    <h2>Book Your Appointment Today</h2>
+    <p>Same-day appointments available. Fill the form and our team will confirm within 30 minutes.</p>
+    <div class="cl-contact-items">
+      <div class="cl-contact-item">📍 123 MG Road, Near City Mall, Delhi</div>
+      <div class="cl-contact-item">⏰ Mon–Sat: 8 AM – 9 PM | Sun: 10 AM – 4 PM</div>
+      <div class="cl-contact-item">📞 +91 98765-43210 | 📧 info@medcare.in</div>
+    </div>
+  </div>
+  <div class="cl-booking-form">
+    <div class="cl-form-title">Request an Appointment</div>
+    <div class="cl-form-row">
+      <input class="cl-input" placeholder="Your Full Name">
+      <input class="cl-input" placeholder="Phone Number">
+    </div>
+    <select class="cl-select" style="width:100%;margin-bottom:0.6rem;">
+      <option>Select Speciality</option>
+      <option>Cardiology</option><option>General Medicine</option><option>Orthopaedics</option><option>Paediatrics</option><option>Dental</option>
+    </select>
+    <input class="cl-input" placeholder="Preferred Date" style="width:100%;margin-bottom:0.6rem;">
+    <textarea class="cl-input" placeholder="Briefly describe your concern (optional)" rows="2" style="resize:none;width:100%;"></textarea>
+    <button class="cl-form-submit">Confirm Appointment →</button>
+  </div>
+</div>
+
+<div class="cl-section">
+  <div class="cl-section-label">What Patients Say</div>
+  <div class="cl-section-title">Patient Testimonials</div>
+  <div class="cl-test-grid">
+    <div class="cl-test"><div class="cl-stars">★★★★★</div><div class="cl-test-text">"Dr. Agarwal diagnosed my condition within minutes and the treatment was spot on. I feel so much better now. The staff is incredibly kind."</div><div class="cl-test-author">— Ramesh Gupta, Delhi</div></div>
+    <div class="cl-test"><div class="cl-stars">★★★★★</div><div class="cl-test-text">"Best clinic in the area. Got same-day appointment for my daughter's fever. The paediatric team was wonderful and very patient."</div><div class="cl-test-author">— Sunita Mehta, Noida</div></div>
+    <div class="cl-test"><div class="cl-stars">★★★★★</div><div class="cl-test-text">"Clean, professional, and very affordable. No unnecessary tests. Dr. Priya explained everything clearly. Highly recommend!"</div><div class="cl-test-author">— Anita Joshi, Gurgaon</div></div>
+  </div>
+</div>
+
+<div class="cl-footer">
+  <div class="cl-footer-logo">MedCare Hospital</div>
+  <div style="font-size:0.8rem;">© 2025 MedCare MultiSpeciality Hospital All rights reserved.</div>
+  <div class="cl-footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Sitemap</a></div>
+</div>
+<div class="cl-wa">💬</div>
+
+</div>`
+},
+
+/* ============ GYM ============ */
+gym: {
+  url: 'powerzonegym.in',
+  html: `
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500&display=swap');
+.gm *{box-sizing:border-box;margin:0;padding:0;}
+.gm{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#0d0d0d;}
+.gm-nav{background:#0d0d0d;padding:1rem 2.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(255,255,255,0.08);}
+.gm-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:0.02em;color:white;}
+.gm-logo span{color:#ff4500;}
+.gm-nav-links{display:flex;gap:2rem;}
+.gm-nav-links a{font-size:0.85rem;color:rgba(255,255,255,0.7);text-decoration:none;font-weight:500;letter-spacing:0.03em;}
+.gm-nav-links a:hover{color:#ff4500;}
+.gm-nav-btn{background:#ff4500;color:white;border:none;padding:0.55rem 1.4rem;border-radius:4px;font-size:0.85rem;font-weight:700;cursor:pointer;letter-spacing:0.05em;text-transform:uppercase;}
+
+/* HERO */
+.gm-hero{position:relative;height:500px;overflow:hidden;display:flex;align-items:center;}
+.gm-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.gm-hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(13,13,13,0.92) 40%,rgba(13,13,13,0.4) 100%);}
+.gm-hero-content{position:relative;z-index:2;padding:0 2.5rem;}
+.gm-hero-tag{font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#ff4500;margin-bottom:0.75rem;}
+.gm-hero-h1{font-family:'Barlow Condensed',sans-serif;font-size:4.5rem;font-weight:900;line-height:0.95;color:white;text-transform:uppercase;margin-bottom:1rem;}
+.gm-hero-h1 span{color:#ff4500;}
+.gm-hero-p{font-size:0.95rem;color:rgba(255,255,255,0.7);line-height:1.6;max-width:420px;margin-bottom:1.75rem;font-weight:300;}
+.gm-hero-btns{display:flex;gap:0.75rem;}
+.gm-btn-r{background:#ff4500;color:white;border:none;padding:0.8rem 1.75rem;border-radius:4px;font-size:0.88rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.05em;}
+.gm-btn-o{background:transparent;color:white;border:2px solid rgba(255,255,255,0.5);padding:0.8rem 1.75rem;border-radius:4px;font-size:0.88rem;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.05em;}
+.gm-hero-badge{position:absolute;bottom:2rem;right:2.5rem;background:rgba(255,69,0,0.15);border:1px solid #ff4500;border-radius:12px;padding:0.75rem 1.25rem;color:white;text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;}
+.gm-hero-badge .big{font-size:1.8rem;color:#ff4500;display:block;line-height:1;}
+
+
+/* STATS */
+.gm-stats{background:#ff4500;display:grid;grid-template-columns:repeat(4,1fr);}
+.gm-stat{padding:1.25rem;text-align:center;border-right:1px solid rgba(255,255,255,0.2);}
+.gm-stat:last-child{border:none;}
+.gm-stat-num{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:white;}
+.gm-stat-label{font-size:0.75rem;color:rgba(255,255,255,0.8);font-weight:500;}
+
+/* MEMBERSHIP */
+.gm-section{padding:2.5rem;}
+.gm-sec-label{font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#ff4500;margin-bottom:0.4rem;}
+.gm-sec-title{font-family:'Barlow Condensed',sans-serif;font-size:2.2rem;font-weight:900;color:white;text-transform:uppercase;margin-bottom:0.4rem;}
+.gm-sec-sub{font-size:0.88rem;color:rgba(255,255,255,0.55);margin-bottom:1.5rem;line-height:1.6;}
+.gm-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.gm-plan{background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.5rem;position:relative;transition:border-color 0.2s;}
+.gm-plan:hover{border-color:#ff4500;}
+.gm-plan.popular{border-color:#ff4500;background:#1f1208;}
+.gm-popular-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#ff4500;color:white;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 12px;border-radius:100px;}
+.gm-plan-name{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;color:white;text-transform:uppercase;margin-bottom:0.25rem;}
+.gm-plan-price{font-family:'Barlow Condensed',sans-serif;font-size:2.2rem;font-weight:900;color:#ff4500;margin-bottom:0.25rem;}
+.gm-plan-period{font-size:0.78rem;color:rgba(255,255,255,0.5);margin-bottom:1rem;}
+.gm-plan-features{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.25rem;}
+.gm-plan-features li{font-size:0.82rem;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:0.4rem;}
+.gm-plan-features li::before{content:'✓';color:#ff4500;font-weight:700;}
+.gm-plan-btn{width:100%;background:#ff4500;color:white;border:none;border-radius:4px;padding:0.7rem;font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;cursor:pointer;}
+.gm-plan-btn.outline{background:transparent;border:1.5px solid rgba(255,255,255,0.25);color:white;}
+.gm-plan-btn.outline:hover{border-color:#ff4500;color:#ff4500;}
+
+/* CLASSES */
+.gm-classes{background:#141414;padding:2.5rem;}
+.gm-class-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem;}
+.gm-class{border-radius:12px;overflow:hidden;position:relative;height:180px;}
+.gm-class img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
+.gm-class:hover img{transform:scale(1.05);}
+.gm-class-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 60%);}
+.gm-class-info{position:absolute;bottom:1rem;left:1rem;}
+.gm-class-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;color:white;text-transform:uppercase;}
+.gm-class-time{font-size:0.75rem;color:rgba(255,255,255,0.7);}
+
+/* TRAINERS */
+.gm-trainers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem;}
+.gm-trainer{border-radius:12px;overflow:hidden;background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);}
+.gm-trainer-img{width:100%;height:170px;object-fit:cover;object-position:top;}
+.gm-trainer-info{padding:1rem;}
+.gm-trainer-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1rem;color:white;text-transform:uppercase;margin-bottom:2px;}
+.gm-trainer-spec{font-size:0.75rem;color:#ff4500;font-weight:600;}
+.gm-trainer-exp{font-size:0.72rem;color:rgba(255,255,255,0.5);margin-top:0.3rem;}
+
+/* SCHEDULE */
+.gm-schedule{background:#1a1a1a;margin:0 2.5rem;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);}
+.gm-schedule-header{background:#ff4500;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;}
+.gm-schedule-header h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;color:white;text-transform:uppercase;}
+.gm-schedule-row{display:grid;grid-template-columns:80px 1fr 100px 90px;padding:0.85rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.05);align-items:center;}
+.gm-schedule-row:last-child{border:none;}
+.gm-schedule-time{font-size:0.8rem;font-weight:600;color:#ff4500;}
+.gm-schedule-class{font-size:0.88rem;font-weight:500;color:white;}
+.gm-schedule-trainer{font-size:0.78rem;color:rgba(255,255,255,0.5);}
+.gm-schedule-btn{background:rgba(255,69,0,0.15);color:#ff4500;border:1px solid rgba(255,69,0,0.3);border-radius:4px;padding:0.35rem 0.75rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;cursor:pointer;text-align:center;}
+
+/* FOOTER */
+.gm-footer{background:#0a0a0a;padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.06);}
+.gm-footer-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.2rem;color:white;}
+.gm-footer-logo span{color:#ff4500;}
+.gm-footer-links{display:flex;gap:1.5rem;font-size:0.8rem;}
+.gm-footer-links a{color:rgba(255,255,255,0.45);text-decoration:none;}
+/* =========================
+   TABLET (≤ 992px)
+   ========================= */
+@media (max-width: 992px){
+
+  .gm-nav{padding:1rem 1.5rem;}
+  .gm-nav-links{gap:1rem;}
+  
+  .gm-hero{height:420px;}
+  .gm-hero-content{padding:0 1.5rem;}
+  .gm-hero-h1{font-size:3.2rem;}
+  
+  .gm-stats{grid-template-columns:repeat(2,1fr);}
+  
+  .gm-plans{grid-template-columns:repeat(2,1fr);}
+  .gm-class-grid{grid-template-columns:repeat(2,1fr);}
+  .gm-trainers-grid{grid-template-columns:repeat(2,1fr);}
+  
+  .gm-schedule-row{
+    grid-template-columns:70px 1fr 80px 80px;
+    font-size:0.8rem;
+  }
+
+  .gm-footer{
+    flex-direction:column;
+    gap:1rem;
+    text-align:center;
+  }
+}
+
+
+/* =========================
+   MOBILE (≤ 768px)
+   ========================= */
+@media (max-width: 768px){
+
+  .gm-nav{
+    flex-direction:column;
+    gap:0.75rem;
+  }
+
+  .gm-nav-links{
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
+  .gm-hero{
+    height:auto;
+    padding:3rem 0;
+  }
+
+  .gm-hero-h1{
+    font-size:2.4rem;
+  }
+
+  .gm-hero-p{
+    font-size:0.85rem;
+  }
+
+  .gm-hero-btns{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .gm-hero-badge{
+    position:static;
+    margin-top:1rem;
+  }
+
+  .gm-section,
+  .gm-classes{
+    padding:2rem 1.25rem;
+  }
+
+  .gm-plans{
+    grid-template-columns:1fr;
+  }
+
+  .gm-class-grid{
+    grid-template-columns:1fr;
+  }
+
+  .gm-trainers-grid{
+    grid-template-columns:1fr;
+  }
+
+  .gm-schedule{
+    margin:0 1rem;
+  }
+
+  .gm-schedule-row{
+    grid-template-columns:1fr;
+    gap:0.3rem;
+    text-align:left;
+  }
+
+  .gm-schedule-btn{
+    width:fit-content;
+  }
+
+  .gm-stats{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* =========================
+   SMALL MOBILE (≤ 480px)
+   ========================= */
+@media (max-width: 480px){
+
+  .gm-logo{
+    font-size:1.2rem;
+  }
+
+  .gm-hero-h1{
+    font-size:2rem;
+  }
+
+  .gm-btn-r,
+  .gm-btn-o{
+    width:100%;
+    text-align:center;
+  }
+
+  .gm-plan-price{
+    font-size:1.8rem;
+  }
+
+  .gm-sec-title{
+    font-size:1.6rem;
+  }
+}
+</style>
+<div class="gm">
+<nav class="gm-nav">
+  <div class="gm-logo">POWER<span>ZONE</span></div>
+  <div class="gm-nav-links">
+    <a href="#">Home</a><a href="#">Classes</a><a href="#">Trainers</a><a href="#">Membership</a><a href="#">Schedule</a>
+  </div>
+  <button class="gm-nav-btn">Free Trial →</button>
+</nav>
+
+<div class="gm-hero">
+  <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=85" alt="Gym">
+  <div class="gm-hero-overlay"></div>
+  <div class="gm-hero-content">
+    <div class="gm-hero-tag">🏆 #1 Rated Gym in the Area</div>
+    <h1 class="gm-hero-h1">Train Hard.<br><span>Live</span><br>Strong.</h1>
+    <p class="gm-hero-p">State-of-the-art equipment, expert trainers, and a community that pushes you to be your best every single day.</p>
+    <div class="gm-hero-btns">
+      <button class="gm-btn-r">Start Free Trial</button>
+      <button class="gm-btn-o">View Schedule</button>
+    </div>
+  </div>
+  <div class="gm-hero-badge"><span class="big">7 AM</span>Opens Daily<br><span style="color:#ff4500;font-size:1.1rem;">to 10 PM</span></div>
+</div>
+
+<div class="gm-stats">
+  <div class="gm-stat"><div class="gm-stat-num">5000+</div><div class="gm-stat-label">Active Members</div></div>
+  <div class="gm-stat"><div class="gm-stat-num">20+</div><div class="gm-stat-label">Expert Trainers</div></div>
+  <div class="gm-stat"><div class="gm-stat-num">50+</div><div class="gm-stat-label">Weekly Classes</div></div>
+  <div class="gm-stat"><div class="gm-stat-num">10K+</div><div class="gm-stat-label">Sq.ft. Facility</div></div>
+</div>
+
+<div class="gm-section">
+  <div class="gm-sec-label">Choose Your Plan</div>
+  <div class="gm-sec-title">Membership Plans</div>
+  <div class="gm-sec-sub">No joining fee this month. Cancel anytime.</div>
+  <div class="gm-plans">
+    <div class="gm-plan">
+      <div class="gm-plan-name">Monthly</div>
+      <div class="gm-plan-price">₹1,200</div>
+      <div class="gm-plan-period">per month</div>
+      <ul class="gm-plan-features"><li>Full gym access</li><li>Locker room</li><li>2 group classes/wk</li><li>Fitness assessment</li></ul>
+      <button class="gm-plan-btn outline">Get Started</button>
+    </div>
+    <div class="gm-plan popular">
+      <div class="gm-popular-badge">Most Popular</div>
+      <div class="gm-plan-name">Quarterly</div>
+      <div class="gm-plan-price">₹2,999</div>
+      <div class="gm-plan-period">per 3 months — save 17%</div>
+      <ul class="gm-plan-features"><li>Full gym access</li><li>Unlimited group classes</li><li>1 PT session/month</li><li>Diet consultation</li><li>Locker + towel service</li></ul>
+      <button class="gm-plan-btn">Join Now →</button>
+    </div>
+    <div class="gm-plan">
+      <div class="gm-plan-name">Annual</div>
+      <div class="gm-plan-price">₹9,999</div>
+      <div class="gm-plan-period">per year — best value</div>
+      <ul class="gm-plan-features"><li>Everything in Quarterly</li><li>4 PT sessions/month</li><li>Body composition tracking</li><li>Nutrition plan</li><li>Guest passes (4/yr)</li></ul>
+      <button class="gm-plan-btn outline">Get Started</button>
+    </div>
+  </div>
+</div>
+
+<div class="gm-classes">
+  <div class="gm-sec-label">What We Offer</div>
+  <div class="gm-sec-title">Our Classes</div>
+  <div class="gm-sec-sub">Expert-led sessions for every fitness level.</div>
+  <div class="gm-class-grid">
+    <div class="gm-class"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80" alt="HIIT"><div class="gm-class-overlay"></div><div class="gm-class-info"><div class="gm-class-name">HIIT Blast</div><div class="gm-class-time">Mon/Wed/Fri — 6:00 AM</div></div></div>
+    <div class="gm-class"><img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=400&q=80" alt="Yoga"><div class="gm-class-overlay"></div><div class="gm-class-info"><div class="gm-class-name">Yoga Flow</div><div class="gm-class-time">Daily — 7:00 AM</div></div></div>
+    <div class="gm-class"><img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&q=80" alt="Strength"><div class="gm-class-overlay"></div><div class="gm-class-info"><div class="gm-class-name">Strength Training</div><div class="gm-class-time">Tue/Thu/Sat — 8:00 AM</div></div></div>
+  </div>
+</div>
+
+<div class="gm-section">
+  <div class="gm-sec-label">Expert Team</div>
+  <div class="gm-sec-title">Our Trainers</div>
+  <div class="gm-trainers-grid">
+    <div class="gm-trainer"><img class="gm-trainer-img" src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&q=80" alt="Rahul"><div class="gm-trainer-info"><div class="gm-trainer-name">Rahul Kapoor</div><div class="gm-trainer-spec">Head Trainer — Strength & Conditioning</div><div class="gm-trainer-exp">CSCS Certified | 8 years exp.</div></div></div>
+    <div class="gm-trainer"><img class="gm-trainer-img" src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&q=80" alt="Neha"><div class="gm-trainer-info"><div class="gm-trainer-name">Neha Malhotra</div><div class="gm-trainer-spec">Yoga & Mindfulness Coach</div><div class="gm-trainer-exp">RYT 500 Certified | 6 years exp.</div></div></div>
+    <div class="gm-trainer"><img class="gm-trainer-img" src="https://images.unsplash.com/photo-1567013127542-490d757e51cd?w=400&q=80" alt="Arun"><div class="gm-trainer-info"><div class="gm-trainer-name">Arun Tiwari</div><div class="gm-trainer-spec">HIIT & Functional Fitness</div><div class="gm-trainer-exp">ACE Certified | 5 years exp.</div></div></div>
+  </div>
+</div>
+
+<div style="padding:0 0 2.5rem;">
+  <div style="padding:0 2.5rem 1.5rem;">
+    <div class="gm-sec-label">Today's Timetable</div>
+    <div class="gm-sec-title">Class Schedule</div>
+  </div>
+  <div class="gm-schedule">
+    <div class="gm-schedule-header"><h3>Monday Schedule</h3><span style="font-size:0.8rem;color:rgba(255,255,255,0.7);">April 14, 2025</span></div>
+    <div class="gm-schedule-row"><span class="gm-schedule-time">6:00 AM</span><span class="gm-schedule-class">HIIT Blast — 45 mins</span><span class="gm-schedule-trainer">Rahul K.</span><div class="gm-schedule-btn">Book Slot</div></div>
+    <div class="gm-schedule-row"><span class="gm-schedule-time">7:00 AM</span><span class="gm-schedule-class">Morning Yoga Flow — 60 mins</span><span class="gm-schedule-trainer">Neha M.</span><div class="gm-schedule-btn">Book Slot</div></div>
+    <div class="gm-schedule-row"><span class="gm-schedule-time">8:00 AM</span><span class="gm-schedule-class">Strength Training — 60 mins</span><span class="gm-schedule-trainer">Arun T.</span><div class="gm-schedule-btn">Book Slot</div></div>
+    <div class="gm-schedule-row"><span class="gm-schedule-time">5:00 PM</span><span class="gm-schedule-class">Zumba Dance — 45 mins</span><span class="gm-schedule-trainer">Priya S.</span><div class="gm-schedule-btn">Book Slot</div></div>
+    <div class="gm-schedule-row"><span class="gm-schedule-time">6:30 PM</span><span class="gm-schedule-class">Evening HIIT — 30 mins</span><span class="gm-schedule-trainer">Rahul K.</span><div class="gm-schedule-btn">Book Slot</div></div>
+  </div>
+</div>
+
+<div class="gm-footer">
+  <div class="gm-footer-logo">POWER<span>ZONE</span> FITNESS</div>
+  <div style="font-size:0.8rem;color:rgba(255,255,255,0.4);">© 2025 PowerZone. All rights reserved.</div>
+  <div class="gm-footer-links"><a href="#">Privacy</a><a href="#">Contact</a><a href="#">Instagram</a></div>
+</div>
+</div>`
+},
+
+/* ============ SALON ============ */
+salon: {
+  url: 'glowgracesalon.in',
+  html: `
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap');
+.sl *{box-sizing:border-box;margin:0;padding:0;}
+.sl{font-family:'DM Sans',sans-serif;color:#2a1f2d;background:#fdf9f6;}
+.sl-nav{background:rgba(253,249,246,0.95);padding:1.1rem 2.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(114,46,209,0.1);}
+.sl-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:#2a1f2d;letter-spacing:0.02em;}
+.sl-logo em{font-style:italic;color:#722ed1;}
+.sl-nav-links{display:flex;gap:2rem;}
+.sl-nav-links a{font-size:0.85rem;color:#555;text-decoration:none;font-weight:400;letter-spacing:0.02em;}
+.sl-nav-links a:hover{color:#722ed1;}
+.sl-nav-btn{background:#722ed1;color:white;border:none;padding:0.55rem 1.3rem;border-radius:100px;font-size:0.83rem;font-weight:500;cursor:pointer;}
+
+/* HERO */
+.sl-hero{display:grid;grid-template-columns:1.1fr 1fr;min-height:500px;}
+.sl-hero-left{padding:3rem 2.5rem;background:#f9f4ff;display:flex;flex-direction:column;justify-content:center;}
+.sl-hero-pretag{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:#9b5de5;margin-bottom:0.75rem;font-weight:500;}
+.sl-hero-h1{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;line-height:1.1;color:#2a1f2d;margin-bottom:1rem;}
+.sl-hero-h1 em{font-style:italic;color:#722ed1;}
+.sl-hero-p{font-size:0.92rem;color:#6a5a73;line-height:1.75;margin-bottom:2rem;font-weight:300;max-width:380px;}
+.sl-hero-actions{display:flex;gap:0.75rem;}
+.sl-btn-p{background:#722ed1;color:white;border:none;padding:0.75rem 1.6rem;border-radius:100px;font-size:0.88rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:0.4rem;}
+.sl-btn-o{background:transparent;color:#722ed1;border:1.5px solid #722ed1;padding:0.75rem 1.6rem;border-radius:100px;font-size:0.88rem;font-weight:500;cursor:pointer;}
+.sl-hero-rating{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(114,46,209,0.15);display:flex;align-items:center;gap:1rem;}
+.sl-stars{color:#f5a623;font-size:1.1rem;}
+.sl-rating-text{font-size:0.82rem;color:#7a6a83;}
+.sl-hero-right{position:relative;}
+.sl-hero-right img{width:100%;height:100%;object-fit:cover;}
+.sl-hero-right-badge{position:absolute;bottom:2rem;left:-1.5rem;background:white;border-radius:14px;padding:0.85rem 1.1rem;box-shadow:0 8px 32px rgba(114,46,209,0.15);border:1px solid rgba(114,46,209,0.1);}
+.sl-badge-text{font-size:0.72rem;color:#7a6a83;margin-bottom:0.2rem;}
+.sl-badge-value{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:#722ed1;}
+
+/* SERVICES */
+.sl-section{padding:2.5rem;}
+.sl-section-label{font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#9b5de5;margin-bottom:0.4rem;}
+.sl-section-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:#2a1f2d;margin-bottom:0.4rem;}
+.sl-section-sub{font-size:0.88rem;color:#7a6a83;margin-bottom:1.75rem;line-height:1.65;}
+.sl-services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;}
+.sl-service{background:white;border:1px solid rgba(114,46,209,0.12);border-radius:14px;padding:1.25rem;transition:all 0.25s;cursor:default;}
+.sl-service:hover{border-color:#722ed1;background:#f9f4ff;transform:translateY(-2px);}
+.sl-service-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;}
+.sl-service-icon{font-size:1.4rem;}
+.sl-service-price{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:#722ed1;}
+.sl-service-name{font-size:0.88rem;font-weight:500;color:#2a1f2d;margin-bottom:0.25rem;}
+.sl-service-sub{font-size:0.75rem;color:#9a8aa3;line-height:1.5;}
+.sl-service-time{margin-top:0.75rem;font-size:0.72rem;color:#b09fc0;display:flex;align-items:center;gap:0.3rem;}
+
+/* GALLERY */
+.sl-gallery{padding:0 2.5rem 2.5rem;}
+.sl-gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:180px 180px;gap:0.75rem;margin-top:1.5rem;}
+.sl-gal-item{border-radius:12px;overflow:hidden;position:relative;}
+.sl-gal-item:first-child{grid-row:span 2;grid-column:span 1;}
+.sl-gal-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
+.sl-gal-item:hover img{transform:scale(1.04);}
+
+/* STYLISTS */
+.sl-stylists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem;}
+.sl-stylist{text-align:center;}
+.sl-stylist-img-wrap{width:90px;height:90px;border-radius:50%;overflow:hidden;margin:0 auto 0.75rem;border:3px solid #e8d5ff;}
+.sl-stylist img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.sl-stylist-name{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1rem;color:#2a1f2d;margin-bottom:2px;}
+.sl-stylist-role{font-size:0.75rem;color:#9b5de5;font-weight:500;margin-bottom:0.3rem;}
+.sl-stylist-exp{font-size:0.72rem;color:#9a8aa3;}
+
+/* TESTIMONIALS */
+.sl-test-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem;margin-top:1.5rem;}
+.sl-test{background:white;border:1px solid rgba(114,46,209,0.1);border-radius:14px;padding:1.25rem;}
+.sl-test-stars{color:#f5a623;font-size:0.85rem;margin-bottom:0.5rem;}
+.sl-test-quote{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:#3a2f44;line-height:1.6;margin-bottom:0.75rem;}
+.sl-test-author{display:flex;align-items:center;gap:0.6rem;}
+.sl-test-avatar{width:32px;height:32px;border-radius:50%;background:#e8d5ff;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:600;color:#722ed1;}
+.sl-test-name{font-size:0.8rem;font-weight:500;color:#2a1f2d;}
+.sl-test-loc{font-size:0.72rem;color:#9a8aa3;}
+
+/* BOOKING */
+.sl-booking{background:linear-gradient(135deg,#722ed1,#9b5de5);padding:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;}
+.sl-booking-left{color:white;}
+.sl-booking-left h2{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:700;margin-bottom:0.75rem;}
+.sl-booking-left p{font-size:0.88rem;opacity:0.85;line-height:1.7;margin-bottom:1rem;}
+.sl-contact-items{display:flex;flex-direction:column;gap:0.5rem;}
+.sl-contact-item{font-size:0.83rem;color:rgba(255,255,255,0.85);display:flex;align-items:center;gap:0.5rem;}
+.sl-form{background:white;border-radius:16px;padding:1.5rem;}
+.sl-form-title{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1rem;color:#2a1f2d;margin-bottom:1rem;}
+.sl-input{width:100%;border:1px solid #e0d0f0;border-radius:8px;padding:0.6rem 0.9rem;font-size:0.83rem;font-family:'DM Sans',sans-serif;color:#2a1f2d;margin-bottom:0.6rem;}
+.sl-select{width:100%;border:1px solid #e0d0f0;border-radius:8px;padding:0.6rem 0.9rem;font-size:0.83rem;font-family:'DM Sans',sans-serif;color:#2a1f2d;background:white;margin-bottom:0.6rem;}
+.sl-form-submit{width:100%;background:#722ed1;color:white;border:none;border-radius:100px;padding:0.75rem;font-size:0.88rem;font-weight:500;cursor:pointer;}
+
+/* FOOTER */
+.sl-footer{background:#1a0d2e;padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;}
+.sl-footer-logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1rem;color:white;}
+.sl-footer-logo em{font-style:italic;color:#b57bee;}
+.sl-footer-links{display:flex;gap:1.5rem;font-size:0.8rem;}
+.sl-footer-links a{color:rgba(255,255,255,0.45);text-decoration:none;}
+/* ================= RESPONSIVE ================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+
+  .sl-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .sl-hero-right {
+    height: 320px;
+  }
+
+  .sl-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sl-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+
+  .sl-gal-item:first-child {
+    grid-row: span 1;
+  }
+
+  .sl-stylists-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sl-test-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sl-booking {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Mobile */
+@media (max-width: 640px) {
+
+  .sl-nav {
+    padding: 1rem;
+  }
+
+  .sl-nav-links {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: #fdf9f6;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    display: none;
+    border-bottom: 1px solid rgba(114,46,209,0.1);
+  }
+
+  .sl-nav-links.active {
+    display: flex;
+  }
+
+  .sl-menu-toggle {
+    display: block;
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+
+  .sl-nav-btn {
+    display: none;
+  }
+
+  .sl-hero-left {
+    padding: 2rem 1.2rem;
+  }
+
+  .sl-hero-h1 {
+    font-size: 2rem;
+  }
+
+  .sl-hero-p {
+    font-size: 0.85rem;
+  }
+
+  .sl-hero-actions {
+    flex-direction: column;
+  }
+
+  .sl-section {
+    padding: 1.5rem 1rem;
+  }
+
+  .sl-gallery {
+    padding: 0 1rem 1.5rem;
+  }
+
+  .sl-services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sl-stylists-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sl-booking {
+    padding: 1.5rem 1rem;
+  }
+
+  .sl-footer {
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: center;
+  }
+}
+
+/* Hide menu toggle on desktop */
+.sl-menu-toggle {
+  display: none;
+}
+</style>
+<div class="sl">
+<nav class="sl-nav">
+  <div class="sl-logo">Glow &amp; <em>Grace</em></div>
+  <div class="sl-nav-links">
+    <a href="#">Home</a><a href="#">Services</a><a href="#">Gallery</a><a href="#">Our Team</a><a href="#">Book Now</a>
+  </div>
+  <button class="sl-nav-btn">Book Appointment</button>
+</nav>
+
+<div class="sl-hero">
+  <div class="sl-hero-left">
+    <div class="sl-hero-pretag">✨ Premium Beauty Studio</div>
+    <h1 class="sl-hero-h1">Where Beauty<br>Meets <em>Confidence</em></h1>
+    <p class="sl-hero-p">Experience the finest hair, skin, and nail care by expert stylists in a luxurious, relaxing atmosphere made just for you.</p>
+    <div class="sl-hero-actions">
+      <button class="sl-btn-p">📅 Book a Session</button>
+      <button class="sl-btn-o">View Services</button>
+    </div>
+    <div class="sl-hero-rating">
+      <span class="sl-stars">★★★★★</span>
+      <span class="sl-rating-text"><strong>4.9/5</strong> from 450+ happy clients</span>
+    </div>
+  </div>
+  <div class="sl-hero-right">
+    <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&q=85" alt="Salon">
+    <div class="sl-hero-right-badge">
+      <div class="sl-badge-text">Experience</div>
+      <div class="sl-badge-value">8+ Years of Excellence</div>
+    </div>
+  </div>
+</div>
+
+<div class="sl-section">
+  <div class="sl-section-label">What We Offer</div>
+  <div class="sl-section-title">Our Services & Pricing</div>
+  <div class="sl-section-sub">All services use premium products. Prices vary based on hair length and complexity.</div>
+  <div class="sl-services-grid">
+    <div class="sl-service"><div class="sl-service-top"><span class="sl-service-icon">✂️</span><span class="sl-service-price">₹299+</span></div><div class="sl-service-name">Haircut & Styling</div><div class="sl-service-sub">Precision cut with blow-dry and style finish by expert stylist</div><div class="sl-service-time">⏱ 45–60 mins</div></div>
+    <div class="sl-service"><div class="sl-service-top"><span class="sl-service-icon">💎</span><span class="sl-service-price">₹1,499+</span></div><div class="sl-service-name">Keratin Treatment</div><div class="sl-service-sub">Smoothing & frizz control treatment for silky, manageable hair</div><div class="sl-service-time">⏱ 2–3 hrs</div></div>
+    <div class="sl-service"><div class="sl-service-top"><span class="sl-service-icon">🌸</span><span class="sl-service-price">₹599+</span></div><div class="sl-service-name">Facial & Cleanup</div><div class="sl-service-sub">Deep cleansing facial with premium skincare products</div><div class="sl-service-time">⏱ 60–75 mins</div></div>
+    <div class="sl-service"><div class="sl-service-top"><span class="sl-service-icon">💅</span><span class="sl-service-price">₹399+</span></div><div class="sl-service-name">Manicure & Pedicure</div><div class="sl-service-sub">Complete nail care with scrub, massage, and gel polish</div><div class="sl-service-time">⏱ 60 mins</div></div>
+    <div class="sl-service"><div class="sl-service-top"><span class="sl-service-icon">👰</span><span class="sl-service-price">₹4,999+</span></div><div class="sl-service-name">Bridal Makeup</div><div class="sl-service-sub">Airbrush bridal makeup with trial session and hairstyling</div><div class="sl-service-time">⏱ 3–4 hrs</div></div>
+    <div class="sl-service"><div class="sl-service-top"><span class="sl-service-icon">🎨</span><span class="sl-service-price">₹999+</span></div><div class="sl-service-name">Hair Colouring</div><div class="sl-service-sub">Global colour, highlights, balayage using Schwarzkopf & Wella</div><div class="sl-service-time">⏱ 2–4 hrs</div></div>
+  </div>
+</div>
+
+<div class="sl-gallery">
+  <div class="sl-section-label">Our Work</div>
+  <div class="sl-section-title">Gallery</div>
+  <div class="sl-gallery-grid">
+    <div class="sl-gal-item"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80" alt="Hair"></div>
+    <div class="sl-gal-item"><img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=400&q=80" alt="Makeup"></div>
+    <div class="sl-gal-item"><img src="https://images.unsplash.com/photo-1470259078422-826894b933aa?w=400&q=80" alt="Nails"></div>
+    <div class="sl-gal-item"><img src="https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?w=400&q=80" alt="Colour"></div>
+    <div class="sl-gal-item"><img src="https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=400&q=80" alt="Spa"></div>
+  </div>
+</div>
+
+<div class="sl-section" style="background:#f9f4ff;">
+  <div class="sl-section-label">Expert Team</div>
+  <div class="sl-section-title">Meet Our Stylists</div>
+  <div class="sl-stylists-grid">
+    <div class="sl-stylist"><div class="sl-stylist-img-wrap"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80" alt="Ananya"></div><div class="sl-stylist-name">Ananya Mehta</div><div class="sl-stylist-role">Senior Hair Stylist & Colourist</div><div class="sl-stylist-exp">8 years experience</div></div>
+    <div class="sl-stylist"><div class="sl-stylist-img-wrap"><img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200&q=80" alt="Rekha"></div><div class="sl-stylist-name">Rekha Sharma</div><div class="sl-stylist-role">Bridal Makeup Artist</div><div class="sl-stylist-exp">6 years experience</div></div>
+    <div class="sl-stylist"><div class="sl-stylist-img-wrap"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80" alt="Priya"></div><div class="sl-stylist-name">Priya Nair</div><div class="sl-stylist-role">Skin & Nail Care Specialist</div><div class="sl-stylist-exp">5 years experience</div></div>
+  </div>
+</div>
+
+<div class="sl-section">
+  <div class="sl-section-label">Client Love</div>
+  <div class="sl-section-title">What Our Clients Say</div>
+  <div class="sl-test-grid">
+    <div class="sl-test"><div class="sl-test-stars">★★★★★</div><div class="sl-test-quote">"Ananya worked magic on my hair! The balayage looks absolutely stunning and so natural. This is my go-to salon now."</div><div class="sl-test-author"><div class="sl-test-avatar">SM</div><div><div class="sl-test-name">Sneha Malhotra</div><div class="sl-test-loc">Delhi NCR</div></div></div></div>
+    <div class="sl-test"><div class="sl-test-stars">★★★★★</div><div class="sl-test-quote">"Got my bridal makeup done here. Rekha is an absolute artist. Every guest at my wedding complimented my look!"</div><div class="sl-test-author"><div class="sl-test-avatar">RP</div><div><div class="sl-test-name">Ritika Patel</div><div class="sl-test-loc">Noida</div></div></div></div>
+    <div class="sl-test"><div class="sl-test-stars">★★★★★</div><div class="sl-test-quote">"The facial here is unlike any other. My skin literally glowed for two weeks. The ambience is so calming and luxurious."</div><div class="sl-test-author"><div class="sl-test-avatar">AK</div><div><div class="sl-test-name">Anita Kumar</div><div class="sl-test-loc">Gurgaon</div></div></div></div>
+    <div class="sl-test"><div class="sl-test-stars">★★★★★</div><div class="sl-test-quote">"Best manicure I've ever had. Priya is so meticulous and the gel polish has lasted 3 weeks without a chip!"</div><div class="sl-test-author"><div class="sl-test-avatar">DV</div><div><div class="sl-test-name">Divya Verma</div><div class="sl-test-loc">Delhi</div></div></div></div>
+  </div>
+</div>
+
+<div class="sl-booking">
+  <div class="sl-booking-left">
+    <h2>Book Your Session Today</h2>
+    <p>Walk-ins welcome, but appointments get priority. Book in 2 minutes and we'll confirm instantly on WhatsApp.</p>
+    <div class="sl-contact-items">
+      <div class="sl-contact-item">📍 45 Green Park Main, New Delhi - 110016</div>
+      <div class="sl-contact-item">⏰ Tue–Sun: 10 AM – 8 PM (Closed Monday)</div>
+      <div class="sl-contact-item">📞 +91 99887-76655 | 💬 WhatsApp us</div>
+    </div>
+  </div>
+  <div class="sl-form">
+    <div class="sl-form-title">Quick Booking Form</div>
+    <input class="sl-input" placeholder="Your Name">
+    <input class="sl-input" placeholder="Phone / WhatsApp Number">
+    <select class="sl-select"><option>Select Service</option><option>Haircut & Styling</option><option>Keratin Treatment</option><option>Facial & Cleanup</option><option>Manicure & Pedicure</option><option>Bridal Makeup</option><option>Hair Colouring</option></select>
+    <input class="sl-input" placeholder="Preferred Date & Time">
+    <button class="sl-form-submit">Confirm Appointment ✨</button>
+  </div>
+</div>
+
+<div class="sl-footer">
+  <div class="sl-footer-logo">Glow &amp; <em>Grace</em> Studio</div>
+  <div style="font-size:0.8rem;color:rgba(255,255,255,0.35);">© 2025 Glow & Grace. All rights reserved.</div>
+  <div class="sl-footer-links"><a href="#">Privacy</a><a href="#">Instagram</a><a href="#">WhatsApp</a></div>
+</div>
+</div>`
+},
+
+/* ============ SMALL BIZ ============ */
+biz: {
+  url: 'sevendaysmart.in',
+  html: `
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+.bz *{box-sizing:border-box;margin:0;padding:0;}
+.bz{font-family:'Plus Jakarta Sans',sans-serif;color:#1a1a2e;background:#f8f9fe;}
+.bz-nav{background:#fff;padding:1rem 2.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;border-bottom:1px solid #eef0fb;box-shadow:0 2px 16px rgba(22,119,255,0.06);}
+.bz-logo{font-weight:800;font-size:1.2rem;color:#1677ff;display:flex;align-items:center;gap:0.5rem;}
+.bz-logo-icon{background:#1677ff;color:white;width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;}
+.bz-nav-links{display:flex;gap:1.75rem;}
+.bz-nav-links a{font-size:0.85rem;color:#555;text-decoration:none;font-weight:500;}
+.bz-nav-links a:hover{color:#1677ff;}
+.bz-nav-btn{background:#1677ff;color:white;border:none;padding:0.55rem 1.25rem;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;}
+
+/* HERO */
+.bz-hero{display:grid;grid-template-columns:1.1fr 1fr;min-height:440px;background:#fff;}
+.bz-hero-left{padding:3rem 2.5rem;display:flex;flex-direction:column;justify-content:center;}
+.bz-hero-tag{display:inline-flex;align-items:center;gap:0.5rem;background:#eff6ff;color:#1677ff;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.35rem 0.85rem;border-radius:100px;margin-bottom:1rem;}
+.bz-hero-h1{font-size:2.5rem;font-weight:800;line-height:1.15;color:#1a1a2e;margin-bottom:1rem;}
+.bz-hero-h1 span{color:#1677ff;}
+.bz-hero-p{font-size:0.92rem;color:#6b7280;line-height:1.7;margin-bottom:1.75rem;font-weight:300;max-width:380px;}
+.bz-hero-btns{display:flex;gap:0.75rem;flex-wrap:wrap;}
+.bz-btn-b{background:#1677ff;color:white;border:none;padding:0.75rem 1.5rem;border-radius:8px;font-size:0.88rem;font-weight:600;cursor:pointer;}
+.bz-btn-w{background:#f0f7ff;color:#1677ff;border:1.5px solid #c5dcff;padding:0.75rem 1.5rem;border-radius:8px;font-size:0.88rem;font-weight:600;cursor:pointer;}
+.bz-hero-trust{display:flex;gap:1.5rem;margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid #eef0fb;}
+.bz-trust-item{display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:#6b7280;font-weight:500;}
+.bz-hero-right{position:relative;overflow:hidden;}
+.bz-hero-right img{width:100%;height:100%;object-fit:cover;}
+.bz-offer-badge{position:absolute;top:1.5rem;right:1.5rem;background:#ff4d4f;color:white;border-radius:12px;padding:0.75rem 1rem;text-align:center;font-weight:700;font-size:0.85rem;}
+.bz-offer-badge .pct{font-size:1.6rem;display:block;line-height:1;}
+
+/* CATEGORIES */
+.bz-cats{background:#fff;padding:1.5rem 2.5rem;border-bottom:1px solid #eef0fb;}
+.bz-cats-row{display:flex;gap:0.75rem;overflow-x:auto;padding-bottom:0.25rem;}
+.bz-cat{background:#f8f9fe;border:1.5px solid #eef0fb;border-radius:10px;padding:0.6rem 1.1rem;font-size:0.82rem;font-weight:600;color:#3a3a5c;cursor:pointer;white-space:nowrap;transition:all 0.2s;}
+.bz-cat:hover,.bz-cat.active{background:#1677ff;color:white;border-color:#1677ff;}
+
+/* OFFERS */
+.bz-section{padding:2rem 2.5rem;}
+.bz-sec-label{font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#1677ff;margin-bottom:0.4rem;}
+.bz-sec-title{font-size:1.5rem;font-weight:800;color:#1a1a2e;margin-bottom:0.4rem;}
+.bz-sec-sub{font-size:0.85rem;color:#6b7280;margin-bottom:1.5rem;line-height:1.6;}
+.bz-offers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;}
+.bz-offer{border-radius:14px;overflow:hidden;position:relative;}
+.bz-offer img{width:100%;height:140px;object-fit:cover;}
+.bz-offer-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,46,0.85) 0%,transparent 55%);}
+.bz-offer-info{position:absolute;bottom:0;left:0;right:0;padding:0.85rem;}
+.bz-offer-tag{background:#1677ff;color:white;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;display:inline-block;margin-bottom:0.3rem;}
+.bz-offer-name{color:white;font-weight:700;font-size:0.85rem;}
+
+/* PRODUCTS */
+.bz-products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;}
+.bz-product{background:white;border:1px solid #eef0fb;border-radius:14px;overflow:hidden;transition:box-shadow 0.2s,transform 0.2s;}
+.bz-product:hover{box-shadow:0 8px 24px rgba(22,119,255,0.1);transform:translateY(-2px);}
+.bz-product-img{width:100%;height:120px;object-fit:cover;}
+.bz-product-body{padding:0.85rem;}
+.bz-product-name{font-size:0.82rem;font-weight:600;color:#1a1a2e;margin-bottom:0.25rem;}
+.bz-product-desc{font-size:0.72rem;color:#9ca3af;margin-bottom:0.6rem;}
+.bz-product-price{display:flex;align-items:center;gap:0.5rem;}
+.bz-product-now{font-size:0.95rem;font-weight:700;color:#1677ff;}
+.bz-product-old{font-size:0.75rem;color:#9ca3af;text-decoration:line-through;}
+.bz-product-btn{width:100%;background:#eff6ff;color:#1677ff;border:none;border-radius:8px;padding:0.4rem;font-size:0.75rem;font-weight:600;cursor:pointer;margin-top:0.6rem;}
+.bz-product-btn:hover{background:#1677ff;color:white;}
+
+/* WHY */
+.bz-why{background:#1a1a2e;padding:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;}
+.bz-why-left{color:white;}
+.bz-why-left h2{font-size:1.7rem;font-weight:800;margin-bottom:0.5rem;line-height:1.2;}
+.bz-why-left p{font-size:0.88rem;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:1.5rem;}
+.bz-why-points{display:flex;flex-direction:column;gap:0.75rem;}
+.bz-why-pt{display:flex;gap:0.75rem;align-items:flex-start;}
+.bz-why-icon{width:36px;height:36px;background:rgba(22,119,255,0.15);border:1px solid rgba(22,119,255,0.3);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;}
+.bz-why-text{font-size:0.83rem;color:rgba(255,255,255,0.75);line-height:1.5;}
+.bz-why-text strong{color:white;display:block;margin-bottom:2px;font-size:0.85rem;}
+.bz-why-right img{width:100%;height:260px;object-fit:cover;border-radius:16px;}
+
+/* REVIEWS */
+.bz-reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-top:1.5rem;}
+.bz-review{background:white;border:1px solid #eef0fb;border-radius:14px;padding:1.25rem;}
+.bz-review-stars{color:#f5a623;font-size:0.85rem;margin-bottom:0.5rem;}
+.bz-review-text{font-size:0.82rem;color:#4b5563;line-height:1.6;margin-bottom:0.75rem;}
+.bz-review-author{font-size:0.78rem;font-weight:600;color:#1a1a2e;}
+
+/* CONTACT */
+.bz-contact{padding:2.5rem;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;}
+.bz-contact-info h2{font-size:1.5rem;font-weight:800;color:#1a1a2e;margin-bottom:0.5rem;}
+.bz-contact-info p{font-size:0.88rem;color:#6b7280;line-height:1.7;margin-bottom:1.5rem;}
+.bz-info-items{display:flex;flex-direction:column;gap:0.75rem;}
+.bz-info-item{display:flex;align-items:flex-start;gap:0.75rem;font-size:0.85rem;color:#4b5563;}
+.bz-info-icon{width:36px;height:36px;background:#eff6ff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;}
+.bz-cf-input{width:100%;border:1.5px solid #eef0fb;border-radius:8px;padding:0.65rem 0.9rem;font-size:0.83rem;font-family:'Plus Jakarta Sans',sans-serif;color:#1a1a2e;margin-bottom:0.6rem;background:#f8f9fe;}
+.bz-cf-submit{width:100%;background:#1677ff;color:white;border:none;border-radius:8px;padding:0.8rem;font-size:0.88rem;font-weight:600;cursor:pointer;}
+
+/* FOOTER */
+.bz-footer{background:#0f1729;padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;}
+.bz-footer-logo{font-weight:800;font-size:1rem;color:#1677ff;}
+.bz-footer-links{display:flex;gap:1.5rem;font-size:0.8rem;}
+.bz-footer-links a{color:rgba(255,255,255,0.4);text-decoration:none;}
+/* ================= RESPONSIVE ================= */
+
+/* Tablet (<=1024px) */
+@media (max-width: 1024px) {
+
+  .bz-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .bz-hero-right {
+    height: 320px;
+  }
+
+  .bz-hero-h1 {
+    font-size: 2rem;
+  }
+
+  .bz-hero-trust {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .bz-offers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bz-products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bz-why {
+    grid-template-columns: 1fr;
+  }
+
+  .bz-why-right img {
+    height: 220px;
+  }
+
+  .bz-reviews-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bz-contact {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Mobile (<=640px) */
+@media (max-width: 640px) {
+
+  .bz-nav {
+    padding: 1rem;
+  }
+
+  .bz-nav-links {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: white;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    display: none;
+    border-bottom: 1px solid #eef0fb;
+  }
+
+  .bz-nav-links.active {
+    display: flex;
+  }
+
+  .bz-menu-toggle {
+    display: block;
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+
+  .bz-nav-btn {
+    display: none;
+  }
+
+  .bz-hero-left {
+    padding: 2rem 1.2rem;
+  }
+
+  .bz-hero-h1 {
+    font-size: 1.6rem;
+  }
+
+  .bz-hero-p {
+    font-size: 0.85rem;
+  }
+
+  .bz-hero-btns {
+    flex-direction: column;
+  }
+
+  .bz-hero-trust {
+    flex-direction: column;
+  }
+
+  .bz-cats {
+    padding: 1rem;
+  }
+
+  .bz-section {
+    padding: 1.5rem 1rem;
+  }
+
+  .bz-offers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bz-products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bz-reviews-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bz-contact {
+    padding: 1.5rem 1rem;
+  }
+
+  .bz-footer {
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: center;
+  }
+}
+
+/* Hide menu toggle on desktop */
+.bz-menu-toggle {
+  display: none;
+}
+</style>
+<div class="bz">
+<nav class="bz-nav">
+  <div class="bz-logo"><div class="bz-logo-icon">🛒</div> LocalMart</div>
+  <div class="bz-nav-links">
+    <a href="#">Home</a><a href="#">Products</a><a href="#">Offers</a><a href="#">About Us</a><a href="#">Contact</a>
+  </div>
+  <button class="bz-nav-btn">📞 Call Us</button>
+</nav>
+
+<div class="bz-hero">
+  <div class="bz-hero-left">
+    <div class="bz-hero-tag">🏪 Serving the Community Since 2010</div>
+    <h1 class="bz-hero-h1">Your <span>Neighbourhood</span><br>Store, Upgraded</h1>
+    <p class="bz-hero-p">Quality products, unbeatable local prices, and same-day home delivery. Everything you need, right in your area.</p>
+    <div class="bz-hero-btns">
+      <button class="bz-btn-b">Shop Now →</button>
+      <button class="bz-btn-w">📦 Track Order</button>
+    </div>
+    <div class="bz-hero-trust">
+      <div class="bz-trust-item">✅ 10,000+ Happy Customers</div>
+      <div class="bz-trust-item">🚚 Free Delivery Above ₹500</div>
+      <div class="bz-trust-item">⚡ Same Day Delivery</div>
+    </div>
+  </div>
+  <div class="bz-hero-right">
+    <img src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=700&q=85" alt="Store">
+    <div class="bz-offer-badge"><span class="pct">20%</span>OFF This Weekend</div>
+  </div>
+</div>
+
+<div class="bz-cats">
+  <div class="bz-cats-row">
+    <div class="bz-cat active">All Products</div>
+    <div class="bz-cat">Groceries</div>
+    <div class="bz-cat">Household</div>
+    <div class="bz-cat">Personal Care</div>
+    <div class="bz-cat">Snacks & Beverages</div>
+    <div class="bz-cat">Fresh Produce</div>
+    <div class="bz-cat">Dairy & Eggs</div>
+    <div class="bz-cat">Cleaning Supplies</div>
+  </div>
+</div>
+
+<div class="bz-section">
+  <div class="bz-sec-label">This Week</div>
+  <div class="bz-sec-title">Hot Offers 🔥</div>
+  <div class="bz-offers-grid">
+    <div class="bz-offer"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=80" alt="Groceries"><div class="bz-offer-overlay"></div><div class="bz-offer-info"><div class="bz-offer-tag">30% OFF</div><div class="bz-offer-name">Fresh Vegetables & Fruits</div></div></div>
+    <div class="bz-offer"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80" alt="Household"><div class="bz-offer-overlay"></div><div class="bz-offer-info"><div class="bz-offer-tag">Buy 2 Get 1</div><div class="bz-offer-name">Household Essentials</div></div></div>
+    <div class="bz-offer"><img src="https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=400&q=80" alt="Dairy"><div class="bz-offer-overlay"></div><div class="bz-offer-info"><div class="bz-offer-tag">Daily Fresh</div><div class="bz-offer-name">Dairy & Eggs — Delivered Fresh</div></div></div>
+  </div>
+</div>
+
+<div class="bz-section" style="background:white;padding-top:0;margin-top:0;">
+  <div class="bz-sec-label">Popular</div>
+  <div class="bz-sec-title">Top Products</div>
+  <div class="bz-products-grid">
+    <div class="bz-product"><img class="bz-product-img" src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=300&q=80" alt="Apples"><div class="bz-product-body"><div class="bz-product-name">Fresh Red Apples (1kg)</div><div class="bz-product-desc">Farm-fresh, imported</div><div class="bz-product-price"><span class="bz-product-now">₹120</span><span class="bz-product-old">₹160</span></div><button class="bz-product-btn">Add to Cart +</button></div></div>
+    <div class="bz-product"><img class="bz-product-img" src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=300&q=80" alt="Milk"><div class="bz-product-body"><div class="bz-product-name">Fresh Milk (1 Litre)</div><div class="bz-product-desc">Delivered daily by 7 AM</div><div class="bz-product-price"><span class="bz-product-now">₹58</span><span class="bz-product-old">₹65</span></div><button class="bz-product-btn">Add to Cart +</button></div></div>
+    <div class="bz-product"><img class="bz-product-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80" alt="Bread"><div class="bz-product-body"><div class="bz-product-name">Whole Wheat Bread</div><div class="bz-product-desc">Baked fresh daily</div><div class="bz-product-price"><span class="bz-product-now">₹45</span><span class="bz-product-old">₹55</span></div><button class="bz-product-btn">Add to Cart +</button></div></div>
+    <div class="bz-product"><img class="bz-product-img" src="https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=300&q=80" alt="Eggs"><div class="bz-product-body"><div class="bz-product-name">Farm Eggs (12 pcs)</div><div class="bz-product-desc">Free-range, organic</div><div class="bz-product-price"><span class="bz-product-now">₹85</span><span class="bz-product-old">₹100</span></div><button class="bz-product-btn">Add to Cart +</button></div></div>
+  </div>
+</div>
+
+<div class="bz-why">
+  <div class="bz-why-left">
+    <h2>Why LocalMart is<br>Your Best Choice</h2>
+    <p>We've been serving this neighbourhood for 15 years. Here's why 10,000+ families trust us every day.</p>
+    <div class="bz-why-points">
+      <div class="bz-why-pt"><div class="bz-why-icon">🚚</div><div class="bz-why-text"><strong>Free Same-Day Delivery</strong>Order before 4 PM, get it today. No minimum for local orders.</div></div>
+      <div class="bz-why-pt"><div class="bz-why-icon">✅</div><div class="bz-why-text"><strong>Quality Guaranteed</strong>100% fresh products or we'll replace them, no questions asked.</div></div>
+      <div class="bz-why-pt"><div class="bz-why-icon">💰</div><div class="bz-why-text"><strong>Best Local Prices</strong>We match any local competitor's price, guaranteed.</div></div>
+      <div class="bz-why-pt"><div class="bz-why-icon">💬</div><div class="bz-why-text"><strong>WhatsApp Orders</strong>Just message us your list and we'll deliver it to your door.</div></div>
+    </div>
+  </div>
+  <div class="bz-why-right"><img src="https://images.unsplash.com/photo-1601599561213-832382fd07ba?q=85&w=600&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Store interior"></div>
+</div>
+
+<div class="bz-section">
+  <div class="bz-sec-label">Customer Love</div>
+  <div class="bz-sec-title">What People Are Saying</div>
+  <div class="bz-reviews-grid">
+    <div class="bz-review"><div class="bz-review-stars">★★★★★</div><div class="bz-review-text">"I WhatsApp my weekly grocery list and it's delivered within 2 hours. Fresh, packed neatly, and always accurate. Best local store!"</div><div class="bz-review-author">— Vikram Nair, Resident</div></div>
+    <div class="bz-review"><div class="bz-review-stars">★★★★★</div><div class="bz-review-text">"Prices are better than the big supermarkets and the vegetables are SO much fresher. Supporting local businesses is easy when they're this good."</div><div class="bz-review-author">— Meena Verma, Housewife</div></div>
+    <div class="bz-review"><div class="bz-review-stars">★★★★★</div><div class="bz-review-text">"The owner knows everyone by name. They went out of their way to source a specific product I needed. Real community spirit!"</div><div class="bz-review-author">— Deepak Chawla, Businessman</div></div>
+  </div>
+</div>
+
+<div class="bz-contact">
+  <div class="bz-contact-info">
+    <h2>Visit Us or Order Online</h2>
+    <p>We're open 7 days a week. Walk in or just WhatsApp us your list and we'll handle the rest.</p>
+    <div class="bz-info-items">
+      <div class="bz-info-item"><div class="bz-info-icon">📍</div><div>Shop 12, Sector 4 Market, Near Metro Station<br>New Delhi - 110022</div></div>
+      <div class="bz-info-item"><div class="bz-info-icon">⏰</div><div>Mon – Sun: 7:00 AM – 10:00 PM<br>(365 days open)</div></div>
+      <div class="bz-info-item"><div class="bz-info-icon">📱</div><div>+91 98765-11223<br>WhatsApp orders accepted</div></div>
+    </div>
+  </div>
+  <div>
+    <div style="font-weight:700;font-size:1rem;color:#1a1a2e;margin-bottom:1rem;">Send Us a Message</div>
+    <input class="bz-cf-input" placeholder="Your Name">
+    <input class="bz-cf-input" placeholder="Phone Number">
+    <textarea class="bz-cf-input" placeholder="Your message or order list..." rows="3" style="resize:none;"></textarea>
+    <button class="bz-cf-submit">Send Message →</button>
+  </div>
+</div>
+
+<div class="bz-footer">
+  <div class="bz-footer-logo">🛒 SevenDaysMart</div>
+  <div style="font-size:0.8rem;color:rgba(255,255,255,0.35);">© 2025 SevenDaysMart. All rights reserved.</div>
+  <div class="bz-footer-links"><a href="#">Privacy</a><a href="#">WhatsApp</a><a href="#">Instagram</a></div>
+</div>
+</div>`
+}
+};
+
+function openDemo(type) {
+  const d = demos[type];
+  if (!d) return;
+  document.getElementById('modal-url').textContent = d.url;
+  document.getElementById('demo-content').innerHTML = d.html;
+  const modal = document.getElementById('demo-modal');
+  modal.classList.add('open');
+  modal.scrollTop = 0;
+}
+
+function closeDemo() {
+  document.getElementById('demo-modal').classList.remove('open');
+}
+
+document.getElementById('demo-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeDemo();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDemo(); });
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+},{ threshold:0.15 });
+reveals.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
